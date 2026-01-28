@@ -1,0 +1,16 @@
+No,Category,Guideline,Description,Do,Don't,Code Good,Code Bad,Severity,Docs URL
+1,Architecture,Unified Aesthetic,Cohesive design between Admin and Frontend,Use Slate/Zinc grays and matching border radiuses,Disconnected visual styles between panels,Use Zinc-950 and 8px radius,Mix Blue-500 with Sharp-0 radius,High,
+2,Architecture,Local API First,Use Local API for server-side logic,Local API with overrideAccess: false,Direct DB driver calls,await payload.find({ overrideAccess: false }),await mongoose.find(),High,https://payloadcms.com/docs/local-api/overview
+3,Architecture,Transaction Safety,Pass req to nested operations,Maintain atomicity in hooks,Omit req in hooks,payload.update({ req }),payload.update({ data }),High,
+4,Performance,Image Optimization,Built-in compression and format,Use formatOptions with WebP/AVIF,Manual Sharp optimization,formatOptions: { format: 'webp' quality: 85 },Custom beforeChange for every image,High,https://payloadcms.com/docs/upload/overview
+5,Performance,Selective Hydration,Use Next.js Suspense for data,Wrap slow Local API calls in Suspense,Wait for everything in Page component,<Suspense fallback={<Skeleton />}><MyPayloadComponent /></Suspense>,const data = await payload.find(),Medium,
+6,UI Components,Shadcn Integration,Standardize on Shadcn primitives,Use @/components/ui base components,Custom unstyled primitives,import { Button } from "@/components/ui/button",import { MyCustomButton } from "./Button",High,https://ui.shadcn.com/docs
+7,UI Components,Lucide Standard,Consistent iconography set,Use lucide-react for all icons,Mix Lucide with FontAwesome or Emojis,<LucideIcon size={20} />,<FontAwesomeIcon /> or 🚀,Medium,
+8,Theming,Tailwind 4.x Variables,Use CSS variables for theme,Define primary/accent in globals.css,Hardcoded hex codes,bg-primary text-primary-foreground,bg-[#ff0000],High,
+9,Theming,Dark Mode First,Premium dark theme optimization,Slate-950 background with subtle accents,Pure black with high contrast,bg-slate-950 border-white/10,bg-black border-white,Medium,
+10,Security,Access Control Integrity,Mirror schema logic in UI,Read-only UI for unauthorized fields,Show empty inputs for secret fields,if (!user) return null,"<Input value={secret} disabled />",High,
+11,UX,Direct CDN Delivery,Bypass server for public media,disablePayloadAccessControl: true for public media,Proxy all files through server,disablePayloadAccessControl: true,Serve everything from /api/media,Medium,
+12,Layout,Responsive Grids,Mobile-first bento or card layouts,Responsive Grid with gap-4,Fixed width containers,className="grid grid-cols-1 md:grid-cols-3",className="flex w-[1200px]",Medium,
+13,Form,Zod Validation,Sync Payload and UI validation,Shared Zod schema for both,Duplicate validation logic,z.object({ name: z.string() }),Manual if/else checks,High,
+14,Loading,Skeleton States,Shadcn skeletons for async,Match skeleton to Payload entry,Blank screen while loading,<Skeleton className="h-12 w-full" />,Nothing or generic spinner,Medium,
+15,Feedback,Toast Notifications,Shadcn Sonner for results,toast.success() after Payload mutations,Alert() or console.log(),toast.success("Saved"),console.log("Success"),Low,

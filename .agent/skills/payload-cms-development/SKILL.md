@@ -1,3 +1,8 @@
+---
+name: payload-cms-development
+description: Expert rules and patterns for developing with Payload CMS, including configuration, collections, security, hooks, and custom components.
+---
+
 # Payload CMS Development Rules
 
 You are an expert Payload CMS developer. When working with Payload projects, follow these rules:
@@ -21,15 +26,36 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 ```
 src/
 ├── app/
-│   ├── (frontend)/          # Frontend routes
+│   ├── (frontend)/          # Frontend routes, layouts, and styles
 │   └── (payload)/           # Payload admin routes
-├── collections/             # Collection configs
-├── globals/                 # Global configs
-├── components/              # Custom React components
-├── hooks/                   # Hook functions
-├── access/                  # Access control functions
-└── payload.config.ts        # Main config
+├── collections/             # Collection configs (PascalCase)
+├── components/              # React components
+│   ├── admin/               # Admin panel custom components
+│   ├── hooks/               # Custom hooks (kebab-case, use-*)
+│   ├── lib/                 # Shared utilities and helpers
+│   └── ui/                  # UI components (kebab-case, shadcn-based)
+├── payload-types.ts         # Generated Payload types
+└── payload.config.ts        # Main config file
 ```
+
+## Naming Conventions
+
+### 1. Collections and Globals
+- **File Naming**: Use **PascalCase** for file names (e.g., `Users.ts`, `Posts.ts`, `SiteSettings.ts`).
+- **Slugs**: Use **kebab-case** for slugs (e.g., `posts`, `site-settings`).
+
+### 2. Components
+- **UI Components**: Use **kebab-case** for standard UI components (e.g., `button.tsx`, `alert-dialog.tsx`).
+- **Custom/Feature Components**: Use **PascalCase** for high-level or custom components (e.g., `AlertBox.tsx`).
+
+### 3. Hooks
+- **Naming**: Use **kebab-case** starting with `use-` (e.g., `use-debounce.tsx`, `use-local-storage.tsx`).
+
+### 4. Utilities and Helpers
+- **Naming**: Use **kebab-case** or **camelCase** for utility files (e.g., `format-date.ts` or `slugify.ts`).
+
+### 5. Directories
+- **Naming**: Always use **kebab-case** for directory names.
 
 ## Configuration
 
@@ -575,20 +601,6 @@ export default buildConfig({
 })
 ```
 
-**Component Path Rules:**
-
-- Paths are relative to project root or `config.admin.importMap.baseDir`
-- Named exports: use `#ExportName` suffix or `exportName` property
-- Default exports: no suffix needed
-- File extensions can be omitted
-
-### Component Types
-
-1. **Root Components** - Global Admin Panel (logo, nav, header)
-2. **Collection Components** - Collection-specific (edit view, list view)
-3. **Global Components** - Global document views
-4. **Field Components** - Custom field UI and cells
-
 ### Component Types
 
 1. **Root Components** - Global Admin Panel (logo, nav, header)
@@ -1035,102 +1047,23 @@ export const myPlugin =
 
 ## Additional Context Files
 
-For deeper exploration of specific topics, refer to the context files located in `.cursor/rules/`:
+For deeper exploration of specific topics, refer to the context files located in the skill's `resources/` directory:
 
 ### Available Context Files
 
 1. **`payload-overview.md`** - High-level architecture and core concepts
-
-   - Payload structure and initialization
-   - Configuration fundamentals
-   - Database adapters overview
-
-2. **`security-critical.md`** - Critical security patterns (⚠️ IMPORTANT)
-
-   - Local API access control
-   - Transaction safety in hooks
-   - Preventing infinite hook loops
-
+2. **`security-critical.mdc`** - Critical security patterns (⚠️ IMPORTANT)
 3. **`collections.md`** - Collection configurations
-
-   - Basic collection patterns
-   - Auth collections with RBAC
-   - Upload collections
-   - Drafts and versioning
-   - Globals
-
 4. **`fields.md`** - Field types and patterns
-
-   - All field types with examples
-   - Conditional fields
-   - Virtual fields
-   - Field validation
-   - Common field patterns
-
 5. **`field-type-guards.md`** - TypeScript field type utilities
-
-   - Field type checking utilities
-   - Safe type narrowing
-   - Runtime field validation
-
 6. **`access-control.md`** - Permission patterns
-
-   - Collection-level access
-   - Field-level access
-   - Row-level security
-   - RBAC patterns
-   - Multi-tenant access control
-
 7. **`access-control-advanced.md`** - Complex access patterns
-
-   - Nested document access
-   - Cross-collection permissions
-   - Dynamic role hierarchies
-   - Performance optimization
-
 8. **`hooks.md`** - Lifecycle hooks
-
-   - Collection hooks
-   - Field hooks
-   - Hook context patterns
-   - Common hook recipes
-
 9. **`queries.md`** - Database operations
-
-   - Local API usage
-   - Query operators
-   - Complex queries with AND/OR
-   - Performance optimization
-
 10. **`endpoints.md`** - Custom API endpoints
-
-    - REST endpoint patterns
-    - Authentication in endpoints
-    - Error handling
-    - Route parameters
-
 11. **`adapters.md`** - Database and storage adapters
-
-    - MongoDB, PostgreSQL, SQLite patterns
-    - Storage adapter usage (S3, Azure, GCS, etc.)
-    - Custom adapter development
-
 12. **`plugin-development.md`** - Creating plugins
-
-    - Plugin architecture
-    - Modifying configuration
-    - Plugin hooks
-    - Best practices
-
 13. **`components.md`** - Custom Components
-
-    - Component types (Root, Collection, Global, Field)
-    - Server vs Client Components
-    - Component paths and definition
-    - Default and custom props
-    - Using hooks
-    - Performance best practices
-    - Styling components
 
 ## Resources
 

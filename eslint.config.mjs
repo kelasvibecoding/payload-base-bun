@@ -1,3 +1,4 @@
+import prettier from 'eslint-config-prettier'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
@@ -31,8 +32,9 @@ const eslintConfig = [
     },
   },
   {
-    ignores: ['.next/'],
+    ignores: ['.next/', '.next-dev/', 'node_modules/', 'public/', 'dist/', 'build/'],
   },
+  prettier,
 ]
 
 export default eslintConfig

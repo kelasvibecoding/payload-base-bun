@@ -1,67 +1,98 @@
-# Payload Blank Template
+# 🚀 Payload 3.0 Base Template
 
-This template comes configured with the bare minimum to get started on anything you need.
+A premium, production-ready foundation for building modern web applications with **Payload CMS 3.0**, **Next.js 16**, **React 19**, and **Tailwind CSS 4.0**.
 
-## Quick start
+This template is designed for high-performance, accessibility, and developer experience, featuring a pre-configured stack that bridges the gap between a blank slate and a full-featured application.
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## 🛠️ Tech Stack
 
-## Quick Start - local setup
+- **Framework**: [Next.js 15+ (App Router)](https://nextjs.org/) & [React 19](https://react.dev/)
+- **CMS**: [Payload 3.0](https://payloadcms.com/) (Stable Release)
+- **Styling**: [Tailwind CSS 4.0](https://tailwindcss.com/) & [Shadcn UI](https://ui.shadcn.com/)
+- **Database**: [Postgres](https://www.postgresql.org/) (via `@payloadcms/db-postgres`)
+- **PWA**: Powered by `@ducanh2912/next-pwa`
+- **Editor**: [Lexical](https://lexical.dev/) (Advanced Rich Text)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Testing**: [Playwright](https://playwright.dev/) (E2E) & [Vitest](https://vitest.dev/) (Unit/Integration)
 
-To spin up this template locally, follow these steps:
+## ✨ Key Features
 
-### Clone
+- **PWA Ready**: Offline support and installability configured out-of-the-box.
+- **Image Intelligence**: Integrated with **Sharp** for world-class image optimization (WebP/AVIF).
+- **Dark Mode First**: Seamless theme switching with `next-themes`.
+- **Type Safe**: End-to-end TypeScript support with automated type generation.
+- **Modern UI**: Pre-built Shadcn UI components optimized for Payload integration.
+- **Agent Enhanced**: Optimized for AI-assisted development with custom search scripts and design intelligence.
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+## 🚀 Quick Start
 
-### Development
+### 1. Requirements
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+- **Node.js**: `^18.20.2 || >=20.9.0`
+- **pnpm**: `^9.0.0`
+- **Database**: A running Postgres instance.
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+### 2. Local Setup
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd payload-base
 
-#### Docker (Optional)
+# Copy environment variables
+cp .env.example .env
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+# Install dependencies
+pnpm install
 
-To do so, follow these steps:
+# Run development server
+pnpm dev
+```
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
+Open [http://localhost:3000/admin](http://localhost:3000/admin) to access the Payload dashboard.
 
-## How it works
+### 3. Environment Variables
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+Ensure your `.env` file contains at least:
 
-### Collections
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+PAYLOAD_SECRET=YOUR_SECRET_HERE
+```
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+## 📂 Project Structure
 
-- #### Users (Authentication)
+- `src/app`: Next.js App Router (Frontend and Admin UI).
+- `src/collections`: Payload Schema definitions.
+- `src/components`: Reusable UI components (Shadcn + Custom).
+- `.agent/skills`: Specialized AI training data for frontend/backend mastery.
 
-  Users are auth-enabled collections that have access to the admin panel.
+## 🧪 Testing
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+```bash
+# Run all tests
+pnpm test
 
-- #### Media
+# Run E2E tests (Playwright)
+pnpm run test:e2e
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+# Run Unit tests (Vitest)
+pnpm run test:int
+```
 
-### Docker
+## 🧠 Agent Intelligence
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+This repository is "Agent-Ready". It includes custom CLI tools to help AI agents navigate the codebase efficiently:
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+```bash
+# Search Payload documentation
+python .agent/skills/payload-cms-docs/scripts/search.py "access control"
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+# Get UI/UX design recommendations
+python .agent/skills/ui-ux-stack/scripts/search.py "saas dashboard fintech" --stack payload
+```
 
-## Questions
+## 📄 License
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+MIT © [Your Name/Org]

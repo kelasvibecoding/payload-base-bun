@@ -1,8 +1,15 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import withPWAInit from '@ducanh2912/next-pwa'
+
+const withPWA = withPWAInit({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
+  distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
@@ -14,4 +21,4 @@ const nextConfig = {
   },
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default withPayload(withPWA(nextConfig), { devBundleServerPackages: false })

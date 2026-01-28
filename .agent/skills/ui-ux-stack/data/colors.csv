@@ -1,0 +1,26 @@
+No,Product Type,Keywords,Primary,Secondary,Accent,Background,Foreground,Muted,Notes
+1,SaaS (General),"saas, general",primary,secondary,accent,background,foreground,muted,Use Shadcn primary/secondary variables. Trust blue theme.
+2,Micro SaaS,"micro, saas",primary,secondary,accent,background,foreground,muted,Vibrant primary + high contrast muted backgrounds.
+3,E-commerce,commerce,primary,secondary,accent,background,foreground,muted,Brand primary + secondary for secondary actions.
+4,E-commerce Luxury,"commerce, luxury",primary,secondary,accent,background,foreground,muted,Deep Zinc/Slate primary + minimal gold accent.
+5,Service Landing Page,"service, landing, page",primary,secondary,accent,background,foreground,muted,Clean corporate primary + trust accent colors.
+6,B2B Service,"b2b, service",primary,secondary,accent,background,foreground,muted,Professional Slate/Zinc primary + neutral muted regions.
+7,Financial Dashboard,"financial, dashboard",primary,secondary,accent,background,foreground,muted,Dark background + destructive for alerts + primary for trust.
+8,Analytics Dashboard,"analytics, dashboard",primary,secondary,accent,background,foreground,muted,Functional primary + muted for grid lines.
+9,Healthcare App,"healthcare, app",primary,secondary,accent,background,foreground,muted,Calm Teal primary + wellness accent colors.
+10,Educational App,"educational, app",primary,secondary,accent,background,foreground,muted,Playful Indigo primary + energetic accent colors.
+11,Creative Agency,"creative, agency",primary,secondary,accent,background,foreground,muted,Bold Pink/Cyan primary + artistic backgrounds.
+12,Portfolio/Personal,"portfolio, personal",primary,secondary,accent,background,foreground,muted,Minimalist Zinc primary + personality accents.
+13,Gaming,gaming,primary,secondary,accent,background,foreground,muted,Neon Purple primary + energetic destructive/accent contrast.
+14,Government/Public Service,"government, public, service",primary,secondary,accent,background,foreground,muted,High contrast Navy primary + accessible neutral muted.
+15,Fintech/Crypto,"fintech, crypto",primary,secondary,accent,background,foreground,muted,Deep Slate primary + vibrant Amber/Violet accents.
+16,Social Media App,"social, media, app",primary,secondary,accent,background,foreground,muted,Engagement-focused primary + soft muted backgrounds.
+17,Productivity Tool,"productivity, tool",primary,secondary,accent,background,foreground,muted,Functional Blue primary + organized muted borders.
+18,Design System,"design, system",primary,secondary,accent,background,foreground,muted,Clear hierarchy using all semantic tokens correctly.
+19,AI/Chatbot Platform,"chatbot, platform",primary,secondary,accent,background,foreground,muted,Intelligence Indigo primary + clean background.
+20,NFT/Web3 Platform,"nft, web3, platform",primary,secondary,accent,background,foreground,muted,Deep Zinc primary + neon accent variables.
+21,Cybersecurity Platform,"cybersecurity, security",destructive,primary,accent,background,foreground,muted,Security-first destructive/primary contrast on Dark Mode.
+22,Developer Tool / IDE,"developer, tool, ide",primary,secondary,accent,background,foreground,muted,Syntax-aware primary with deep Indigo/Slate variables.
+23,Biotech / Science,"biotech, science",primary,secondary,accent,background,foreground,muted,Clinical Blue primary + growth accent colors.
+24,Space Tech / Aerospace,"space, aerospace",primary,secondary,accent,background,foreground,muted,Interstellar Black background + stellar Primary.
+25,Climate Tech,"climate, green",primary,secondary,accent,background,foreground,muted,Nature-inspired Primary + Renewable Energy accents.
