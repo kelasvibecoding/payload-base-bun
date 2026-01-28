@@ -18,6 +18,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      beforeDashboard: ['/components/admin/Welcome'],
+    },
   },
   collections: [Users, Media, Posts],
   editor: lexicalEditor(),

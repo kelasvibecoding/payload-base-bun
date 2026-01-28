@@ -17,13 +17,17 @@ export const viewport = {
   themeColor: '#000000',
 }
 
+import { SWRProvider } from '@/providers/SWRProvider'
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
     <html lang="en" className={inter.className}>
       <body className="antialiased">
-        <main>{children}</main>
+        <SWRProvider>
+          <main>{children}</main>
+        </SWRProvider>
       </body>
     </html>
   )
