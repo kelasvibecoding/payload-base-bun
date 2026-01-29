@@ -12,5 +12,33 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    staticDir: 'media',
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 400,
+        height: 300,
+        position: 'centre',
+      },
+      {
+        name: 'card',
+        width: 768,
+        height: 1024,
+        position: 'centre',
+      },
+      {
+        name: 'og',
+        width: 1200,
+        height: 630,
+        position: 'centre',
+      },
+    ],
+    adminThumbnail: 'thumbnail',
+    formatOptions: {
+      format: 'webp',
+      options: { quality: 85 },
+    },
+    focalPoint: true,
+  },
 }

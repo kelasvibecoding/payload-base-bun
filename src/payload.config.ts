@@ -7,6 +7,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import dns from 'node:dns'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
 // Fix for MongoDB Atlas SRV connection issues on Windows
 // This forces Node to use a reliable DNS provider for the SRV lookup
@@ -51,5 +52,15 @@ export default buildConfig({
         },
       }),
   sharp,
-  plugins: [],
+  plugins: [
+    uploadthingStorage({
+      collections: {
+        media: true,
+      },
+      options: {
+        token: process.env.UPLOADTHING_TOKEN,
+        acl: 'public-read',
+      },
+    }),
+  ],
 })

@@ -19,6 +19,11 @@ Expert toolkit for fullstack development using Payload CMS 3.0, Next.js, and mod
 
 ## Core Principles
 
+### 0. HILE Strategy (Recommendation First)
+- **High Impact, Low Effort**: Always offer a HILE implementation option alongside a comprehensive one for new features.
+- **Value-Driven**: Prioritize speed-to-value and maintainability.
+
+
 ### 1. Payload-First Architecture
 - **Schema-Driven**: Define your data model in collections/globals first.
 - **Local API**: Prefer `payload.find`, `payload.create`, etc., over external API calls within the same server.

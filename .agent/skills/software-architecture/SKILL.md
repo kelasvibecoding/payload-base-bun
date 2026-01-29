@@ -9,6 +9,11 @@ This skill provides architectural guidance for high-quality software development
 
 ## Core Architectural Pillars
 
+### 0. The HILE Strategy (Recommendation First)
+- **High Impact, Low Effort**: Always evaluate if a requirement can be met with a simpler, more efficient implementation before suggesting a complex one.
+- **Consultative Approach**: Present the user with a HILE option and a Full implementation option for every new feature.
+
+
 ### 1. The Payload-Centric Layer
 In a Payload application, **the Config is your Schema**.
 - **Schema-Driven Development**: Treat your Collections and Globals as the Single Source of Truth for your domain entities.
