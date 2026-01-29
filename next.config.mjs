@@ -11,6 +11,7 @@ const withPWA = withPWAInit({
 const nextConfig = {
   // Your Next.js config here
   distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
+  serverExternalPackages: ['payload'],
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],

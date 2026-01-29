@@ -1,4 +1,6 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+// import { postgresAdapter } from '@payloadcms/db-postgres'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -24,15 +26,24 @@ export default buildConfig({
   },
   collections: [Users, Media, Posts],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || '864a8383b7ed11af189db510',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URL || '',
-    },
-  }),
+  // db: postgresAdapter({
+  //   pool: {
+  //     connectionString: process.env.DATABASE_URL || '',
+  //   },
+  // }),
+  db: process.env.DATABASE_URL?.startsWith('mongodb')
+    ? mongooseAdapter({
+        url: process.env.DATABASE_URL || '',
+      })
+    : sqliteAdapter({
+        client: {
+          url: 'file:./local.db',
+        },
+      }),
   sharp,
   plugins: [],
 })
