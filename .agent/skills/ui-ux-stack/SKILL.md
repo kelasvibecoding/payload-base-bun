@@ -1,11 +1,18 @@
 ---
-name: ui-ux-pro-max
+name: ui-ux-stack
 description: "UI/UX design intelligence optimized for Payload CMS 3.0, Next.js, Tailwind, and Shadcn UI. Actions: plan, build, create, design, implement, review, fix, improve, optimize, enhance, refactor, check UI/UX code. Styles: glassmorphism, minimalism, dark mode, responsive, bento grid. Topics: color palette, accessibility, animation, layout, typography, font pairing, spacing, hover, shadow, gradient."
 ---
 
-# UI/UX Pro Max - Design Intelligence (Payload CMS Edition)
+# UI/UX Stack - Design Intelligence
 
 Comprehensive design guide optimized for **Payload CMS 3.0**, **Next.js (App Router)**, **Tailwind CSS 4.x**, and **Shadcn UI**.
+
+## How to Trigger This Skill
+Simply ask questions related to design, UI/UX, or frontend implementation.
+- **"Review my UI design."** -> Triggers a checklist review.
+- **"Design a dashboard for a fintech app."** -> Uses the design system generator.
+- **"Fix this button's contrast."** -> Checks against accessibility rules.
+- **"How balancing works?"** -> Explains the 7 Principles of Design.
 
 ## Core Design Philosophy (Payload Ecosystem)
 
@@ -27,6 +34,26 @@ Your design should feel cohesive between the **Payload Admin Panel** and the **C
   - `bg-secondary`, `bg-accent`, `bg-muted`
   - `border-border`, `bg-background`, `text-foreground`
 - **Contextual Meaning**: Use `destructive` for errors/delete actions and `muted` for secondary metadata.
+- **Text Readability**: When selecting a background color, ALWAYS use its matching foreground token for text to ensure WCAG-compliant contrast (e.g., `bg-primary` with `text-primary-foreground`). Never assume black/white text fits all backgrounds.
+
+## The 7 Core Principles of Design
+
+Apply these foundational principles to every UI layout and component decision:
+
+1. **Balance**: Distribute visual weight (color, size, texture) evenly to create stability.
+   - *Check*: Does the layout feel "heavy" on one side? Use symmetrical or asymmetrical balance intentionally.
+2. **Contrast**: Use differences to make elements stand out and create interest.
+   - *Check*: Do primary actions (CTAs) pop against the background? Is text legible?
+3. **Emphasis (Hierarchy)**: Highlight the most important element to control the focal point.
+   - *Check*: Does the eye naturally land on the key message/action first? (Scale: H1 > H2 > Body).
+4. **Movement**: Guide the viewer's eye through the design using lines, shapes, or color.
+   - *Check*: Are you using Z-pattern or F-pattern reading flows to lead to conversion?
+5. **Repetition (Pattern/Rhythm)**: Reuse elements to create consistency and unity.
+   - *Check*: Are margins, paddings, and border-radii consistent across all components?
+6. **Proportion (Scale)**: Use relative size to signal importance and weight.
+   - *Check*: Are headings significantly larger than body text to clearly section content?
+7. **Unity (White Space/Harmony)**: Use empty space to group related elements and prevent clutter.
+   - *Check*: "When in doubt, add whitespace." Are related items visually grouped?
 
 ## Rule Categories (Payload & Next.js Focus)
 
@@ -56,16 +83,16 @@ Search specifically for the Payload/Shadcn stack:
 
 ```bash
 # Get complete design system for a specific product
-python3 .agent/skills/ui-ux-pro-max/scripts/search.py "saas dashboard fintech dark" --design-system -p "Payload App"
+python3 .agent/skills/ui-ux-stack/scripts/search.py "saas dashboard fintech dark" --design-system -p "Payload App"
 
 # Get Payload fullstack specific patterns (NEW)
-python3 .agent/skills/ui-ux-pro-max/scripts/search.py "media table auth" --stack payload
+python3 .agent/skills/ui-ux-stack/scripts/search.py "media table auth" --stack payload
 
 # Get Shadcn-specific patterns
-python3 .agent/skills/ui-ux-pro-max/scripts/search.py "data-table form navigation" --stack shadcn
+python3 .agent/skills/ui-ux-stack/scripts/search.py "data-table form navigation" --stack shadcn
 
 # Get Next.js App Router performance tips
-python3 .agent/skills/ui-ux-pro-max/scripts/search.py "suspense caching image" --stack nextjs
+python3 .agent/skills/ui-ux-stack/scripts/search.py "suspense caching image" --stack nextjs
 ```
 
 ## Available Stacks & Domains

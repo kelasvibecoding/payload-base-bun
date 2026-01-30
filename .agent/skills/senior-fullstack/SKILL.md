@@ -57,6 +57,8 @@ src/
 ├── hooks/                   # Shared Payload lifecycle hooks
 ├── payload-types.ts         # Automatically generated TypeScript types
 └── payload.config.ts        # Primary Payload configuration
+
+ai-doc/                      # Planning & AI documentation artifacts
 ```
 
 ## Best Practices
@@ -75,6 +77,16 @@ src/
 - **Access Control**: Never rely on frontend-only checks; always implement `access` rules in Payload.
 - **Local API**: Set `overrideAccess: false` when performing operations on behalf of a user.
 - **Environment**: Keep secrets (DATABASE_URL, PAYLOAD_SECRET) strictly in `.env`.
+
+### 5. Frontend Stability (Hydration)
+- **Invalid DOM Nesting**: Never nest interactive elements (`<a>` inside `<a>`, `<button>` inside `<button>`). This causes hydration mismatches and breaks accessibility.
+- **Solution**: If you need a clickable card with internal links, use the "Stretched Link" pattern (CSS `::after` on the main link) or handling `onClick` programmatically, rather than nesting tags.
+- **HTML Validity**: Ensure standard HTML rules are followed (e.g., no `<div>` inside `<p>`). Use `<span>` for block-like styling inside paragraphs if necessary.
+
+### 6. Documentation & Planning
+- **Centralized AI Artifacts**: All AI-generated outputs—including implementation plans, architecture definitions, code audits, logs, analysis reports, and research notes—MUST be saved to the `/ai-doc` directory.
+- **Organization**: Use subfolders if necessary (e.g., `/ai-doc/plans`, `/ai-doc/audits`) to keep the directory clean.
+- **Format**: Use Markdown (`.md`) for documentation and standard formats (txt/json/csv) for logs and data.
 
 ## Common Commands
 

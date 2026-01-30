@@ -27,8 +27,9 @@ python .agent/skills/payload-cms-docs/scripts/search.py "blocks field validation
 
 ## Index of Resources
 
-The following documentation modules are available in `resources/`:
+The following documentation modules and implementation examples are available in `resources/`:
 
+- [Implementation Examples](./resources/examples-index.md)
 - [Database Overview](./resources/database-overview.md)
 - [Migrations](./resources/migrations.md)
 - [Transactions](./resources/transactions.md)

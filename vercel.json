@@ -1,0 +1,14 @@
+{
+  "framework": "nextjs",
+  "functions": {
+    "src/app/(payload)/admin/[[...segments]]/page.tsx": {
+      "maxDuration": 60
+    },
+    "src/app/api/graphql/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/rest/[[...segments]]/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}
