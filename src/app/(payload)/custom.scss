@@ -135,36 +135,73 @@
   --radius: 0.75rem;
 }
 
-/* Button overrides - targeted to Payload's button classes if possible, or generic */
-button.btn {
-  @apply h-11 rounded-lg px-4 text-sm font-medium transition-all duration-200 sm:px-8 sm:text-base;
-}
-
+/* Premium Button Enhancements */
 button.btn--style-primary {
-  background-color: var(--color-primary) !important;
-  color: var(--color-primary-foreground) !important;
-  box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.3);
+  @apply relative overflow-hidden transition-all duration-300;
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, #7c3aed 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.3) !important;
 }
 
 button.btn--style-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px 0 rgba(124, 58, 237, 0.4);
+  @apply -translate-y-0.5;
+  box-shadow: 0 8px 25px 0 rgba(124, 58, 237, 0.4) !important;
+  filter: brightness(1.1);
 }
 
-/* Inputs - targeted to form fields */
-input.form-field__input,
-textarea.form-field__input,
-select.form-field__input {
-  @apply h-11 rounded-lg bg-transparent px-4;
-  border-color: var(--color-input);
+/* Glassmorphism for Admin Cards */
+.card {
+  @apply border-slate-200/50 bg-white/80 backdrop-blur-md transition-all duration-300 dark:border-slate-800/50 dark:bg-slate-900/80;
 }
 
-/* Typography refinements */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-semibold tracking-tight;
+.card:hover {
+  @apply border-primary/30 -translate-y-1 shadow-xl;
+}
+
+/* Refined Navigation */
+.nav {
+  @apply border-r border-slate-200/50 dark:border-slate-800/50;
+
+  &__link {
+    @apply mx-2 my-1 rounded-lg transition-all duration-200;
+  }
+
+  &__link:hover {
+    @apply bg-primary/10 text-primary;
+  }
+
+  &__link.active {
+    @apply bg-primary shadow-primary/20 text-white shadow-lg;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300 transition-colors dark:bg-slate-700;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-slate-600;
+}
+
+/* Dashboard Layout Enhancements */
+.dashboard {
+  background:
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.05), transparent),
+    radial-gradient(circle at bottom left, rgba(124, 58, 237, 0.03), transparent) !important;
+}
+
+/* PayloadCMS UI Overrides */
+.payload__root {
+  --font-body: 'Inter', sans-serif;
+  --font-header: 'Inter', sans-serif;
 }

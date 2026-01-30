@@ -26,38 +26,66 @@ const Welcome: React.FC = async () => {
   const dateString = dateFormatter.format(now)
 
   return (
-    <div className="mb-8">
-      <div className="border-border bg-card relative overflow-hidden rounded-xl border p-6 shadow-sm sm:p-8">
-        <div className="relative z-10">
-          <h2 className="text-primary mb-2 text-3xl font-bold tracking-tight">
-            Welcome to Payload
-          </h2>
-          <p className="text-muted-foreground mb-6 max-w-2xl">
-            You are managing a premium content experience. Here is a quick snapshot of your system
-            status.
-          </p>
+    <div className="mb-10">
+      <div className="from-card to-background hover:shadow-primary/10 relative overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br p-1 shadow-2xl transition-all duration-500">
+        <div className="bg-card relative z-10 rounded-[calc(1rem-1px)] p-8 sm:p-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="from-primary mb-3 bg-gradient-to-r to-purple-400 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent">
+                Welcome to your Dashboard
+              </h2>
+              <p className="text-muted-foreground/80 max-w-2xl text-lg">
+                You&apos;re managing a high-performance content ecosystem. Here is your real-time
+                system status.
+              </p>
+            </div>
+            <div className="border-border/50 bg-background/50 flex items-center gap-3 rounded-full border px-5 py-2 backdrop-blur-sm">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+              <span className="text-foreground/70 text-sm font-semibold">System Online</span>
+            </div>
+          </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="border-border bg-background/50 hover:bg-accent/10 rounded-lg border p-4 backdrop-blur-sm transition-all">
-              <p className="text-muted-foreground text-sm font-medium">Total Users</p>
-              <p className="text-foreground text-2xl font-bold">{userCount}</p>
-            </div>
-            <div className="border-border bg-background/50 hover:bg-accent/10 rounded-lg border p-4 backdrop-blur-sm transition-all">
-              <p className="text-muted-foreground text-sm font-medium">Media Assets</p>
-              <p className="text-foreground text-2xl font-bold">{mediaCount}</p>
-            </div>
-            <div className="border-border bg-background/50 hover:bg-accent/10 rounded-lg border p-4 backdrop-blur-sm transition-all">
-              <p className="text-muted-foreground text-sm font-medium">Asia/Jakarta Time</p>
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {[
+              { label: 'Total Users', value: userCount, icon: 'Users' },
+              { label: 'Media Assets', value: mediaCount, icon: 'Image' },
+              { label: 'Active Sessions', value: 'Live', icon: 'Activity' },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="group border-border/50 bg-background/30 hover:border-primary/50 hover:bg-primary/5 relative overflow-hidden rounded-xl border p-6 transition-all duration-300"
+              >
+                <p className="text-muted-foreground group-hover:text-primary text-sm font-medium transition-colors">
+                  {stat.label}
+                </p>
+                <p className="text-foreground mt-1 text-3xl font-bold">{stat.value}</p>
+                <div className="absolute -right-2 -bottom-2 h-12 w-12 opacity-5 transition-transform duration-500 group-hover:scale-150 group-hover:opacity-10">
+                  <div className="bg-primary h-full w-full rounded-full blur-xl" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-border/50 mt-8 flex items-center justify-between border-t pt-6">
+            <div className="flex items-center gap-4">
               <div className="flex flex-col">
-                <p className="text-foreground text-2xl font-bold">{timeString}</p>
-                <p className="text-muted-foreground text-xs">{dateString}</p>
+                <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                  Server Time
+                </span>
+                <span className="text-foreground text-sm font-bold">
+                  {timeString} — {dateString}
+                </span>
               </div>
             </div>
+            <button className="bg-primary/10 text-primary hover:bg-primary rounded-lg px-4 py-2 text-sm font-bold transition-all hover:text-white">
+              Quick Action
+            </button>
           </div>
         </div>
 
-        {/* Decorative gradient blob */}
-        <div className="bg-primary/10 absolute -top-20 -right-20 h-64 w-64 rounded-full blur-3xl filter" />
+        {/* Decorative background blobs */}
+        <div className="bg-primary/10 absolute -top-24 -right-24 h-64 w-64 rounded-full blur-3xl filter" />
+        <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-purple-500/5 blur-3xl filter" />
       </div>
     </div>
   )

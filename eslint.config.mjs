@@ -10,7 +10,15 @@ import prettier from 'eslint-config-prettier'
 export default defineConfig([
   {
     name: 'project/ignores',
-    ignores: ['.next/', '.next-dev/', 'node_modules/', 'public/', 'dist/', 'build/'],
+    ignores: [
+      '.next/',
+      '.next-dev/',
+      'node_modules/',
+      'public/',
+      'dist/',
+      'build/',
+      'src-midpanel/',
+    ],
   },
   {
     name: 'project/javascript',

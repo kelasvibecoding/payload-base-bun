@@ -3,8 +3,13 @@
 import useSWR from 'swr'
 import { PaginatedDocs } from 'payload'
 
-export function usePayloadCollection<T>(collection: string, query?: Record<string, any>) {
-  const queryString = query ? `?${new URLSearchParams(query).toString()}` : ''
+export function usePayloadCollection<T>(
+  collection: string,
+  query?: Record<string, string | number | boolean>,
+) {
+  const queryString = query
+    ? `?${new URLSearchParams(query as unknown as Record<string, string>).toString()}`
+    : ''
   const { data, error, isLoading, mutate } = useSWR<PaginatedDocs<T>>(
     `/api/${collection}${queryString}`,
   )

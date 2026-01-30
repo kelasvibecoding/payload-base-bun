@@ -30,6 +30,13 @@ export default buildConfig({
     },
     components: {
       beforeDashboard: ['/components/admin/Welcome'],
+      graphics: {
+        Icon: '/components/admin/Graphics#Icon',
+        Logo: '/components/admin/Graphics#Logo',
+      },
+    },
+    meta: {
+      titleSuffix: '- Payload Base Admin',
     },
   },
   collections: [Users, Media, Posts],
