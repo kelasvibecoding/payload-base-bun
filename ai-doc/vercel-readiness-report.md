@@ -15,11 +15,12 @@ The codebase is technically ready for Vercel deployment, but requires specific e
   DATABASE_URL=mongodb+srv://user:pass@cluster.mongodb.net/dbname?retryWrites=true&w=majority
   ```
 
-### 2. Storage (Uploadthing Configured)
+### 2. Storage (Vercel Blob Configured)
 
 - **Status**: ✅ Good.
-- **Config**: The project uses `@payloadcms/storage-uploadthing`.
-- **Action**: Ensure `UPLOADTHING_TOKEN` is set in Vercel.
+- **Config**: The project uses `@payloadcms/storage-vercel-blob`.
+- **Action**: Ensure `BLOB_READ_WRITE_TOKEN` is set in Vercel.
+- **Note**: Uploadthing configuration is available as a commented alternative in `payload.config.ts`.
 
 ### 3. Vercel Configuration
 
@@ -32,7 +33,7 @@ The codebase is technically ready for Vercel deployment, but requires specific e
 | ------------------------ | -------------------------- | ----------------------------- |
 | `DATABASE_URL`           | Cloud MongoDB Connection   | `mongodb+srv://...`           |
 | `PAYLOAD_SECRET`         | Secure string for sessions | `openssl rand -hex 32`        |
-| `UPLOADTHING_TOKEN`      | API Token for file uploads | `...`                         |
+| `BLOB_READ_WRITE_TOKEN`  | Vercel Blob storage token  | Auto-generated in Vercel      |
 | `NEXT_PUBLIC_SERVER_URL` | Your Vercel Domain         | `https://your-app.vercel.app` |
 
 ## Deployment Steps

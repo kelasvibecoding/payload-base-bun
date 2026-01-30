@@ -7,7 +7,8 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import dns from 'node:dns'
-import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
+// import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 // Fix for MongoDB Atlas SRV connection issues on Windows
 // This forces Node to use a reliable DNS provider for the SRV lookup
@@ -53,14 +54,23 @@ export default buildConfig({
       }),
   sharp,
   plugins: [
-    uploadthingStorage({
+    vercelBlobStorage({
       collections: {
-        media: true,
+        media: {
+          prefix: 'media',
+        },
       },
-      options: {
-        token: process.env.UPLOADTHING_TOKEN,
-        acl: 'public-read',
-      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
+    // Cloud storage using Uploadthing (alternative)
+    // uploadthingStorage({
+    //   collections: {
+    //     media: true,
+    //   },
+    //   options: {
+    //     token: process.env.UPLOADTHING_TOKEN,
+    //     acl: 'public-read',
+    //   },
+    // }),
   ],
 })
