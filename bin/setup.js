@@ -62,7 +62,7 @@ async function setup() {
       process.exit(1)
     }
 
-    rl.question('Enter your Access Key (You will get this when buy ebook): ', async (token) => {
+    rl.question('Enter your Access Key (Available only with the Ebook purchase): ', async (token) => {
       if (!token) {
         error('❌ Error: Access Key is required.')
         process.exit(1)
