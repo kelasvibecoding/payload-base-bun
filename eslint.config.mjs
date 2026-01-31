@@ -35,10 +35,12 @@ export default defineConfig([
       'vitest.config.*',
       '**/*.config.{js,mjs,cjs,ts,mts,cts}',
       '**/scripts/**/*.{js,mjs,cjs,ts,mts,cts}',
+      '**/bin/**/*.{js,mjs,cjs,ts,mts,cts}',
     ],
     languageOptions: {
       globals: {
         process: 'readonly',
+        console: 'readonly',
         module: 'readonly',
         require: 'readonly',
         __dirname: 'readonly',

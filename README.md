@@ -32,20 +32,26 @@ This template is designed for high-performance, accessibility, and developer exp
 - **pnpm**: `^9.0.0`
 - **Database**: A running Postgres instance.
 
-### 2. Local Setup
+### 2. Local Setup (Private Access)
+
+To clone this private repository, you will need an **Access Key** (GitHub Personal Access Token).
+
+**Option A: Automatic Setup (Recommended)**
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+# Run the setup script to clone and configure automatically
+npx github:kelasvibecoding/payload-base
+```
+
+_The script will prompt for your Access Key, clone the repo, and setup your `.env`._
+
+**Option B: Manual Clone**
+
+```bash
+git clone https://YOUR_TOKEN@github.com/kelasvibecoding/payload-base.git
 cd payload-base
-
-# Copy environment variables
 cp .env.example .env
-
-# Install dependencies
 pnpm install
-
-# Run development server
 pnpm dev
 ```
 
