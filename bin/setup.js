@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * 🚀 Payload Base - Private Setup Script
- * Developed for Kelas Vibe Coding
+ * Payload Base - Private Setup Script
+ * Developed with ❤️ by Kelas Vibe Coding
  */
 
 import { execSync } from 'child_process'
@@ -41,10 +41,10 @@ function showProgress(message, duration = 2000) {
 
 async function setup() {
   log('\n' + '━'.repeat(50))
-  info('   🚀 KELAS VIBE CODING - PAYLOAD BASE SETUP')
+  info('KELAS VIBE CODING - PAYLOAD BASE SETUP')
   log('━'.repeat(50) + '\n')
 
-  rl.question('� Enter your Project Name: ', (projectName) => {
+  rl.question('Enter your Project Name: ', (projectName) => {
     const targetDir = projectName.trim() || 'my-payload-app'
 
     if (fs.existsSync(targetDir)) {
@@ -52,7 +52,7 @@ async function setup() {
       process.exit(1)
     }
 
-    rl.question('� Enter your Access Key (GitHub Token): ', async (token) => {
+    rl.question('Enter your Access Key (GitHub Token): ', async (token) => {
       if (!token) {
         error('❌ Error: Access Key is required.')
         process.exit(1)
@@ -61,7 +61,7 @@ async function setup() {
       const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base.git`
 
       try {
-        log(`\n📦 Initializing project: \x1b[33m${targetDir}\x1b[0m`)
+        log(`\nInitializing project: \x1b[33m${targetDir}\x1b[0m`)
 
         // 1. Cloning
         process.stdout.write(`\r\x1b[36m⠋\x1b[0m Cloning private repository...`)
@@ -79,7 +79,7 @@ async function setup() {
 
         // 3. Final Success UI
         log('\n' + '━'.repeat(50))
-        success('✨ ALL DONE! PROJECT READY ✨')
+        success('ALL DONE! PROJECT READY')
         log('━'.repeat(50))
         log(`Location: ${projectPath}`)
         log('\nNext suggested commands:')
