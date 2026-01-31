@@ -113,9 +113,9 @@ async function setup() {
         log('━'.repeat(50))
         log(`Location: ${projectPath}`)
         log('\nNext suggested commands:')
-        info(`  1. cd ${targetDir}`)
-        info('  2. pnpm install')
-        info('  3. pnpm dev')
+        log(`\x1b[31m  1. cd ${targetDir}\x1b[0m`)
+        log('\x1b[31m  2. pnpm install\x1b[0m')
+        log('\x1b[31m  3. pnpm dev\x1b[0m')
         log('━'.repeat(50) + '\n')
       } catch {
         error('\n\n❌ Setup Failed.')
