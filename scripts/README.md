@@ -14,7 +14,7 @@ If you are developing **Payload Base** itself (not using it as a user), use thes
     Converts `package.json` back to the minimal installer and updates the template with your changes.
     **Always run this before pushing!**
     ```bash
-    npm run ship:mode
+    node scripts/switch-mode.js ship
     # Then verify everything works
     git add .
     git commit -m "feat: my update"
