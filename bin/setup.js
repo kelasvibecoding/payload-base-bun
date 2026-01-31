@@ -71,13 +71,28 @@ async function setup() {
         const projectPath = path.join(process.cwd(), targetDir)
         process.chdir(projectPath)
 
-        // 2. Setup .env
+        // 2. Resolve Package Configuration (The Swap)
+        if (fs.existsSync('package.template.json')) {
+          fs.unlinkSync('package.json') // Remove tiny npx-only file
+          fs.renameSync('package.template.json', 'package.json') // Switch to real file
+          await showProgress('Resolving project configurations', 1000)
+        }
+
+        // 3. Setup .env
         if (fs.existsSync('.env.example')) {
           fs.copyFileSync('.env.example', '.env')
           await showProgress('Configuring environment variables', 1500)
         }
 
-        // 3. Final Success UI
+        // 4. Cleanup (Remove internal setup files from the cloned project)
+        try {
+          // This keeps the project clean for the user
+          fs.rmSync('bin', { recursive: true, force: true })
+        } catch {
+          // Ignore cleanup errors
+        }
+
+        // 5. Final Success UI
         log('\n' + '━'.repeat(50))
         success('ALL DONE! PROJECT READY')
         log('━'.repeat(50))
