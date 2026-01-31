@@ -50,7 +50,8 @@ function showProgress(message, duration = 2000) {
 
 async function setup() {
   log('\n' + '━'.repeat(50))
-  info('KELAS VIBE CODING - PAYLOAD BASE SETUP')
+  // Red color for the title
+  log('\x1b[31m   KELAS VIBE CODING - PAYLOAD BASE SETUP\x1b[0m')
   log('━'.repeat(50) + '\n')
 
   rl.question('Enter your Project Name: ', (projectName) => {
