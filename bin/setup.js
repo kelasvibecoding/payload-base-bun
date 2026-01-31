@@ -21,22 +21,31 @@ const success = (msg) => console.log(`\x1b[32m${msg}\x1b[0m`)
 const info = (msg) => console.log(`\x1b[34m${msg}\x1b[0m`)
 
 /**
- * Visual Progress Spinner
+ * Visual Progress Bar
  */
 function showProgress(message, duration = 2000) {
   return new Promise((resolve) => {
-    const symbols = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
-    let i = 0
+    const width = 30;
+    let percent = 0;
+    
+    // Initial render
+    process.stdout.write(`${message}...\n`);
+    
     const interval = setInterval(() => {
-      process.stdout.write(`\r\x1b[36m${symbols[i++ % symbols.length]}\x1b[0m ${message}...`)
-    }, 100)
-
-    setTimeout(() => {
-      clearInterval(interval)
-      process.stdout.write(`\r\x1b[32m✔\x1b[0m ${message} Complete!\n`)
-      resolve()
-    }, duration)
-  })
+      percent += 5;
+      const completed = Math.floor(width * (percent / 100));
+      const remaining = width - completed;
+      const bar = '█'.repeat(completed) + '░'.repeat(remaining);
+      
+      process.stdout.write(`\r\x1b[36m${bar}\x1b[0m ${percent}%`);
+      
+      if (percent >= 100) {
+        clearInterval(interval);
+        process.stdout.write('\n'); // New line after completion
+        resolve();
+      }
+    }, duration / 20);
+  });
 }
 
 async function setup() {
@@ -64,10 +73,15 @@ async function setup() {
         log(`\nInitializing project: \x1b[33m${targetDir}\x1b[0m`)
 
         // 1. Cloning
-        process.stdout.write(`\r\x1b[36m⠋\x1b[0m Cloning private repository...`)
-        execSync(`git clone --quiet ${repoUrl} ${targetDir}`, { stdio: 'pipe' })
-        process.stdout.write(`\r\x1b[32m✔\x1b[0m Cloning Repository Complete!\n`)
-
+        process.stdout.write(`\rCloning private repository...\n`)
+        execSync(`git clone --quiet ${repoUrl} ${targetDir}`, { stdio: 'inherit' }) // inherit allows git to show its own progress if needed, or we can silence it.
+        // Since we want a custom bar, we can fake it or just let git do its thing.
+        // Let's stick to the requested bar style for consistency for the POST-clone steps.
+        
+        // Simulating clone progress for consistent UI feel if cloning is fast
+        const width = 30;
+        process.stdout.write(`\r\x1b[36m${'█'.repeat(30)}\x1b[0m 100%\n`);
+        
         const projectPath = path.join(process.cwd(), targetDir)
         process.chdir(projectPath)
 
