@@ -75,9 +75,8 @@ async function setup() {
 
         // 1. Cloning
         process.stdout.write(`\rCloning private repository...\n`)
-        execSync(`git clone --quiet ${repoUrl} ${targetDir}`, { stdio: 'inherit' }) // inherit allows git to show its own progress if needed, or we can silence it.
-        // Since we want a custom bar, we can fake it or just let git do its thing.
-        // Let's stick to the requested bar style for consistency for the POST-clone steps.
+        // --depth 1 removes history (faster), but we delete .git anyway
+        execSync(`git clone --quiet --depth=1 ${repoUrl} ${targetDir}`, { stdio: 'inherit' })
         
         // Simulating clone progress for consistent UI feel if cloning is fast
         const width = 30;
@@ -86,7 +85,23 @@ async function setup() {
         const projectPath = path.join(process.cwd(), targetDir)
         process.chdir(projectPath)
 
-        // 2. Resolve Package Configuration (The Swap)
+        // 2. Remove History & Fresh Git Init
+        // Remove the cloned .git folder to wipe history
+        fs.rmSync(path.join(projectPath, '.git'), { recursive: true, force: true });
+        
+        // Initialize fresh git
+        try {
+          execSync('git init', { stdio: 'ignore' });
+          execSync('git add .', { stdio: 'ignore' });
+          // Optional: we can commit, or let the user do it. 
+          // Letting them do it feels more "theirs", but committing ensures "clean working tree".
+          // Let's commit "Initial setup" so they start clean.
+          execSync('git commit -m "feat: initial project setup"', { stdio: 'ignore' });
+        } catch (e) {
+          // Ignore if git setup fails (e.g. no git installed, rare)
+        }
+
+        // 3. Resolve Package Configuration (The Swap)
         if (fs.existsSync('package.template.json')) {
           fs.unlinkSync('package.json') // Remove tiny npx-only file
           fs.renameSync('package.template.json', 'package.json') // Switch to real file
