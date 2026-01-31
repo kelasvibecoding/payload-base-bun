@@ -12,9 +12,11 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 1. **TypeScript-First**: Always use TypeScript with proper types from Payload
 2. **Security-Critical**: Follow all security patterns, especially access control
 3. **Type Generation**: Run `generate:types` script after schema changes
-4. **Transaction Safety**: Always pass `req` to nested operations in hooks
-5. **Access Control**: Understand Local API bypasses access control by default
-6. **Access Control**: Ensure roles exist when modifiyng collection or globals with access controls
+4. **Type Usage**: Always use types from `payload-types.ts` for collections and globals. Only create custom types if the generated ones are too complicated or if unique structures are truly needed.
+5. **Transaction Safety**: Always pass `req` to nested operations in hooks
+6. **Access Control**: Understand Local API bypasses access control by default
+7. **Access Control**: Ensure roles exist when modifying collection or globals with access controls
+8. **Server Components by Default**: In Payload 3.0 / Next.js App Router, always treat main `Page` files as Server Components. Only use `'use client'` for specific interactive sub-components.
 
 ### Code Validation
 

@@ -30,8 +30,8 @@ Expert toolkit for fullstack development using Payload CMS 3.0, Next.js, and mod
 - **Hooks & Access**: Implement business logic in lifecycle hooks and security in access control functions.
 
 ### 2. Next.js App Router Patterns
-- **Server Components**: Use by default for data fetching and static rendering.
-- **Client Components**: Use only for interactivity, state, and browser APIs.
+- **Server Components (RSC)**: Use by default for data fetching and static rendering. **Main Page files (`page.tsx`) MUST be Server Components.** This keeps sensitive logic (like Payload Local API calls) secure and reduces the client bundle size.
+- **Client Components**: Use only for specific interactive parts like filters, buttons, charts, or browser-only APIs. Always use the `'use client'` directive at the smallest possible component level.
 - **Server Actions**: Leverage for data mutations from the frontend.
 
 ### 3. Design System (Shadcn + Tailwind)
