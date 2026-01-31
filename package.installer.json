@@ -1,0 +1,14 @@
+{
+  "name": "@kelasvibecoding/payload-base",
+  "version": "1.0.6",
+  "description": "Installer for Payload Base Template",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "payload-base": "./bin/setup.js"
+  },
+  "scripts": {
+    "dev:mode": "node scripts/switch-mode.js dev",
+    "ship:mode": "node scripts/switch-mode.js ship"
+  }
+}
