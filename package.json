@@ -1,33 +1,10 @@
 {
   "name": "@kelasvibecoding/payload-base",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Installer for Payload Base Template",
   "license": "MIT",
   "type": "module",
   "bin": {
     "payload-base": "./bin/setup.js"
-  },
-  "scripts": {
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
-    "format": "prettier --write .",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,css,scss}": [
-      "prettier --write"
-    ]
-  },
-  "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "eslint": "^9.16.0",
-    "prettier": "^3.4.2",
-    "cross-env": "^7.0.3"
   }
 }
