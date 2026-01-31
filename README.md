@@ -103,4 +103,4 @@ python .agent/skills/ui-ux-stack/scripts/search.py "saas dashboard fintech" --st
 
 ## 📄 License
 
-MIT © [Your Name/Org]
+MIT © [Kelas Vibe Coding]

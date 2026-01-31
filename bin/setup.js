@@ -103,6 +103,8 @@ async function setup() {
         try {
           // This keeps the project clean for the user
           fs.rmSync('bin', { recursive: true, force: true })
+          fs.rmSync('scripts', { recursive: true, force: true }) // Remove dev scripts
+          fs.rmSync('package.installer.json', { force: true })   // Remove potential backups
         } catch {
           // Ignore cleanup errors
         }
