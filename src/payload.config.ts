@@ -18,6 +18,7 @@ dns.setDefaultResultOrder('verbatim')
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
+import { ContactRequests } from './collections/ContactRequests'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -39,7 +40,7 @@ export default buildConfig({
       titleSuffix: '- Payload Base Admin',
     },
   },
-  collections: [Users, Media, Posts],
+  collections: [Users, Media, Posts, ContactRequests],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '864a8383b7ed11af189db510',
   typescript: {

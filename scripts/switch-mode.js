@@ -13,24 +13,42 @@ const installerPath = path.join(rootDir, 'package.installer.json'); // We will s
 
 if (mode === 'dev') {
   if (!fs.existsSync(installerPath) && fs.existsSync(pkgPath)) {
-    // Save the current tiny package.json as installer backup if not exists
     console.log('📦 Backing up installer config to package.installer.json');
     fs.copyFileSync(pkgPath, installerPath);
   }
   
   if (fs.existsSync(templatePath)) {
-    console.log('🚀 Switching to DEV MODE (Restoring full package.json)...');
-    fs.copyFileSync(templatePath, pkgPath);
+    console.log('🚀 Switching to DEV MODE...');
+    // Read the Clean Template
+    const template = JSON.parse(fs.readFileSync(templatePath, 'utf-8'));
+    
+    // Inject Maintenance Scripts (For YOU only)
+    template.scripts = {
+      ...template.scripts,
+      "dev:mode": "node scripts/switch-mode.js dev",
+      "ship:mode": "node scripts/switch-mode.js ship"
+    };
+
+    // Write to package.json
+    fs.writeFileSync(pkgPath, JSON.stringify(template, null, 2));
     console.log('✅ Ready! Run "pnpm install" to get started.');
   } else {
     console.error('❌ Error: package.template.json not found!');
   }
 
 } else if (mode === 'ship') {
-  // First, update the template with latest changes from package.json (if any deps changed)
+  // Sync changes back to template (BUT clean up our maintenance scripts first)
   if (fs.existsSync(pkgPath)) {
     console.log('💾 Syncing current package.json to package.template.json...');
-    fs.copyFileSync(pkgPath, templatePath);
+    const currentPkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+    
+    // Remove Maintenance Scripts before saving to template
+    if (currentPkg.scripts) {
+      delete currentPkg.scripts['dev:mode'];
+      delete currentPkg.scripts['ship:mode'];
+    }
+    
+    fs.writeFileSync(templatePath, JSON.stringify(currentPkg, null, 2));
   }
 
   if (fs.existsSync(installerPath)) {
