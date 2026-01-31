@@ -6,5 +6,9 @@
   "type": "module",
   "bin": {
     "payload-base": "./bin/setup.js"
+  },
+  "scripts": {
+    "dev:mode": "node scripts/switch-mode.js dev",
+    "ship:mode": "node scripts/switch-mode.js ship"
   }
 }
