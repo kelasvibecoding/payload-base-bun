@@ -43,7 +43,9 @@ To clone this private repository, you will need an **Access Key** (GitHub Person
 npx github:kelasvibecoding/payload-base
 ```
 
-_The script will prompt for your Access Key, clone the repo, and setup your `.env`._
+_The script will prompt for your **Project Name** first, then your **Access Key**. It will handle cloning and `.env` setup._
+
+> **Tip for a Clean Install**: If you see `npm warnings` during the initial `npx` command, don't worry! This is just `npm` checking the template dependencies. The setup script will run perfectly once the prompts appear.
 
 **Option B: Manual Clone**
 

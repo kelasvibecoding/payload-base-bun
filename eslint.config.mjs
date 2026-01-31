@@ -41,6 +41,9 @@ export default defineConfig([
       globals: {
         process: 'readonly',
         console: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        setTimeout: 'readonly',
         module: 'readonly',
         require: 'readonly',
         __dirname: 'readonly',
