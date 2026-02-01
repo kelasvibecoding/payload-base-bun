@@ -1,7 +1,8 @@
 ---
 title: Queries
+trigger: always_on
+glob: "src/**/*.{ts,tsx}"
 description: Local API, REST, and GraphQL query patterns
-tags: [payload, queries, local-api, rest, graphql]
 ---
 
 # Payload CMS Queries

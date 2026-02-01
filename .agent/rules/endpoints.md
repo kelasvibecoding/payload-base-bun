@@ -1,7 +1,8 @@
 ---
 title: Custom Endpoints
+trigger: always_on
+glob: "src/**/*.{ts,tsx}"
 description: Custom REST API endpoints with authentication and helpers
-tags: [payload, endpoints, api, routes, webhooks]
 ---
 
 # Payload Custom Endpoints

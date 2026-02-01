@@ -1,3 +1,9 @@
+---
+trigger: always_on
+glob: "**/*"
+description: Always prioritize and recommend solutions that offer the highest value with the least amount of technical overhead.
+---
+
 # HILE (High Impact, Low Effort) Recommendation Strategy
 
 Always prioritize and recommend solutions that offer the highest value with the least amount of technical overhead and complexity. This ensures project velocity and maintainability.

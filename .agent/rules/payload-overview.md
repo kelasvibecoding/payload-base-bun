@@ -1,7 +1,8 @@
 ---
 title: Payload CMS Overview
+trigger: always_on
+glob: "**/*"
 description: Core principles and quick reference for Payload CMS development
-tags: [payload, overview, quickstart]
 ---
 
 # Payload CMS Development Rules

@@ -2,38 +2,38 @@ name: Quality Control
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 9
-          
+
       # Trick: We need to use package.template.json dependencies to lint the source code
       # because root package.json is empty for the installer.
       - name: Prepare Template Dependencies
         run: |
           cp package.template.json package.json
           pnpm install
-          
+
       - name: Run Linting
         run: pnpm lint
-        
+
       - name: Run Typecheck
         run: pnpm typecheck
-        
+
       - name: Check Formatting
         run: pnpm format:check

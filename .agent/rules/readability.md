@@ -1,3 +1,9 @@
+---
+trigger: always_on
+glob: "**/*"
+description: Apply readability rules strictly to ensure high maintainability and clarity.
+---
+
 # Coding Standards: Readability & Naming
 
 Apply these rules strictly when generating or modifying code to ensure high maintainability and clarity.

@@ -1,7 +1,8 @@
 ---
 title: Plugin Development
+trigger: always_on
+glob: "src/**/*.ts"
 description: Creating Payload CMS plugins with TypeScript patterns
-tags: [payload, plugins, architecture, patterns]
 ---
 
 # Payload Plugin Development

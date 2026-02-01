@@ -1,7 +1,8 @@
 ---
 title: Fields
+trigger: always_on
+glob: "{src/collections/**/*.ts,src/globals/**/*.ts}"
 description: Field types, patterns, and configurations
-tags: [payload, fields, validation, conditional]
 ---
 
 # Payload CMS Fields

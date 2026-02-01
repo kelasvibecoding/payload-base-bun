@@ -1,8 +1,8 @@
 ---
 title: Access Control - Advanced Patterns
+trigger: always_on
+glob: "src/**/*.{ts,tsx}"
 description: Context-aware, time-based, subscription-based access, factory functions, templates
-tags: [payload, access-control, security, advanced, performance]
-priority: high
 ---
 
 # Advanced Access Control Patterns

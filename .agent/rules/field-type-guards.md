@@ -1,7 +1,8 @@
 ---
 title: Field Type Guards
+trigger: always_on
+glob: "src/**/*.ts"
 description: Runtime field type checking and safe type narrowing
-tags: [payload, typescript, type-guards, fields]
 ---
 
 # Payload Field Type Guards

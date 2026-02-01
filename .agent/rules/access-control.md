@@ -1,7 +1,8 @@
 ---
 title: Access Control
+trigger: always_on
+glob: "src/**/*.{ts,tsx}"
 description: Collection, field, and global access control patterns
-tags: [payload, access-control, security, permissions, rbac]
 ---
 
 # Payload CMS Access Control

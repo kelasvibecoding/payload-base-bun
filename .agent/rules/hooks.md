@@ -1,7 +1,8 @@
 ---
 title: Hooks
+trigger: always_on
+glob: "src/**/*.{ts,tsx}"
 description: Collection hooks, field hooks, and context patterns
-tags: [payload, hooks, lifecycle, context]
 ---
 
 # Payload CMS Hooks

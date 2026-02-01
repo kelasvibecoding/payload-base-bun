@@ -1,8 +1,8 @@
 ---
 title: Critical Security Patterns
+trigger: always_on
+glob: "**/*"
 description: The three most important security patterns in Payload CMS
-tags: [payload, security, critical, access-control, transactions, hooks]
-priority: high
 ---
 
 # CRITICAL SECURITY PATTERNS

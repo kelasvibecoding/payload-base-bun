@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { fadeIn } from '@/lib/motions'
 
@@ -65,6 +66,14 @@ export function HeroSection({
           <a href="https://payloadcms.com/docs" target="_blank" rel="noopener noreferrer">
             Documentation
           </a>
+        </Button>
+        <Button
+          variant="secondary"
+          size="lg"
+          className="h-11 px-8 text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+          asChild
+        >
+          <Link href="/contact">Contact Us</Link>
         </Button>
       </motion.div>
     </div>

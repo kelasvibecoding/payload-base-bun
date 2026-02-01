@@ -1,3 +1,9 @@
+---
+trigger: always_on
+glob: "**/*"
+description: "Enforce the KISS (Keep It Simple, Stupid) principle across the codebase."
+---
+
 # KISS Principle (Keep It Simple, Stupid)
 
 Apply the KISS principle to all aspects of software development within this project to ensure simplicity, maintainability, and clarity.
@@ -19,3 +25,8 @@ Apply the KISS principle to all aspects of software development within this proj
 
 ## 5. Standard Patterns
 - Use the established patterns of the project (e.g., standard Payload hooks, standard Shadcn components) rather than introducing new paradigms without a strong justification.
+
+## 6. Balanced DRY (Don't Repeat Yourself)
+- **Avoid Premature Abstraction**: It is better to duplicate code once ("Write Everything Twice") than to create the wrong abstraction early.
+- **Rule of Three**: Only refactor into a shared function or component when you have repeated the same logic **three times**.
+- **Readability Trumps DRY**: If removing duplication requires passing too many flags or making the code harder to follow, duplication is preferred.

@@ -4,6 +4,7 @@ If you are developing **Payload Base** itself (not using it as a user), use thes
 
 1.  **Start Developing**:
     Restores the full `package.json` so you can run `pnpm install` and test locally.
+
     ```bash
     npm run dev:mode
     pnpm install
