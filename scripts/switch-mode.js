@@ -30,7 +30,7 @@ if (mode === 'dev') {
     }
 
     // Write to package.json
-    fs.writeFileSync(pkgPath, JSON.stringify(template, null, 2))
+    fs.writeFileSync(pkgPath, JSON.stringify(template, null, 2) + '\n')
     console.log('✅ Ready! Run "pnpm install" to get started.')
   } else {
     console.error('❌ Error: package.template.json not found!')
@@ -51,7 +51,7 @@ if (mode === 'dev') {
         delete currentPkg.scripts['ship:mode']
       }
 
-      fs.writeFileSync(templatePath, JSON.stringify(currentPkg, null, 2))
+      fs.writeFileSync(templatePath, JSON.stringify(currentPkg, null, 2) + '\n')
 
       // Now actually switch to ship mode
       if (fs.existsSync(installerPath)) {
@@ -75,7 +75,7 @@ if (mode === 'dev') {
             'ship:mode': 'node scripts/switch-mode.js ship',
           },
         }
-        fs.writeFileSync(pkgPath, JSON.stringify(minimal, null, 2))
+        fs.writeFileSync(pkgPath, JSON.stringify(minimal, null, 2) + '\n')
         console.log('✅ Ready to push! (Generated fresh installer config)')
       }
     } else {
