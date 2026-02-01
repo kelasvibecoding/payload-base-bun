@@ -98,7 +98,9 @@ function Calendar({
       }}
       components={{
         Root: ({ className, rootRef, ...props }) => {
-          return <div data-slot="calendar" ref={rootRef} className={cn('p-3', className)} {...props} />
+          return (
+            <div data-slot="calendar" ref={rootRef} className={cn('p-3', className)} {...props} />
+          )
         },
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
@@ -129,4 +131,3 @@ function Calendar({
 }
 
 export { Calendar }
-

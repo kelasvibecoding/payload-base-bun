@@ -6,21 +6,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ContactFormSchema, type ContactFormValues } from '../schemas'
 import { submitContactForm } from '../actions'
 import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
-import { 
-  Input, 
-  Textarea, 
-  Select, 
-  SelectItem, 
-  DatePicker, 
-  Combobox, 
-  PasswordInput 
+  Input,
+  Textarea,
+  Select,
+  SelectItem,
+  DatePicker,
+  Combobox,
+  PasswordInput,
 } from '@/components/ui/floating'
 import { toast } from 'sonner'
 
@@ -58,7 +52,10 @@ export function ContactForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto p-6 bg-card rounded-xl border shadow-sm">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="bg-card mx-auto max-w-2xl space-y-6 rounded-xl border p-6 shadow-sm"
+      >
         <div className="space-y-2">
           <h2 className="text-2xl font-bold tracking-tight">Example Floating Form</h2>
           <p className="text-muted-foreground text-sm">
@@ -66,7 +63,7 @@ export function ContactForm() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <FormField
             control={form.control}
             name="fullName"
@@ -104,11 +101,7 @@ export function ContactForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Select 
-                    label="Contact Type" 
-                    value={field.value} 
-                    onValueChange={field.onChange}
-                  >
+                  <Select label="Contact Type" value={field.value} onValueChange={field.onChange}>
                     {CONTACT_TYPE_OPTIONS.map((opt) => (
                       <SelectItem key={opt.value} value={opt.value}>
                         {opt.label}
@@ -127,10 +120,10 @@ export function ContactForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <DatePicker 
-                    label="Preferred Date" 
-                    date={field.value} 
-                    onDateChange={(date) => field.onChange(date)} 
+                  <DatePicker
+                    label="Preferred Date"
+                    date={field.value}
+                    onDateChange={(date) => field.onChange(date)}
                   />
                 </FormControl>
                 <FormMessage />
@@ -144,8 +137,8 @@ export function ContactForm() {
             render={({ field }) => (
               <FormItem className="md:col-span-2">
                 <FormControl>
-                  <Combobox 
-                    label="Interested Services" 
+                  <Combobox
+                    label="Interested Services"
                     options={[...SERVICE_OPTIONS]}
                     value={field.value}
                     onValueChange={field.onChange}
@@ -184,11 +177,11 @@ export function ContactForm() {
               return (
                 <FormItem className="md:col-span-2">
                   <FormControl>
-                    <PasswordInput 
-                      label="Example Password" 
-                      placeholder="Enter a secret..." 
+                    <PasswordInput
+                      label="Example Password"
+                      placeholder="Enter a secret..."
                       strength={getStrength(field.value || '')}
-                      {...field} 
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -218,7 +211,11 @@ export function ContactForm() {
           />
         </div>
 
-        <Button type="submit" className="w-full h-12 text-base font-semibold" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="h-12 w-full text-base font-semibold"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? 'Sending Message...' : 'Send Message'}
         </Button>
       </form>

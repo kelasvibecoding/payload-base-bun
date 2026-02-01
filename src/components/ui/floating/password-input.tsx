@@ -29,14 +29,14 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
     const currentStrength = strength ? strengthConfig[strength] : null
 
     return (
-      <div className="space-y-3 w-full">
+      <div className="w-full space-y-3">
         <div className="relative">
           <BaseInput
             {...props}
             id={finalId}
             type={showPassword ? 'text' : 'password'}
             placeholder=" "
-            className={cn('peer h-12 pl-3 pr-10', className)}
+            className={cn('peer h-12 pr-10 pl-3', className)}
             ref={ref}
           />
           <FloatingLabel htmlFor={finalId} id={finalId}>
@@ -46,7 +46,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             type="button"
             variant="ghost"
             size="sm"
-            className="absolute right-0 top-0 h-12 px-3 py-2 hover:bg-transparent text-muted-foreground transition-colors"
+            className="text-muted-foreground absolute top-0 right-0 h-12 px-3 py-2 transition-colors hover:bg-transparent"
             onClick={() => setShowPassword((prev) => !prev)}
             tabIndex={-1}
           >
@@ -58,23 +58,26 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
             <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
           </Button>
         </div>
-        
+
         {currentStrength && (
-          <div className="px-1 space-y-2">
-            <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-              <div 
+          <div className="space-y-2 px-1">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-100">
+              <div
                 className={cn(
-                  "h-full transition-all duration-500 ease-in-out",
+                  'h-full transition-all duration-500 ease-in-out',
                   currentStrength.color,
-                  currentStrength.width
-                )} 
+                  currentStrength.width,
+                )}
               />
             </div>
-            <p className={cn("text-[11px] font-semibold uppercase tracking-widest transition-colors duration-300", 
-              strength === 'low' && "text-red-500",
-              strength === 'medium' && "text-yellow-600",
-              strength === 'high' && "text-green-600"
-            )}>
+            <p
+              className={cn(
+                'text-[11px] font-semibold tracking-widest uppercase transition-colors duration-300',
+                strength === 'low' && 'text-red-500',
+                strength === 'medium' && 'text-yellow-600',
+                strength === 'high' && 'text-green-600',
+              )}
+            >
               {currentStrength.label}
             </p>
           </div>

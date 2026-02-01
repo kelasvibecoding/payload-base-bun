@@ -93,7 +93,7 @@ async function setup() {
           info('\n🚀 Injecting Agent Ability into current codebase...')
           process.stdout.write(`\rCloning source...`)
           execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
-          
+
           await showProgress('Merging Agent configurations', 1500)
 
           const agentSrc = path.join(tempDir, '.agent')
@@ -116,7 +116,7 @@ async function setup() {
         } finally {
           rl.close()
         }
-      }
+      },
     )
     return
   }
@@ -131,7 +131,7 @@ async function setup() {
     }
 
     const startSetup = async (token = null) => {
-      const repoUrl = token 
+      const repoUrl = token
         ? `https://${token}@github.com/kelasvibecoding/payload-base.git`
         : `https://github.com/kelasvibecoding/payload-base.git`
 
@@ -169,6 +169,8 @@ async function setup() {
           fs.rmSync('bin', { recursive: true, force: true })
           fs.rmSync('scripts', { recursive: true, force: true })
           fs.rmSync('package.installer.json', { force: true })
+
+          fs.rmSync('.github', { recursive: true, force: true })
 
           if (!keepAbilities) {
             await showProgress('Removing Agent-specific configurations', 1000)
@@ -210,7 +212,7 @@ async function setup() {
             process.exit(1)
           }
           await startSetup(token)
-        }
+        },
       )
     } else {
       await startSetup()

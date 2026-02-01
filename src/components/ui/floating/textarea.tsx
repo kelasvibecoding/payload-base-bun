@@ -8,42 +8,45 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   showCount?: boolean
 }
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({ id, label, className, showCount, maxLength, value, ...props }, ref) => {
-  const generatedId = React.useId()
-  const finalId = id || generatedId
-  
-  const currentCount = React.useMemo(() => {
-    if (typeof value === 'string') return value.length
-    if (typeof value === 'number') return value.toString().length
-    return 0
-  }, [value])
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ id, label, className, showCount, maxLength, value, ...props }, ref) => {
+    const generatedId = React.useId()
+    const finalId = id || generatedId
 
-  return (
-    <div className="relative space-y-1.5 w-full">
-      <div className="relative">
-        <BaseTextarea 
-          {...props} 
-          id={finalId} 
-          value={value}
-          maxLength={maxLength}
-          placeholder=" " 
-          className={cn('peer min-h-[120px] px-3 py-3', className)} 
-          ref={ref} 
-        />
-        <FloatingLabel htmlFor={finalId} id={finalId} className="top-6">
-          {label}
-        </FloatingLabel>
-      </div>
-      {(showCount || maxLength) && (
-        <div className="flex justify-end px-1">
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-widest">
-            {currentCount}{maxLength ? ` / ${maxLength}` : ''} Characters
-          </p>
+    const currentCount = React.useMemo(() => {
+      if (typeof value === 'string') return value.length
+      if (typeof value === 'number') return value.toString().length
+      return 0
+    }, [value])
+
+    return (
+      <div className="relative w-full space-y-1.5">
+        <div className="relative">
+          <BaseTextarea
+            {...props}
+            id={finalId}
+            value={value}
+            maxLength={maxLength}
+            placeholder=" "
+            className={cn('peer min-h-[120px] px-3 py-3', className)}
+            ref={ref}
+          />
+          <FloatingLabel htmlFor={finalId} id={finalId} className="top-6">
+            {label}
+          </FloatingLabel>
         </div>
-      )}
-    </div>
-  )
-})
+        {(showCount || maxLength) && (
+          <div className="flex justify-end px-1">
+            <p className="text-muted-foreground text-[11px] font-semibold tracking-widest uppercase">
+              {currentCount}
+              {maxLength ? ` / ${maxLength}` : ''} Characters
+            </p>
+          </div>
+        )}
+      </div>
+    )
+  },
+)
 Textarea.displayName = 'Textarea'
 
 export { Textarea }

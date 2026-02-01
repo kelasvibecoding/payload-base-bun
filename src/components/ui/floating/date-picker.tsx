@@ -33,21 +33,25 @@ export function DatePicker({
   const isActive = isOpen || Boolean(date)
 
   return (
-    <div className={cn('relative w-full group', className)}>
+    <div className={cn('group relative w-full', className)}>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <Button
             id={finalId}
             variant={'outline'}
             className={cn(
-              'peer relative flex h-12 w-full items-center justify-start rounded-md border border-input bg-background px-3 py-2 text-left text-sm font-normal ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all',
+              'peer border-input bg-background ring-offset-background focus-visible:ring-ring relative flex h-12 w-full items-center justify-start rounded-md border px-3 py-2 text-left text-sm font-normal transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
               !date && 'text-muted-foreground',
             )}
           >
-            <div className="flex items-center gap-2 overflow-hidden truncate">
-              {date ? format(date, 'PPP') : <span className="opacity-0">{placeholder || 'Pick a date'}</span>}
+            <div className="flex items-center gap-2 truncate overflow-hidden">
+              {date ? (
+                format(date, 'PPP')
+              ) : (
+                <span className="opacity-0">{placeholder || 'Pick a date'}</span>
+              )}
             </div>
-            <CalendarIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50 pointer-events-none" />
+            <CalendarIcon className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" align="start">
@@ -69,7 +73,7 @@ export function DatePicker({
           'transition-all duration-300',
           isActive
             ? 'top-2 -translate-y-4 scale-75 text-gray-500'
-            : 'peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 top-1/2 -translate-y-1/2 scale-100 text-gray-500',
+            : 'top-1/2 -translate-y-1/2 scale-100 text-gray-500 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75',
           isOpen && 'text-foreground font-medium',
         )}
       >

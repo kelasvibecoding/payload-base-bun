@@ -1,7 +1,7 @@
 import { extractValues, type Option } from '@/lib/schemas/utils'
 import { ContactRequest } from '../../payload-types'
 
-// These types ensure that if you add something here that isn't in Payload, 
+// These types ensure that if you add something here that isn't in Payload,
 // TypeScript will stop you.
 type ContactType = ContactRequest['contactType']
 type ServiceType = NonNullable<ContactRequest['service']>[number]
@@ -33,4 +33,3 @@ export const SERVICE_OPTIONS = [
 // Extract values as tuple for Zod enum (preserves literal types)
 export const CONTACT_TYPE_VALUES = extractValues(CONTACT_TYPE_OPTIONS)
 export const SERVICE_VALUES = extractValues(SERVICE_OPTIONS)
-

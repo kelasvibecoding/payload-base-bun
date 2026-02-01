@@ -90,7 +90,7 @@ export function Combobox({
   const isActive = open || hasValue
 
   return (
-    <div className={cn('relative w-full group', className)}>
+    <div className={cn('group relative w-full', className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -99,13 +99,13 @@ export function Combobox({
             role="combobox"
             aria-expanded={open}
             className={cn(
-              'peer flex h-12 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-left text-sm font-normal ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all',
+              'peer border-input bg-background ring-offset-background focus:ring-ring flex h-12 w-full items-center justify-between rounded-md border px-3 py-2 text-left text-sm font-normal transition-all focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
             )}
           >
-            <div className="flex items-center gap-1.5 max-w-[90%] overflow-hidden">
+            <div className="flex max-w-[90%] items-center gap-1.5 overflow-hidden">
               {hasValue ? (
                 multiple ? (
-                  <div className="flex items-center gap-1.5 flex-nowrap overflow-hidden">
+                  <div className="flex flex-nowrap items-center gap-1.5 overflow-hidden">
                     {((value as string[]) || []).slice(0, 2).map((v) => {
                       const option = options.find((o) => o.value === v)
                       if (!option) return null
@@ -113,13 +113,13 @@ export function Combobox({
                         <Badge
                           key={v}
                           variant="secondary"
-                          className="rounded-sm px-2 py-0.5 font-normal shrink-0"
+                          className="shrink-0 rounded-sm px-2 py-0.5 font-normal"
                         >
                           {option.label}
                           <span
                             role="button"
                             tabIndex={0}
-                            className="ml-1.5 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
+                            className="ring-offset-background focus:ring-ring ml-1.5 cursor-pointer rounded-full outline-none focus:ring-2 focus:ring-offset-2"
                             onKeyDown={(e) => {
                               if (e.key === 'Enter' || e.key === ' ') {
                                 e.preventDefault()
@@ -137,13 +137,16 @@ export function Combobox({
                               handleSelect(v)
                             }}
                           >
-                            <X className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                            <X className="text-muted-foreground hover:text-foreground h-3.5 w-3.5" />
                           </span>
                         </Badge>
                       )
                     })}
                     {((value as string[]) || []).length > 2 && (
-                      <Badge variant="secondary" className="rounded-sm px-2 py-0.5 font-normal shrink-0">
+                      <Badge
+                        variant="secondary"
+                        className="shrink-0 rounded-sm px-2 py-0.5 font-normal"
+                      >
                         + {((value as string[]) || []).length - 2} more
                       </Badge>
                     )}
@@ -188,9 +191,9 @@ export function Combobox({
         id={`${finalId}-label`}
         htmlFor={finalId}
         className={cn(
-          isActive 
-            ? 'top-2 -translate-y-4 scale-75 text-gray-500' 
-            : 'peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 top-1/2 -translate-y-1/2 scale-100 text-gray-500',
+          isActive
+            ? 'top-2 -translate-y-4 scale-75 text-gray-500'
+            : 'top-1/2 -translate-y-1/2 scale-100 text-gray-500 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75',
           open && 'text-foreground font-medium',
         )}
       >
