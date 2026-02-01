@@ -2,10 +2,9 @@
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { ContactFormSchema } from './schemas'
-import { z } from 'zod'
+import { ContactFormSchema, type ContactFormValues } from './schemas'
 
-export async function submitContactForm(data: z.infer<typeof ContactFormSchema>) {
+export async function submitContactForm(data: ContactFormValues) {
   const result = ContactFormSchema.safeParse(data)
 
   if (!result.success) {
@@ -20,7 +19,7 @@ export async function submitContactForm(data: z.infer<typeof ContactFormSchema>)
       data: {
         ...result.data,
         preferredDate: result.data.preferredDate?.toISOString(),
-      } as any,
+      } as Omit<typeof result.data, 'preferredDate'> & { preferredDate?: string },
     })
 
     return { success: true, message: 'Message sent successfully!' }

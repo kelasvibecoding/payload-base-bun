@@ -3,7 +3,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ContactFormSchema, ContactFormValues } from '../schemas'
+import { ContactFormSchema, type ContactFormValues } from '../schemas'
 import { submitContactForm } from '../actions'
 import { Button } from '@/components/ui/button'
 import {
@@ -28,7 +28,7 @@ import { SERVICE_OPTIONS, CONTACT_TYPE_OPTIONS } from '../constants'
 
 export function ContactForm() {
   const form = useForm<ContactFormValues>({
-    resolver: zodResolver(ContactFormSchema) as any,
+    resolver: zodResolver(ContactFormSchema),
     defaultValues: {
       fullName: '',
       email: '',
@@ -146,8 +146,8 @@ export function ContactForm() {
                 <FormControl>
                   <Combobox 
                     label="Interested Services" 
-                    options={SERVICE_OPTIONS}
-                    value={field.value as string[]}
+                    options={[...SERVICE_OPTIONS]}
+                    value={field.value}
                     onValueChange={field.onChange}
                     multiple
                   />

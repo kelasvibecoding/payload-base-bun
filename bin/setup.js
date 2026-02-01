@@ -150,7 +150,9 @@ async function setup() {
           execSync('git init', { stdio: 'ignore' })
           execSync('git add .', { stdio: 'ignore' })
           execSync('git commit -m "feat: initial project setup"', { stdio: 'ignore' })
-        } catch (e) {}
+        } catch {
+          // Git operations may fail if git is not properly configured - this is non-critical
+        }
 
         if (fs.existsSync('package.template.json')) {
           fs.unlinkSync('package.json')
@@ -173,7 +175,9 @@ async function setup() {
             fs.rmSync('.agent', { recursive: true, force: true })
             fs.rmSync('.cursor', { recursive: true, force: true })
           }
-        } catch {}
+        } catch {
+          // Cleanup errors are non-critical - files may not exist
+        }
 
         log('\n' + '━'.repeat(50))
         success('ALL DONE! PROJECT READY')

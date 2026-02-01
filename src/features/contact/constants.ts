@@ -1,3 +1,4 @@
+import { extractValues, type Option } from '@/lib/schemas/utils'
 import { ContactRequest } from '../../payload-types'
 
 // These types ensure that if you add something here that isn't in Payload, 
@@ -5,19 +6,14 @@ import { ContactRequest } from '../../payload-types'
 type ContactType = ContactRequest['contactType']
 type ServiceType = NonNullable<ContactRequest['service']>[number]
 
-interface Option<T> {
-  label: string
-  value: T
-}
-
-export const CONTACT_TYPE_OPTIONS: Option<ContactType>[] = [
+export const CONTACT_TYPE_OPTIONS = [
   { label: 'General Inquiry', value: 'general' },
   { label: 'Support', value: 'support' },
   { label: 'Sales', value: 'sales' },
   { label: 'Other', value: 'other' },
-]
+] as const satisfies readonly Option<ContactType>[]
 
-export const SERVICE_OPTIONS: Option<ServiceType>[] = [
+export const SERVICE_OPTIONS = [
   { label: 'Web Development', value: 'web-dev' },
   { label: 'Mobile App Development', value: 'mobile-dev' },
   { label: 'IOS Application Development', value: 'ios-app-dev' },
@@ -32,4 +28,9 @@ export const SERVICE_OPTIONS: Option<ServiceType>[] = [
   { label: 'E-commerce Development', value: 'ecommerce-dev' },
   { label: 'CRM Development', value: 'crm-dev' },
   { label: 'ERP Development', value: 'erp-dev' },
-]
+] as const satisfies readonly Option<ServiceType>[]
+
+// Extract values as tuple for Zod enum (preserves literal types)
+export const CONTACT_TYPE_VALUES = extractValues(CONTACT_TYPE_OPTIONS)
+export const SERVICE_VALUES = extractValues(SERVICE_OPTIONS)
+
