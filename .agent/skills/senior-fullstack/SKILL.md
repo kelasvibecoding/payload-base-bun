@@ -39,6 +39,12 @@ Expert toolkit for fullstack development using Payload CMS 3.0, Next.js, and mod
 - **Theme-Aware**: Use Tailwind's dark mode and CSS variables for consistent styling.
 - **Responsive**: Mobile-first design using Tailwind utility classes.
 
+### 4. Distinctive Frontend Design
+- **Anti-Generic**: Avoid "AI slop" aesthetics (e.g., Inter font, purple gradients on white).
+- **Aesthetic Intent**: Commit to a bold, intentional aesthetic direction (Editorial, Brutalist, Retro-Futuristic, etc.) for every project.
+- **Visual Texture**: Use grain, noise, and gradient meshes instead of flat backgrounds.
+- **Micro-interactions**: Implement high-impact motion and staggered reveals.
+
 ## Project Structure
 
 ```

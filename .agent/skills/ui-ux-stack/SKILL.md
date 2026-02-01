@@ -16,10 +16,11 @@ Simply ask questions related to design, UI/UX, or frontend implementation.
 
 ## Core Design Philosophy (Payload Ecosystem)
 
-### 1. Unified Aesthetic
-Your design should feel cohesive between the **Payload Admin Panel** and the **Custom Frontend**.
-- **Admin Consistency**: Use deep, rich grays (Slate/Zinc) and consistent border radiuses matching the Admin UI.
-- **Glassmorphism**: Use for overlays and navigation to maintain a premium "modern SaaS" feel.
+### 1. Unified Aesthetic & Intentionality
+Your design should feel cohesive between the **Payload Admin Panel** and the **Custom Frontend**, but avoid "generic SaaS" aesthetics.
+- **Aesthetic Intentionality**: Before coding, commit to a bold direction from the [Theme Profiles](./theme-profiles.md) (e.g., Editorial, Brutalist, Tech Innovation).
+- **Admin Consistency**: Use deep, rich grays (Slate/Zinc) and consistent border radiuses matching the Admin UI for internal tools.
+- **Visual Texture**: Avoid solid flat backgrounds. Use grain overlays, noise, or gradient meshes to create depth.
 - **Dynamic Response**: Implement micro-interactions (hover states, spring animations) that feel alive.
 
 ### 2. Shadcn-First Implementation
@@ -108,14 +109,17 @@ python3 .agent/skills/ui-ux-stack/scripts/search.py "suspense caching image" --s
 | Domain | Use For |
 |--------|---------|
 | `ux` | Best practices for accessibility, animation, and loading states |
-| `style` | UI styles, colors, and visual effects (glassmorphism, etc.) |
+| `style` | UI styles, colors, and visual effects (glassmorphism, meshes, grain) |
+| `anti-slop` | Rules to avoid generic AI aesthetics and ensure distinctive design |
 | `product` | Industry-specific product recommendations |
-| `typography` | Font pairings and Google Font recommendations |
+| `typography` | Distinctive font pairings (no Inter/Arial) |
 | `color` | Curated color palettes by product type |
 
 ## Pre-Delivery Checklist (Payload Specific)
 
 ### Visual & Semantic Quality
+- [ ] **Anti-Slop Check**: No generic fonts (Inter/Roboto), no plain purple gradients on white.
+- [ ] **Aesthetic Intent**: Is the design committed to a specific tone (e.g., Editorial, Brutalist)?
 - [ ] Uses Shadcn UI primitives where applicable.
 - [ ] No emojis as icons (use Lucide/SVG).
 - [ ] All images optimized via `formatOptions: { format: 'webp' }`.

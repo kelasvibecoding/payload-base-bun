@@ -36,43 +36,51 @@ if (mode === 'dev') {
     console.error('❌ Error: package.template.json not found!')
   }
 } else if (mode === 'ship') {
-  // Sync changes back to template (BUT clean up our maintenance scripts first)
   if (fs.existsSync(pkgPath)) {
-    console.log('💾 Syncing current package.json to package.template.json...')
     const currentPkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 
-    // Remove Maintenance Scripts before saving to template
-    if (currentPkg.scripts) {
-      delete currentPkg.scripts['dev:mode']
-      delete currentPkg.scripts['ship:mode']
-    }
+    // CRITICAL: Only sync to template if this is NOT the tiny installer version
+    // The installer version has no dependencies (or very few, but definitely not the full project)
+    const isTiny = !currentPkg.dependencies || Object.keys(currentPkg.dependencies).length === 0
+    if (!isTiny) {
+      console.log('💾 Syncing current package.json to package.installer.json...')
 
-    fs.writeFileSync(templatePath, JSON.stringify(currentPkg, null, 2))
-  }
+      // Remove Maintenance Scripts before saving to template
+      if (currentPkg.scripts) {
+        delete currentPkg.scripts['dev:mode']
+        delete currentPkg.scripts['ship:mode']
+      }
 
-  if (fs.existsSync(installerPath)) {
-    console.log('🚢 Switching to SHIP MODE (Restoring tiny installer package.json)...')
-    fs.copyFileSync(installerPath, pkgPath)
-    console.log('✅ Ready to push!')
-  } else {
-    // Fallback if backup missing - recreate minimal
-    console.log('⚠️ Installer backup missing. Creating fresh minimal package.json...')
-    const minimal = {
-      name: '@kelasvibecoding/payload-base',
-      version: '1.0.6',
-      description: 'Installer for Payload Base Template',
-      license: 'MIT',
-      type: 'module',
-      bin: {
-        'payload-base': './bin/setup.js',
-      },
-      scripts: {
-        'dev:mode': 'node scripts/switch-mode.js dev',
-        'ship:mode': 'node scripts/switch-mode.js ship',
-      },
+      fs.writeFileSync(templatePath, JSON.stringify(currentPkg, null, 2))
+
+      // Now actually switch to ship mode
+      if (fs.existsSync(installerPath)) {
+        console.log('🚢 Switching to SHIP MODE (Restoring tiny installer package.json)...')
+        fs.copyFileSync(installerPath, pkgPath)
+        console.log('✅ Ready to push!')
+      } else {
+        // Fallback if backup missing - recreate minimal
+        console.log('⚠️ Installer backup missing. Creating fresh minimal package.json...')
+        const minimal = {
+          name: '@kelasvibecoding/payload-base',
+          version: '1.0.6',
+          description: 'Installer for Payload Base Template',
+          license: 'MIT',
+          type: 'module',
+          bin: {
+            'payload-base': './bin/setup.js',
+          },
+          scripts: {
+            'dev:mode': 'node scripts/switch-mode.js dev',
+            'ship:mode': 'node scripts/switch-mode.js ship',
+          },
+        }
+        fs.writeFileSync(pkgPath, JSON.stringify(minimal, null, 2))
+        console.log('✅ Ready to push! (Generated fresh installer config)')
+      }
+    } else {
+      console.log('✅ Already in SHIP MODE. Everything is ready for push.')
     }
-    fs.writeFileSync(pkgPath, JSON.stringify(minimal, null, 2))
-    console.log('✅ Ready to push! (Generated fresh installer config)')
   }
 } else {
   console.log('Usage: node scripts/switch-mode.js [dev|ship]')
