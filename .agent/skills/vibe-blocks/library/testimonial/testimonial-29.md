@@ -1,0 +1,148 @@
+# Testimonial 29
+
+## Metadata
+- **Category**: Testimonial
+- **Objective**: General Testimonial
+- **Use Case**: Visual Testimonial browsing.
+- **Visual Style**: Clean layout.
+- **Interactivity**: Primary actions.
+
+## Description
+A social proof component designed to display customer feedback, quotes, and attribution through professional layouts.
+
+## Source Code
+```tsx
+import { Button } from '@/components/ui';
+import type { ButtonProps } from '@/components/ui';
+import { ChevronRight } from 'lucide-react';
+
+type ImageProps = {
+  src: string;
+  alt?: string;
+};
+
+type Testimonial = {
+  logo: ImageProps;
+  quote: string;
+  avatar: ImageProps;
+  name: string;
+  position: string;
+  companyName: string;
+  button: ButtonProps;
+};
+
+type Props = {
+  heading: string;
+  description: string;
+  testimonials: Testimonial[];
+};
+
+export type Testimonial29Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
+
+export const Testimonial29 = (props: Testimonial29Props) => {
+  const { heading, description, testimonials } = {
+    ...Testimonial29Defaults,
+    ...props,
+  };
+  return (
+    <section className="px-[5%] py-16 md:py-24 lg:py-28">
+      <div className="container">
+        <div className="rb-12 mb-12 md:mb-18 lg:mb-20">
+          <h2 className="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">
+            {heading}
+          </h2>
+          <p className="md:text-md">{description}</p>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard key={index} testimonial={testimonial} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
+  return (
+    <div className="flex w-full flex-col items-start justify-between border border-border-primary p-6 md:p-8">
+      <div className="rb-5 mb-5 md:mb-6">
+        <div className="rb-12 mb-12">
+          <img src={testimonial.logo.src} alt={testimonial.logo.alt} className="max-h-12" />
+        </div>
+        <blockquote className="md:text-md">{testimonial.quote}</blockquote>
+      </div>
+      <div className="flex w-full flex-col items-start gap-4 md:w-auto md:flex-row md:items-center">
+        <img
+          src={testimonial.avatar.src}
+          alt={testimonial.avatar.alt}
+ className="size-12 min-h-12 min-w-12 rounded-full object-cover"
+        />
+        <div>
+          <p className="font-semibold">{testimonial.name}</p>
+          <p>
+            <span>{testimonial.position}</span>, <span>{testimonial.companyName}</span>
+          </p>
+        </div>
+      </div>
+      <div className="mt-6 md:mt-8">
+        <Button className="py-1" {...testimonial.button}>
+          {testimonial.button.title}
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export const Testimonial29Defaults: Props = {
+  heading: "Customer testimonials",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  testimonials: [
+    {
+      logo: {
+        src: "https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg",
+        alt: "Webflow logo 1",
+      },
+      quote:
+        '"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare."',
+      avatar: {
+        src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
+        alt: "Testimonial avatar 1",
+      },
+      name: "Name Surname",
+      position: "Position",
+      companyName: "Company name",
+      button: {
+        title: "Read case study",
+        variant: "link",
+        size: "link",
+        iconRight: <ChevronRight />,
+      },
+    },
+    {
+      logo: {
+        src: "https://d22po4pjz3o32e.cloudfront.net/vibecoding-logo.svg",
+        alt: "vibecoding logo 2",
+      },
+      quote:
+        '"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare."',
+      avatar: {
+        src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
+        alt: "Testimonial avatar 2",
+      },
+      name: "Name Surname",
+      position: "Position",
+      companyName: "Company name",
+      button: {
+        title: "Read case study",
+        variant: "link",
+        size: "link",
+        iconRight: <ChevronRight />,
+      },
+    },
+  ],
+};
+
+Testimonial29.displayName = 'Testimonial29';
+```
+
