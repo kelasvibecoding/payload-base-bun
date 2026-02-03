@@ -20,6 +20,8 @@ import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { ContactRequests } from './collections/ContactRequests'
 
+import { uuidPlugin } from './plugins/uuid'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -47,6 +49,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   // db: postgresAdapter({
+  //   idType: 'uuid',
   //   pool: {
   //     connectionString: process.env.DATABASE_URL || '',
   //   },
@@ -56,6 +59,7 @@ export default buildConfig({
         url: process.env.DATABASE_URL || '',
       })
     : sqliteAdapter({
+        idType: 'uuid',
         client: {
           url: 'file:./local.db',
         },
@@ -70,6 +74,7 @@ export default buildConfig({
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
+    uuidPlugin,
     // Cloud storage using Uploadthing (alternative)
     // uploadthingStorage({
     //   collections: {

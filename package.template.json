@@ -3,6 +3,7 @@
   "version": "1.0.4",
   "description": "A premium Payload 3.0 base template by Kelas Vibe Coding",
   "license": "MIT",
+  "packageManager": "pnpm@9.15.0",
   "type": "module",
   "preferGlobal": true,
   "bin": {
