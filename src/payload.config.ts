@@ -9,6 +9,7 @@ import sharp from 'sharp'
 import dns from 'node:dns'
 // import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { importExportPlugin } from '@payloadcms/plugin-import-export'
 
 // Fix for MongoDB Atlas SRV connection issues on Windows
 // This forces Node to use a reliable DNS provider for the SRV lookup
@@ -74,7 +75,6 @@ export default buildConfig({
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
-    uuidPlugin,
     // Cloud storage using Uploadthing (alternative)
     // uploadthingStorage({
     //   collections: {
@@ -85,5 +85,14 @@ export default buildConfig({
     //     acl: 'public-read',
     //   },
     // }),
+    uuidPlugin,
+    importExportPlugin({
+      collections: [
+        {
+          slug: 'users',
+          import: false,
+        },
+      ],
+    }),
   ],
 })
