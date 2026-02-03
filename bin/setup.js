@@ -56,6 +56,7 @@ async function setup() {
 
   const keepAbilities = process.argv.includes('--ability')
   const abilityOnly = process.argv.includes('--abilityonly')
+  const isMobile = process.argv.includes('--mobile')
 
   /**
    * Helper: Copy Directory Recursively (Basic Node.js 16+ compatible)
@@ -163,6 +164,44 @@ async function setup() {
         if (fs.existsSync('.env.example')) {
           fs.copyFileSync('.env.example', '.env')
           await showProgress('Configuring environment variables', 1000)
+        }
+
+        if (isMobile) {
+          await showProgress('Applying mobile layout optimizations', 1000)
+          
+          const layoutPath = path.join('src', 'app', '(frontend)', 'layout.tsx')
+          if (fs.existsSync(layoutPath)) {
+            let layoutContent = fs.readFileSync(layoutPath, 'utf8')
+            const oldBody = /<body className="antialiased">([\s\S]*?)<\/body>/
+            const newBody = `<body className="flex min-h-screen justify-center bg-zinc-100 antialiased dark:bg-zinc-950">
+        <SWRProvider>
+          <div className="relative flex min-h-screen w-full max-w-[480px] flex-col overflow-hidden bg-background shadow-[0_0_50px_rgba(0,0,0,0.1)]">
+            <main className="flex-1 shrink-0">{children}</main>
+          </div>
+        </SWRProvider>
+      </body>`
+            layoutContent = layoutContent.replace(oldBody, newBody)
+            fs.writeFileSync(layoutPath, layoutContent)
+          }
+
+          const globalsPath = path.join('src', 'app', '(frontend)', 'globals.css')
+          if (fs.existsSync(globalsPath)) {
+            let globalsContent = fs.readFileSync(globalsPath, 'utf8')
+            const breakpointOverrides = `
+  /* Force Mobile View: Disable standard breakpoints */
+  --breakpoint-sm: 9999px;
+  --breakpoint-md: 9999px;
+  --breakpoint-lg: 9999px;
+  --breakpoint-xl: 9999px;
+  --breakpoint-2xl: 9999px;
+`
+            if (globalsContent.includes('@theme inline {')) {
+              globalsContent = globalsContent.replace('@theme inline {', `@theme inline {${breakpointOverrides}`)
+            } else {
+              globalsContent += `\n@theme {\n${breakpointOverrides}\n}`
+            }
+            fs.writeFileSync(globalsPath, globalsContent)
+          }
         }
 
         try {
