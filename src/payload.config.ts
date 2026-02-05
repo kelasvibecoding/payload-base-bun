@@ -11,10 +11,18 @@ import dns from 'node:dns'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 
-// Fix for MongoDB Atlas SRV connection issues on Windows
-// This forces Node to use a reliable DNS provider for the SRV lookup
-dns.setServers(['8.8.8.8', '1.1.1.1'])
-dns.setDefaultResultOrder('verbatim')
+// // Fix for MongoDB Atlas SRV connection issues on Windows
+// // This forces Node to use a reliable DNS provider for the SRV lookup
+// dns.setServers(['8.8.8.8', '1.1.1.1'])
+// dns.setDefaultResultOrder('verbatim')
+
+// Configure DNS settings BEFORE any connections
+dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
+dns.setDefaultResultOrder('ipv4first')
+
+// Force Node.js to use the configured DNS servers
+const dnsPromises = dns.promises
+dns.promises.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
