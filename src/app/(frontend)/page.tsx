@@ -1,20 +1,20 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
 import React from 'react'
+import Image from 'next/image'
 import { fileURLToPath } from 'url'
-import { Rocket } from 'lucide-react'
+import { Rocket, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 import config from '@/payload.config'
 import { HeroSection } from '@/components/HeroSection'
 import { HomeFeatures } from '@/components/HomeFeatures'
+import { Button } from '@/components/ui/button'
+import { AuthService } from '@/features/auth/services/auth.service'
 
 export default async function HomePage() {
-  const headers = await getHeaders()
+  // DIP: Delegating auth logic to a dedicated service
+  const user = await AuthService.getCurrentUser()
   const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
-
+  
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
@@ -41,8 +41,59 @@ export default async function HomePage() {
           <span className="text-xl font-bold tracking-tighter">Payload</span>
         </div>
 
-        {/* Hero Section */}
-        <HeroSection userEmail={user?.email} adminRoute={payloadConfig.routes.admin} />
+        {/* Hero Section - OCP in action: Composing the content instead of hardcoding it in the component */}
+        <HeroSection 
+          title={
+            <h1>
+              {user?.email ? (
+                <>
+                  Welcome back, <br /> <span className="text-primary">{user.email}</span>
+                </>
+              ) : (
+                <>
+                  Elevate Your <br /> Digital Experience
+                </>
+              )}
+            </h1>
+          }
+          description={
+            <p>
+              Build modern, scalable applications with the power of Payload CMS and Next.js. A seamless
+              bridge between your content and your users.
+            </p>
+          }
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="h-11 px-8 text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+                asChild
+              >
+                <a href={payloadConfig.routes.admin} target="_blank" rel="noopener noreferrer">
+                  Admin Panel <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="hover:bg-accent/50 h-11 px-8 text-sm font-semibold backdrop-blur-sm transition-all hover:scale-105 active:scale-95"
+                asChild
+              >
+                <a href="https://payloadcms.com/docs" target="_blank" rel="noopener noreferrer">
+                  Documentation
+                </a>
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                className="h-11 px-8 text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+                asChild
+              >
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </>
+          }
+        />
 
         {/* Feature Grid */}
         <HomeFeatures />

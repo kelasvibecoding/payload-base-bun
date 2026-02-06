@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { CONTACT_TYPE_OPTIONS, SERVICE_OPTIONS } from '../features/contact/constants'
+import { notifyAdminOnCreate } from '../features/contact/hooks/notifications'
 
 export const ContactRequests: CollectionConfig = {
   slug: 'contact-requests',
@@ -14,6 +15,9 @@ export const ContactRequests: CollectionConfig = {
     create: () => true, // Anyone can submit a contact request
     update: ({ req: { user } }) => Boolean(user), // Only admins can update
     delete: ({ req: { user } }) => Boolean(user), // Only admins can delete
+  },
+  hooks: {
+    afterChange: [notifyAdminOnCreate],
   },
   admin: {
     useAsTitle: 'subject',

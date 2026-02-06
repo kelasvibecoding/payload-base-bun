@@ -25,10 +25,20 @@ While small projects can live entirely in hooks, complex business logic should b
 - **Service Hooks**: Payload hooks should be "thin listeners" that delegate the actual logic to your Service Layer.
 - **Example**: A `MembershipService.renew(userId)` function called from a `Users.beforeChange` hook.
 
+
 ### 3. Library-First & Plugin-First approach
 - **Official Plugins**: Before writing custom code, check for official Payload plugins (`storage-s3`, `form-builder`, `search`, etc.).
 - **Community Plugins**: Search the Payload ecosystem for existing solutions.
 - **Consistency**: Use established libraries (Zod, React Hook Form, Lucide) that align with Payload's own tech stack.
+
+### 4. SOLID Mastery (The Foundation)
+Adhere to the SOLID principles to ensure scalable and maintainable code.
+- **SRP (Single Responsibility)**: Split Hooks and Components. A `ProductCard` displays data; it doesn't fetch it. A `beforeChange` hook handles one specific side-effect.
+- **OCP (Open/Closed)**: Extend functionality via Plugins and Composition (`children` props), avoiding changes to stable source code.
+- **LSP (Liskov Substitution)**: Ensure sub-types (e.g., specific Button variants) can replace base types without breaking the UI.
+- **ISP (Interface Segregation)**: Pass only required props to components (`Avatar({ url })` vs `Avatar({ user })`). Don't force components to depend on unused data.
+- **DIP (Dependency Inversion)**: UI components depend on Custom Hooks (abstractions), not direct fetch calls. Backend logic depends on Service classes, not raw DB queries.
+
 
 ## Code Style & Naming
 

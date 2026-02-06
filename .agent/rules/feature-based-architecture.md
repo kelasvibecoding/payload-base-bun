@@ -10,6 +10,13 @@ description: Follow Feature-Based Architecture (FBA) to group code by domain rat
 ## Core Philosophy
 Group code by **Feature Domain** (e.g., Auth, Blog, Shop, Contact) rather than **File Type** (e.g., Components, Utils, Hooks). This makes the codebase scalable, maintainable, and easier to navigate.
 
+## The SOLID Connection
+Feature-Based Architecture is the **structural foundation** for **SOLID Principles**:
+- **SRP**: Each feature folder (`src/features/xyz`) has one responsibility.
+- **OCP**: Features isolate change; you can add a new `src/features/audit-logs` without touching `src/features/posts`.
+- **DIP**: Collections (`src/collections`) depend on Feature Interfaces (Hooks/Services), not implementation details.
+
+
 ## Directory Structure
 Specialized domains belong in `src/features/[feature-name]/`.
 
