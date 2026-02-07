@@ -233,4 +233,4 @@ export default buildConfig({
 4. **Throw `APIError` for errors** - Provides consistent error responses
 5. **Return Web API `Response`** - Use `Response.json()` for consistent responses
 6. **Validate input** - Check required fields, validate types
-7. **Log errors** - Use `req.payload.logger` for debugging
+7. **Log errors** - Use `req.req.payload.logger` for debugging

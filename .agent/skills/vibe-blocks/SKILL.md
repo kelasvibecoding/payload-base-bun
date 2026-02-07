@@ -96,5 +96,6 @@ The library is organized into the following categories:
    - **Typography**: Fix line-heights and letter-spacing.
    - **Colors**: Replace hardcoded hex/utility colors with CSS variables (e.g., `bg-background`, `text-foreground`).
    - **Textures**: Add grain, gradients, or subtle borders to lift the design.
+   - **Safe Class Merging**: Always use the `cn` utility (from `@/components/lib/utils`) when merging classes or handling conditional logic in components.
    - **Micro-Interactions**: Add hover states to buttons and cards.
 5. **Final Review**: Does it look "premium"? If it looks basic, it is not finished.

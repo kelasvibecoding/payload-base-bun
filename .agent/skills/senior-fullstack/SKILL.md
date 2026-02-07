@@ -38,6 +38,7 @@ Expert toolkit for fullstack development using Payload CMS 3.0, Next.js, and mod
 - **Atomic Components**: Build with standard Shadcn primitives in `src/components/ui`.
 - **Theme-Aware**: Use Tailwind's dark mode and CSS variables for consistent styling.
 - **Responsive**: Mobile-first design using Tailwind utility classes.
+- **Safe Merging**: Always use the `cn` utility (from `@/components/lib/utils`) for conditional classes and merging.
 
 ### 4. Distinctive Frontend Design
 - **Anti-Generic**: Avoid "AI slop" aesthetics (e.g., Inter font, purple gradients on white).

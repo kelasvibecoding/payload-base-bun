@@ -13,4 +13,4 @@ No,Category,Guideline,Description,Do,Don't,Code Good,Code Bad,Severity,Docs URL
 12,Layout,Responsive Grids,Mobile-first bento or card layouts,Responsive Grid with gap-4,Fixed width containers,className="grid grid-cols-1 md:grid-cols-3",className="flex w-[1200px]",Medium,
 13,Form,Zod Validation,Sync Payload and UI validation,Shared Zod schema for both,Duplicate validation logic,z.object({ name: z.string() }),Manual if/else checks,High,
 14,Loading,Skeleton States,Shadcn skeletons for async,Match skeleton to Payload entry,Blank screen while loading,<Skeleton className="h-12 w-full" />,Nothing or generic spinner,Medium,
-15,Feedback,Toast Notifications,Shadcn Sonner for results,toast.success() after Payload mutations,Alert() or console.log(),toast.success("Saved"),console.log("Success"),Low,
+15,Feedback,Toast Notifications,Shadcn Sonner for results,toast.success() after Payload mutations,Alert() or logger.info(),toast.success("Saved"),logger.info("Success"),Low,

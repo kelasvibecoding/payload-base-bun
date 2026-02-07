@@ -262,7 +262,7 @@ export const myPlugin =
       if (incomingOnInit) await incomingOnInit(payload)
 
       // Plugin initialization
-      payload.logger.info('Plugin initialized')
+      req.payload.logger.info('Plugin initialized')
 
       // Example: Seed data
       const { totalDocs } = await payload.count({

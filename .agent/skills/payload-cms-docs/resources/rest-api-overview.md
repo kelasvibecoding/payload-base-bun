@@ -504,9 +504,9 @@ const sdk = new PayloadSDK<Config>({
   baseInit: { credentials: 'include' },
   baseURL: 'https://example.com/api',
   fetch: async (url, init) => {
-    console.log('before req')
+    logger.info('before req')
     const response = await fetch(url, init)
-    console.log('after req')
+    logger.info('after req')
     return response
   },
 })

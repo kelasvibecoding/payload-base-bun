@@ -69,7 +69,7 @@ import { PopupList } from '@payloadcms/ui'
 
 export const MyMenuItem = () => (
   <PopupList.ButtonGroup>
-    <PopupList.Button onClick={() => console.log('Clicked!')}>
+    <PopupList.Button onClick={() => logger.info('Clicked!')}>
       Custom Menu Item
     </PopupList.Button>
   </PopupList.ButtonGroup>

@@ -10,6 +10,7 @@ import dns from 'node:dns'
 // import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
+import { loggerOptions } from './lib/logger'
 
 // // Fix for MongoDB Atlas SRV connection issues on Windows
 // // This forces Node to use a reliable DNS provider for the SRV lookup
@@ -35,6 +36,9 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  logger: {
+    options: loggerOptions,
+  },
   admin: {
     user: Users.slug,
     importMap: {
@@ -93,7 +97,7 @@ export default buildConfig({
     //     acl: 'public-read',
     //   },
     // }),
-    uuidPlugin,
+    uuidPlugin(),
     importExportPlugin({
       collections: [
         {

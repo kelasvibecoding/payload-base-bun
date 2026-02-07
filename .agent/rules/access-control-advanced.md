@@ -450,8 +450,8 @@ export const efficientAccess: Access = () => {
 ### Log Access Check Execution
 
 ```typescript
-export const debugAccess: Access = ({ req: { user }, id }) => {
-  console.log('Access check:', {
+export const debugAccess: Access = ({ req: { user, payload }, id }) => {
+  payload.logger.debug('Access check:', {
     userId: user?.id,
     userRoles: user?.roles,
     docId: id,
@@ -465,7 +465,7 @@ export const debugAccess: Access = ({ req: { user }, id }) => {
 
 ```typescript
 export const checkArgsAccess: Access = (args) => {
-  console.log('Available arguments:', {
+  args.req?.payload?.logger?.debug('Available arguments:', {
     hasReq: 'req' in args,
     hasUser: args.req?.user ? 'yes' : 'no',
     hasId: args.id ? 'provided' : 'undefined',
@@ -485,7 +485,7 @@ const testAccess = await payload.find({
   user: undefined, // Simulate no user
 })
 
-console.log('Public access result:', testAccess.docs.length)
+logger.info('Public access result:', testAccess.docs.length) // Use standard console for standalone scripts if payload logger isn't initialized
 ```
 
 ## Best Practices

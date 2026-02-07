@@ -119,7 +119,7 @@ const membershipStatusField: Field = {
       ({ value, previousValue, req }) => {
         if (value !== previousValue) {
           // Log or perform an action when the membership status changes
-          console.log(
+          logger.info(
             `User ID ${req.user.id} changed their membership status from ${previousValue} to ${value}.`,
           )
           // Here, you can implement actions that could track conversions from one tier to another

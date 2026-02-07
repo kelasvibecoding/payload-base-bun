@@ -952,7 +952,7 @@ import {
 function processField(field: Field) {
   // Check if field stores data
   if (fieldAffectsData(field)) {
-    console.log(field.name) // Safe to access
+    logger.info(field.name) // Safe to access
   }
 
   // Check if field has nested fields
@@ -962,12 +962,12 @@ function processField(field: Field) {
 
   // Check field type
   if (fieldIsArrayType(field)) {
-    console.log(field.minRows, field.maxRows)
+    logger.info(field.minRows, field.maxRows)
   }
 
   // Check capabilities
   if (fieldSupportsMany(field) && field.hasMany) {
-    console.log('Multiple values supported')
+    logger.info('Multiple values supported')
   }
 }
 ```

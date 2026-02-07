@@ -56,8 +56,8 @@ import { fieldIsArrayType } from 'payload'
 
 if (fieldIsArrayType(field)) {
   // field.type === 'array'
-  console.log(`Min rows: ${field.minRows}`)
-  console.log(`Max rows: ${field.maxRows}`)
+  logger.info(`Min rows: ${field.minRows}`)
+  logger.info(`Max rows: ${field.maxRows}`)
 }
 ```
 
@@ -73,7 +73,7 @@ import { fieldSupportsMany } from 'payload'
 if (fieldSupportsMany(field)) {
   // field.type is 'select' | 'relationship' | 'upload'
   if (field.hasMany) {
-    console.log('Field accepts multiple values')
+    logger.info('Field accepts multiple values')
   }
 }
 ```
@@ -102,7 +102,7 @@ import { fieldIsVirtual } from 'payload'
 if (fieldIsVirtual(field)) {
   // field.virtual is truthy
   if (typeof field.virtual === 'string') {
-    console.log(`Virtual path: ${field.virtual}`)
+    logger.info(`Virtual path: ${field.virtual}`)
   }
 }
 ```
@@ -117,7 +117,7 @@ import { fieldIsBlockType } from 'payload'
 if (fieldIsBlockType(field)) {
   // field.type === 'blocks'
   field.blocks.forEach((block) => {
-    console.log(`Block: ${block.slug}`)
+    logger.info(`Block: ${block.slug}`)
   })
 }
 ```
@@ -129,7 +129,7 @@ import { fieldIsGroupType } from 'payload'
 
 if (fieldIsGroupType(field)) {
   // field.type === 'group'
-  console.log(`Interface: ${field.interfaceName}`)
+  logger.info(`Interface: ${field.interfaceName}`)
 }
 ```
 
@@ -197,7 +197,7 @@ import { fieldSupportsMany, fieldHasMaxDepth } from 'payload'
 
 // With guard - safe access
 if (fieldSupportsMany(field) && field.hasMany) {
-  console.log('Multiple values supported')
+  logger.info('Multiple values supported')
 }
 
 if (fieldHasMaxDepth(field)) {

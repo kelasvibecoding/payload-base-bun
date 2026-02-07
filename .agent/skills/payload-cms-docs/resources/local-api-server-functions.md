@@ -347,7 +347,7 @@ export async function createPost(data) {
     const payload = await getPayload({ config })
     return await payload.create({ collection: 'posts', data })
   } catch (error) {
-    console.error('Error creating post:', error)
+    logger.error('Error creating post:', error)
     return { error: 'Failed to create post' }
   }
 }

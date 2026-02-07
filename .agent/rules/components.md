@@ -184,7 +184,7 @@ Pass additional props using `clientProps` or `serverProps`:
       path: '/components/Logout',
       clientProps: {
         buttonText: 'Sign Out',
-        onLogout: () => console.log('Logged out'),
+        onLogout: () => logger.info('Logged out'),
       },
     },
   },

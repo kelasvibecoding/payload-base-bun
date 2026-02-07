@@ -77,10 +77,10 @@ const job = await payload.findByID({
   id: 'job-id',
 })
 
-console.log(job.processing) // true if currently running
-console.log(job.completedAt) // timestamp of completion
-console.log(job.hasError) // true if failed
-console.log(job.taskStatus) // Detailed status of all tasks in a workflow
+logger.info(job.processing) // true if currently running
+logger.info(job.completedAt) // timestamp of completion
+logger.info(job.hasError) // true if failed
+logger.info(job.taskStatus) // Detailed status of all tasks in a workflow
 ```
 
 ### Cancelling Jobs
