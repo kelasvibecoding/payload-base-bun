@@ -172,5 +172,6 @@ export const revalidatePage: CollectionAfterChangeHook = ({
 - Use `afterChange` for side effects
 - Use `afterRead` for computed fields
 - Store expensive operations in `context`
-- Pass `req` to nested operations for transaction safety
+- Pass `req` to nested operations for transaction safety (prevents the "1-data-late" bug)
 - Use context flags to prevent infinite loops
+- **Data Integrity (Aggregation)**: Always use `docs.length` instead of `totalDocs` for statistics inside hooks to ensure perfect synchronization.

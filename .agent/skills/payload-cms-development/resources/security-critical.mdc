@@ -120,3 +120,35 @@ hooks: {
 ```
 
 **Rule**: Use `req.context` flags to prevent hook loops
+
+## 4. Immunity to 1-Data-Off Bug (Stale Aggregation Sync)
+
+**Counters and averages can be "one data point late" (the 1-data-late bug) if they query the DB index instead of the current transaction during hooks.**
+
+### Why This Matters:
+Statistical calculations (like averages or totals) inside hooks must reflect the *exact current state* including the change that triggered the hook. If you use `payload.count()` or query without the `req` object, you might read a stale index state, causing the UI to briefly show incorrect values or fall out of sync.
+
+### ❌ STALE: `totalDocs` may not include the current change yet
+```typescript
+const { totalDocs } = await req.payload.find({
+  collection: 'ratings',
+  where: { toilet: id },
+  req, // Even with req, totalDocs might be stale in some DBs
+})
+const avg = sum / totalDocs 
+```
+
+### ✅ ROBUST: Use the length of actual documents retrieved
+```typescript
+const { docs } = await req.payload.find({
+  collection: 'ratings',
+  where: { toilet: id },
+  limit: 1000,
+  req, // Essential for transaction visibility
+})
+
+const realCount = docs.length
+const avg = sum / realCount
+```
+
+**Rule**: ALWAYS use `docs.length` instead of `totalDocs` for statistics inside hooks to ensure perfect synchronization. Deriving totals directly from the component indicator array is the only way to guarantee mathematical consistency.

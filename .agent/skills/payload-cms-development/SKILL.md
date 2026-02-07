@@ -13,8 +13,10 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 2. **Security-Critical**: Follow all security patterns, especially access control
 3. **Type Generation**: Run `generate:types` script after schema changes
 4. **Type Usage**: Always use types from `payload-types.ts` for collections and globals. Only create custom types if the generated ones are too complicated or if unique structures are truly needed.
-5. **Transaction Safety**: Always pass `req` to nested operations in hooks
-6. **Access Control**: Understand Local API bypasses access control by default
+5. **Transaction Safety**: Always pass `req` to nested operations in hooks to avoid reading stale data (the "1-data-late" bug).
+6. **Mathematical Consistency (Aggregation)**: When calculating totals from indicators, derive the global score directly from the indicator averages ($avg_{total} = \sum avg_{indicators} / n$) to ensure the UI remains perfectly synced.
+7. **Cross-DB Robustness**: Prefer Payload's universal `find()` over native DB features like MongoDB's `.aggregate()` to ensure cross-environment compatibility (e.g., SQLite vs. MongoDB).
+8. **Access Control**: Understand Local API bypasses access control by default
 7. **Access Control**: Ensure roles exist when modifying collection or globals with access controls
 8. **Server Components by Default**: In Payload 3.0 / Next.js App Router, always treat main `Page` files as Server Components. Only use `'use client'` for specific interactive sub-components.
 
@@ -234,6 +236,30 @@ hooks: {
 ```
 
 **Rule**: ALWAYS pass `req` to nested operations in hooks
+
+## IMMUNITY TO 1-DATA-OFF BUG (STALE AGGREGATION PREVENTION)
+
+To prevent counters and averages from being "one data point late" or mathematically inconsistent, follow these mandatory aggregation synchronization rules:
+
+### 1. Transaction-Aware Hook Context
+When a service (like `updateStats`) is triggered by a hook (like `afterChange` or `afterDelete`), it **MUST** receive and use the current `req` object.
+- **Why**: Without `req`, the service uses a separate database connection that cannot see the "uncommitted" changes happening in the current transaction. This causes the "1-data-late" lag.
+- **Rule**: Always thread `req` into custom service functions and pass it to all `payload.find`, `payload.update`, and `payload.create` calls.
+
+### 2. Robust Counting (Find vs. Count)
+Avoid using `payload.count()` inside hooks when the result is critical for statistical calculations (like tag counts or averages).
+- **Why**: `payload.count()` can return stale metadata from the database index that hasn't updated yet.
+- **Rule**: Use `payload.find()` with `limit: 1000` and `req` instead. Use the actual `docs.length` from the result set for your calculation.
+- **Pattern**: `const actualCount = findResult.docs.length`
+
+### 3. Absolute Mathematical Sync
+Never calculate a global total independently if it is displayed alongside its component indicators.
+- **Why**: Subtle rounding differences or race conditions can cause the "Total" score to drift from the "Breakdown" scores.
+- **Rule**: Calculate component averages first, then derive the global average directly from those components ($avg_{total} = \sum avg_{indicators} / n$).
+
+### 4. Direct Result Denominators
+Always use the length of the *successfully retrieved* document array as the denominator for averages, rather than a separate count query.
+- **Why**: This ensures the numerator (sum of values) and denominator (count of docs) are 100% in sync even during deletions.
 
 ### 3. Prevent Infinite Hook Loops
 
@@ -1043,7 +1069,8 @@ export const myPlugin =
 5. **Relationship Depth**: Default depth is 2, set to 0 for IDs only
 6. **Draft Status**: `_status` field auto-injected when drafts enabled
 7. **Type Generation**: Types not updated until `generate:types` runs
-8. **MongoDB Transactions**: Require replica set configuration
+8. **1-Data-Off Bug**: Using `totalDocs` or missing `req` object in hooks causes stale statistical calculations (the "1-data-late" bug).
+9. **MongoDB Transactions**: Require replica set configuration
 9. **SQLite Transactions**: Disabled by default, enable with `transactionOptions: {}`
 10. **Point Fields**: Not supported in SQLite
 

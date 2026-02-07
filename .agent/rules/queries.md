@@ -114,6 +114,8 @@ await payload.delete({
 })
 
 // Count
+// ⚠️ WARNING (Aggregation): Avoid using payload.count() inside hooks for statistical calculations.
+// It can return stale metadata. Use payload.find() with docs.length instead.
 const count = await payload.count({
   collection: 'posts',
   where: {
@@ -202,6 +204,7 @@ query {
         name
       }
     }
+    # ⚠️ totalDocs in GraphQL reflects the DB index and might be stale in hooks
     totalDocs
     hasNextPage
   }

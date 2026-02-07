@@ -82,6 +82,7 @@ ai-doc/                      # Planning & AI documentation artifacts
 ### Security
 - **Access Control**: Never rely on frontend-only checks; always implement `access` rules in Payload.
 - **Local API**: Set `overrideAccess: false` when performing operations on behalf of a user.
+- **Data Integrity (Aggregation/1-Data-Off)**: Always use `docs.length` instead of `totalDocs` and thread `req` into hooks to prevent stale counts and averages (the "1-data-late" bug).
 - **Environment**: Keep secrets (DATABASE_URL, PAYLOAD_SECRET) strictly in `.env`.
 
 ### 5. Frontend Stability (Hydration)
