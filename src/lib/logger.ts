@@ -10,6 +10,9 @@ import pino from 'pino'
  */
 export const loggerOptions = {
   level: process.env.LOG_LEVEL || 'info',
+  serializers: {
+    err: pino.stdSerializers.err,
+  },
   transport:
     process.env.NODE_ENV === 'development'
       ? {

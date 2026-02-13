@@ -89,4 +89,16 @@ export const Users: CollectionConfig = {
     },
     // Add more fields as needed
   ],
+  hooks: {
+    beforeValidate: [
+      ({ data, operation }) => {
+        if (data && (operation === 'create' || !data.id)) {
+          if (!data.id) {
+            data.id = crypto.randomUUID()
+          }
+        }
+        return data
+      },
+    ],
+  },
 }

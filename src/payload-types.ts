@@ -608,7 +608,6 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  id?: T;
   name?: T;
   avatar?: T;
   role?: T;
@@ -637,7 +636,6 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  id?: T;
   alt?: T;
   caption?: T;
   updatedAt?: T;
@@ -691,7 +689,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   content?: T;
   updatedAt?: T;
@@ -702,7 +699,6 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "contact-requests_select".
  */
 export interface ContactRequestsSelect<T extends boolean = true> {
-  id?: T;
   fullName?: T;
   email?: T;
   contactType?: T;
@@ -719,7 +715,6 @@ export interface ContactRequestsSelect<T extends boolean = true> {
  * via the `definition` "oauth_select".
  */
 export interface OauthSelect<T extends boolean = true> {
-  id?: T;
   provider?: T;
   providerId?: T;
   providerEmail?: T;

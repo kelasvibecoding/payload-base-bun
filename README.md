@@ -60,6 +60,17 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) to see the app.
 Open [http://localhost:3000/admin](http://localhost:3000/admin) to access the Payload dashboard.
 
+### 🌐 Network Access & 0.0.0.0
+
+If your build result or dev server shows `http://0.0.0.0:3000` instead of your local IP:
+
+- **Reason**: This is often due to the `output: 'standalone'` setting in `next.config.mjs` or the `HOSTNAME` environment variable being set to `0.0.0.0` (standard for Docker). It means the server is listening on **all** network interfaces.
+- **Accessing via IP**: You can still access the app on other devices using your local IP (e.g., `http://192.168.1.5:3000`).
+- **Restoring IP Display**: To see your specific IP in the console, unset the `HOSTNAME` environment variable before running:
+  - **Windows (CMD)**: `set HOSTNAME=`
+  - **Windows (PowerShell)**: `$env:HOSTNAME=""`
+  - **Mac/Linux**: `unset HOSTNAME`
+
 ### 3. Environment Variables
 
 Ensure your `.env` file contains at least:

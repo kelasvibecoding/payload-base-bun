@@ -40,9 +40,12 @@ export const uuidPlugin =
               type: 'text',
               defaultValue: () => crypto.randomUUID(),
               required: true,
+              index: true,
+              unique: true,
               admin: {
                 readOnly: true,
                 position: 'sidebar',
+                description: 'Unique identifier (UUID)',
               },
             },
             ...collection.fields,
