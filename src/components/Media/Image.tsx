@@ -3,7 +3,7 @@
 import Image, { ImageProps } from 'next/image'
 import type { Media } from '@/payload-types'
 
-type SizeKey = 'thumbnail' | 'card'
+export type SizeKey = 'thumbnail' | 'card'
 
 interface MediaImageProps extends Omit<ImageProps, 'src' | 'alt'> {
   media: Media | string | null | undefined

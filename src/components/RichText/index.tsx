@@ -20,26 +20,22 @@ import { BannerBlock } from '@/blocks/Banner/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { MediaBlock } from '@/blocks/Media/Component'
 
-type NodeTypes =
-  | DefaultNodeTypes
-  | SerializedBlockNode
-  | SerializedLinkNode
-  | SerializedUploadNode
+type NodeTypes = DefaultNodeTypes | SerializedBlockNode | SerializedLinkNode | SerializedUploadNode
 
 /**
- * Handle internal link routing. 
+ * Handle internal link routing.
  * By default, it maps collection slugs to paths (e.g., 'posts' -> '/posts/my-post').
  * Override this via the `internalDocToHref` prop if you have custom routes.
  */
 const defaultInternalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
-  
+
   if (typeof value !== 'object') {
     return `/${relationTo}/${value}`
   }
-  
+
   const slug = value.slug || value.id
-  
+
   // Custom mappings can be handled here or passed via props
   const customMappings: Record<string, string> = {
     places: 'place',
@@ -56,7 +52,7 @@ export const defaultJSXConverters: JSXConvertersFunction<NodeTypes> = ({ default
   upload: ({ node }: { node: SerializedUploadNode }) => {
     const { value } = node
     if (!value || typeof value !== 'object') return null
-    
+
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     const { url, alt, width, height } = value as any
     if (!url) return null
@@ -98,25 +94,20 @@ interface Props {
 }
 
 export default function RichText(props: Props) {
-  const { 
-    className, 
-    enableGutter = false, 
-    enableProse = true, 
-    data, 
-    converters, 
-    ...rest 
-  } = props
+  const { className, enableGutter = false, enableProse = true, data, converters, ...rest } = props
 
   if (!data || !data.root || !data.root.children) return null
 
   return (
-    <div className={cn(
-      {
-        'container mx-auto': enableGutter,
-        'prose prose-slate dark:prose-invert max-w-none': enableProse,
-      },
-      className
-    )}>
+    <div
+      className={cn(
+        {
+          'container mx-auto': enableGutter,
+          'prose prose-slate dark:prose-invert max-w-none': enableProse,
+        },
+        className,
+      )}
+    >
       <ConvertRichText
         converters={(args) => ({
           ...defaultJSXConverters(args),

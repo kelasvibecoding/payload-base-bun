@@ -1,4 +1,3 @@
-
 'use client'
 
 import React from 'react'
@@ -13,7 +12,7 @@ interface HeroSectionProps {
 
 /**
  * HeroSection Component
- * 
+ *
  * Applies SOLID Principles:
  * - OCP (Open/Closed): Open for extension (via children/props), closed for modification.
  *   You can change the text/buttons without editing this file.
@@ -30,7 +29,7 @@ export function HeroSection({ title, description, actions }: HeroSectionProps) {
       >
         {title}
       </motion.div>
-      
+
       {description && (
         <motion.div
           variants={fadeIn('up', 0.4)}

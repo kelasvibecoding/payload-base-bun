@@ -2,7 +2,7 @@ import pino from 'pino'
 
 /**
  * Pino Logger instance
- * 
+ *
  * Features:
  * - Human-readable output in development (pino-pretty)
  * - Structured JSON output in production

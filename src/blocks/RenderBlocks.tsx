@@ -1,5 +1,9 @@
 import React, { Fragment } from 'react'
-import type { BannerBlock as BannerBlockType, ContentBlock as ContentBlockType, MediaBlock as MediaBlockType } from '@/payload-types'
+import type {
+  BannerBlock as BannerBlockType,
+  ContentBlock as ContentBlockType,
+  MediaBlock as MediaBlockType,
+} from '@/payload-types'
 
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { ContentBlock } from '@/blocks/Content/Component'

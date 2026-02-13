@@ -14,7 +14,7 @@ export default async function HomePage() {
   // DIP: Delegating auth logic to a dedicated service
   const user = await AuthService.getCurrentUser()
   const payloadConfig = await config
-  
+
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
@@ -42,7 +42,7 @@ export default async function HomePage() {
         </div>
 
         {/* Hero Section - OCP in action: Composing the content instead of hardcoding it in the component */}
-        <HeroSection 
+        <HeroSection
           title={
             <h1>
               {user?.email ? (
@@ -58,8 +58,8 @@ export default async function HomePage() {
           }
           description={
             <p>
-              Build modern, scalable applications with the power of Payload CMS and Next.js. A seamless
-              bridge between your content and your users.
+              Build modern, scalable applications with the power of Payload CMS and Next.js. A
+              seamless bridge between your content and your users.
             </p>
           }
           actions={

@@ -165,14 +165,17 @@ async function setup() {
         if (fs.existsSync('.env.example')) {
           const secret = crypto.randomBytes(32).toString('hex')
           let envContent = fs.readFileSync('.env.example', 'utf8')
-          envContent = envContent.replace('PAYLOAD_SECRET=YOUR_SECRET_HERE', `PAYLOAD_SECRET=${secret}`)
+          envContent = envContent.replace(
+            'PAYLOAD_SECRET=YOUR_SECRET_HERE',
+            `PAYLOAD_SECRET=${secret}`,
+          )
           fs.writeFileSync('.env', envContent)
           await showProgress('Configuring environment variables & Generating Secret', 1000)
         }
 
         if (isMobile) {
           await showProgress('Applying mobile layout optimizations', 1000)
-          
+
           const layoutPath = path.join('src', 'app', '(frontend)', 'layout.tsx')
           if (fs.existsSync(layoutPath)) {
             let layoutContent = fs.readFileSync(layoutPath, 'utf8')
@@ -200,7 +203,10 @@ async function setup() {
   --breakpoint-2xl: 9999px;
 `
             if (globalsContent.includes('@theme inline {')) {
-              globalsContent = globalsContent.replace('@theme inline {', `@theme inline {${breakpointOverrides}`)
+              globalsContent = globalsContent.replace(
+                '@theme inline {',
+                `@theme inline {${breakpointOverrides}`,
+              )
             } else {
               globalsContent += `\n@theme {\n${breakpointOverrides}\n}`
             }

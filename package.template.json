@@ -30,13 +30,8 @@
     "typecheck": "tsc --noEmit --pretty false"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,css,scss}": [
-      "prettier --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,md,css,scss}": ["prettier --write"]
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
@@ -146,9 +141,5 @@
     "node": "^18.20.2 || >=20.9.0",
     "bun": "^1.2.0"
   },
-  "trustedDependencies": [
-    "sharp",
-    "esbuild",
-    "unrs-resolver"
-  ]
+  "trustedDependencies": ["sharp", "esbuild", "unrs-resolver"]
 }
