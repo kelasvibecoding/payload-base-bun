@@ -252,10 +252,10 @@ export async function GET(request: NextRequest) {
     try {
       const originalSecret = process.env.PAYLOAD_SECRET || 'your-secret-key'
       const hashedSecret = crypto
-          .createHash('sha256')
-          .update(originalSecret)
-          .digest('hex')
-          .slice(0, 32)
+        .createHash('sha256')
+        .update(originalSecret)
+        .digest('hex')
+        .slice(0, 32)
 
       const sid = uuidv4()
       const sessionExpiry = new Date()

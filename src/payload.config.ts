@@ -14,7 +14,6 @@ import { loggerOptions } from './lib/logger'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 // import { resendAdapter } from '@payloadcms/email-resend'
 
-
 // // Fix for MongoDB Atlas SRV connection issues on Windows
 // // This forces Node to use a reliable DNS provider for the SRV lookup
 // dns.setServers(['8.8.8.8', '1.1.1.1'])
