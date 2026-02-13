@@ -44,8 +44,13 @@ When Framer Motion is strictly required, use this pattern:
 2. **Usage**:
    ```tsx
    import { m } from 'framer-motion'
-   // Use m.div instead of motion.div
+   // ✅ CORRECT: Use m.div instead of motion.div within LazyMotion
    ```
+
+   > [!CAUTION]
+   > **CRITICAL**: NEVER render a `motion` component within a `LazyMotion` wrapper. Doing so will trigger the error: 
+   > *"Uncaught Error: You have rendered a `motion` component within a `LazyMotion` component. This will break tree shaking."*
+   > You must import and render `m` components instead.
 
 ### 4. Zero-JS Structural Headers
 Ensure that the `HeroSection` and `Navbar` are pure React Server Components. If they need "active link" logic or small interactions, use:

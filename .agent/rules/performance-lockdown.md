@@ -28,7 +28,8 @@ Favor CSS Keyframes over Javascript-driven animations (Framer Motion, GSAP) for 
 If Framer Motion is required for complex interactions below the fold:
 
 - Use `LazyMotion` with the `domAnimation` subset (imported from `framer-motion`).
-- Prefer the `m` component (e.g., `m.div`) over the standard `motion.div`.
+- **MANDATORY**: Use the `m` component (e.g., `m.div`) instead of the standard `motion.div`. 
+- **CRITICAL**: Using `motion` within `LazyMotion` will throw a runtime error and break tree-shaking (*"Uncaught Error: You have rendered a `motion` component within a `LazyMotion` component"*).
 - Ensure heavy interaction JS is deferred and does not block the initial hydration of the page.
 
 ## 4. Hydration Tax Management
