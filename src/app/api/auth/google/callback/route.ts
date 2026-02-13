@@ -83,7 +83,6 @@ export async function GET(request: NextRequest) {
     })
 
     let user
-    let isNewUser = false
 
     if (existingOAuth.docs.length > 0) {
       // OAuth exists - find linked user
@@ -163,7 +162,6 @@ export async function GET(request: NextRequest) {
               lastLoginAt: new Date().toISOString(),
             },
           })
-          isNewUser = true
 
           // Update OAuth record
           await payload.update({
@@ -228,7 +226,6 @@ export async function GET(request: NextRequest) {
             lastLoginAt: new Date().toISOString(),
           },
         })
-        isNewUser = true
 
         await payload.create({
           collection: 'oauth',
