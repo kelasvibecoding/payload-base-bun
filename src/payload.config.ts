@@ -11,6 +11,9 @@ import dns from 'node:dns'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { loggerOptions } from './lib/logger'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+// import { resendAdapter } from '@payloadcms/email-resend'
+
 
 // // Fix for MongoDB Atlas SRV connection issues on Windows
 // // This forces Node to use a reliable DNS provider for the SRV lookup
@@ -28,6 +31,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { ContactRequests } from './collections/ContactRequests'
+import { OAuth } from './collections/OAuth'
 
 import { uuidPlugin } from './plugins/uuid'
 
@@ -54,7 +58,7 @@ export default buildConfig({
       titleSuffix: '- Payload Base Admin',
     },
   },
-  collections: [Users, Media, Posts, ContactRequests],
+  collections: [Users, Media, Posts, ContactRequests, OAuth],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '864a8383b7ed11af189db510',
   typescript: {
@@ -106,4 +110,21 @@ export default buildConfig({
       ],
     }),
   ],
+  email: nodemailerAdapter({
+    defaultFromAddress: 'info@payloadcms.com',
+    defaultFromName: 'Payload',
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: 587,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
+  // email: resendAdapter({
+  //   defaultFromAddress: 'dev@payloadcms.com',
+  //   defaultFromName: 'Payload CMS',
+  //   apiKey: process.env.RESEND_API_KEY,
+  // }),
 })
