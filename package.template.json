@@ -30,8 +30,13 @@
     "typecheck": "tsc --noEmit --pretty false"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
-    "*.{json,md,css,scss}": ["prettier --write"]
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
@@ -39,13 +44,13 @@
     "@payloadcms/db-mongodb": "3.75.0",
     "@payloadcms/db-postgres": "3.75.0",
     "@payloadcms/db-sqlite": "3.75.0",
+    "@payloadcms/email-nodemailer": "3.75.0",
+    "@payloadcms/email-resend": "3.75.0",
     "@payloadcms/next": "3.75.0",
     "@payloadcms/plugin-import-export": "3.75.0",
     "@payloadcms/richtext-lexical": "3.75.0",
     "@payloadcms/storage-uploadthing": "3.75.0",
     "@payloadcms/storage-vercel-blob": "3.75.0",
-    "@payloadcms/email-nodemailer": "3.75.0",
-    "@payloadcms/email-resend": "3.75.0",
     "@payloadcms/ui": "3.75.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -73,6 +78,8 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/uuid": "^11.0.0",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^1.1.1",
     "cross-env": "^7.0.3",
@@ -81,8 +88,10 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.29.2",
+    "google-auth-library": "^10.5.0",
     "graphql": "^16.8.1",
     "input-otp": "^1.4.2",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "next-themes": "^0.4.6",
@@ -98,6 +107,7 @@
     "sharp": "0.34.2",
     "sonner": "^2.0.7",
     "swr": "^2.3.8",
+    "uuid": "^13.0.0",
     "vaul": "^1.1.2",
     "zod": "^4.3.6"
   },
@@ -143,5 +153,9 @@
     "node": "^18.20.2 || >=20.9.0",
     "bun": "^1.2.0"
   },
-  "trustedDependencies": ["sharp", "esbuild", "unrs-resolver"]
+  "trustedDependencies": [
+    "sharp",
+    "esbuild",
+    "unrs-resolver"
+  ]
 }
