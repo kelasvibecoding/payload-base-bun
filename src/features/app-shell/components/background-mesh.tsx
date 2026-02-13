@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '@/components/lib/utils'
 
 export function BackgroundMesh({ className }: { className?: string }) {

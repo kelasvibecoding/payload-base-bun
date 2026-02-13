@@ -14,6 +14,7 @@ The critical rendering path (Navbar, Hero, and Background) must remain **React S
 
 - **NO** Client Components in the top-level shell.
 - **NO** `use client` in `navbar.tsx`, `hero-section.tsx`, or `background-mesh.tsx`.
+- **ISOLATE JS**: Move interactions into leaf components (e.g., `navbar-links.tsx`) while keeping the main header/section as RSC.
 - **NO** Framer Motion in the initial viewport unless absolutely necessary and optimized.
 
 ## 2. Hardware-Accelerated CSS Animations

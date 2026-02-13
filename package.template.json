@@ -10,7 +10,7 @@
     "payload-base": "./bin/setup.js"
   },
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build && node scripts/post-build.js",
     "buildsafe": "rm -rf .next && bun run build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
     "devsafe": "rm -rf .next-dev && cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
@@ -23,7 +23,7 @@
     "format:check": "prettier --check .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "prepare": "husky",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation bun run .next/standalone/server.js",
     "test": "bun run test:int && bun run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" bunx playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",

@@ -51,7 +51,10 @@ When Framer Motion is strictly required, use this pattern:
 Ensure that the `HeroSection` and `Navbar` are pure React Server Components. If they need "active link" logic or small interactions, use:
 - **CSS `:hover`** instead of JS event listeners.
 - **Server-side class calculation** for active links if possible.
-- **Isolate JS** into the smallest possible sub-components.
+- **Isolate JS**: Extract interactive elements (Search, Menu, Links) into small client "leaf" components while keeping the `header` or `section` shell as a Server Component.
+- **Hybrid Animation Strategy**: 
+  - Use **CSS Animations** (`tailwindcss-animate`) for the Hero section and Navbar.
+  - Use **Framer Motion + LazyMotion** for below-the-fold content (Features, Testimonials).
 
 ## Checklists
 
