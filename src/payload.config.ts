@@ -22,7 +22,6 @@ dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
 dns.setDefaultResultOrder('ipv4first')
 
 // Force Node.js to use the configured DNS servers
-const dnsPromises = dns.promises
 dns.promises.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
 
 import { Users } from './collections/Users'

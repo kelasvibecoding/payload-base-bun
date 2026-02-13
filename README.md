@@ -29,7 +29,7 @@ This template is designed for high-performance, accessibility, and developer exp
 ### 1. Requirements
 
 - **Node.js**: `^18.20.2 || >=20.9.0`
-- **pnpm**: `^9.0.0`
+- **Bun**: `^1.2.0`
 - **Database**: A running Postgres instance.
 
 ### 2. Local Setup (Private Access)
@@ -53,8 +53,8 @@ _The script will prompt for your **Project Name** first, then your **Access Key*
 git clone https://YOUR_TOKEN@github.com/kelasvibecoding/payload-base.git
 cd payload-base
 cp .env.example .env
-pnpm install
-pnpm dev
+bun install
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see the app.
@@ -80,13 +80,13 @@ PAYLOAD_SECRET=YOUR_SECRET_HERE
 
 ```bash
 # Run all tests
-pnpm test
+bun test
 
 # Run E2E tests (Playwright)
-pnpm run test:e2e
+bun run test:e2e
 
 # Run Unit tests (Vitest)
-pnpm run test:int
+bun run test:int
 ```
 
 ## 🧠 Agent Intelligence

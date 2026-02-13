@@ -100,9 +100,7 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user: User;
   jobs: {
     tasks: {
       createCollectionExport: TaskCreateCollectionExport;
@@ -157,6 +155,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -164,7 +163,22 @@ export interface User {
  */
 export interface Media {
   id: string;
-  alt: string;
+  alt?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -544,6 +558,7 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   id?: T;
   alt?: T;
+  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -815,6 +830,74 @@ export interface TaskCreateCollectionImport {
     debug?: boolean | null;
   };
   output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerBlock".
+ */
+export interface BannerBlock {
+  style: 'info' | 'warning' | 'error' | 'success';
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlock".
+ */
+export interface ContentBlock {
+  columns?:
+    | {
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock".
+ */
+export interface MediaBlock {
+  media: string | Media;
+  size?: ('thumbnail' | 'card') | null;
+  priority?: boolean | null;
+  loading?: ('lazy' | 'eager') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

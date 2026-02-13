@@ -31,7 +31,7 @@ if (mode === 'dev') {
 
     // Write to package.json
     fs.writeFileSync(pkgPath, JSON.stringify(template, null, 2) + '\n')
-    console.log('✅ Ready! Run "pnpm install" to get started.')
+    console.log('✅ Ready! Run "bun install" to get started.')
   } else {
     console.error('❌ Error: package.template.json not found!')
   }

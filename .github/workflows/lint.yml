@@ -17,24 +17,24 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: 9
+          bun-version: latest
 
       # Trick: We need to use package.template.json dependencies to lint the source code
       # because root package.json is empty for the installer.
       - name: Prepare Template Dependencies
         run: |
           cp package.template.json package.json
-          pnpm install
-          npx prettier --write package.json
+          bun install
+          bunx prettier --write package.json
 
       - name: Run Linting
-        run: pnpm lint
+        run: bun lint
 
       - name: Run Typecheck
-        run: pnpm typecheck
+        run: bun typecheck
 
       - name: Check Formatting
-        run: pnpm format:check
+        run: bun format:check

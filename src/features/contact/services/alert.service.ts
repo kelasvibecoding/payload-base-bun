@@ -1,7 +1,4 @@
-
 import type { ContactRequest } from '@/payload-types'
-import { getPayload } from 'payload'
-import config from '@payload-config'
 
 /**
  * AlertService

@@ -9,7 +9,8 @@ const withPWA = withPWAInit({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
+  // Output standalone for Docker/Self-hosted (Vercel ignores this and does its own optimization)
+  output: 'standalone',
   distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
   serverExternalPackages: ['payload'],
   webpack: (webpackConfig) => {

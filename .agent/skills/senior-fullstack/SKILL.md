@@ -15,7 +15,7 @@ Expert toolkit for fullstack development using Payload CMS 3.0, Next.js, and mod
 - **Forms & Validation**: React Hook Form, Zod
 - **Database**: MongoDB / PostgreSQL (via Payload Adapters)
 - **Testing**: Playwright (E2E), Vitest (Unit/Integration)
-- **Package Manager**: pnpm
+- **Package Manager**: Bun
 
 ## Core Principles
 
@@ -100,21 +100,21 @@ ai-doc/                      # Planning & AI documentation artifacts
 
 ```bash
 # Development
-pnpm devsafe            # Run dev server with .next-dev cleanup
-pnpm typecheck          # Run full TypeScript validation
+bun devsafe            # Run dev server with .next-dev cleanup
+bun typecheck          # Run full TypeScript validation
 
 # Code Generation
-pnpm generate:types     # Sync Payload schema with TypeScript types
-pnpm generate:importmap # Regenerate Payload's internal component map
+bun generate:types     # Sync Payload schema with TypeScript types
+bun generate:importmap # Regenerate Payload's internal component map
 
 # Testing
-pnpm test               # Run all tests (Integration + E2E)
-pnpm run test:int       # Run backend/integration tests with Vitest
-pnpm run test:e2e       # Run frontend E2E tests with Playwright
+bun test               # Run all tests (Integration + E2E)
+bun run test:int       # Run backend/integration tests with Vitest
+bun run test:e2e       # Run frontend E2E tests with Playwright
 
 # Production
-pnpm build              # Build for production
-pnpm start              # Start production server
+bun build              # Build for production
+bun start              # Start production server
 ```
 
 ## Resources

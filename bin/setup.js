@@ -9,6 +9,7 @@ import { execSync } from 'child_process'
 import readline from 'readline'
 import fs from 'fs'
 import path from 'path'
+import crypto from 'crypto'
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -162,8 +163,11 @@ async function setup() {
         }
 
         if (fs.existsSync('.env.example')) {
-          fs.copyFileSync('.env.example', '.env')
-          await showProgress('Configuring environment variables', 1000)
+          const secret = crypto.randomBytes(32).toString('hex')
+          let envContent = fs.readFileSync('.env.example', 'utf8')
+          envContent = envContent.replace('PAYLOAD_SECRET=YOUR_SECRET_HERE', `PAYLOAD_SECRET=${secret}`)
+          fs.writeFileSync('.env', envContent)
+          await showProgress('Configuring environment variables & Generating Secret', 1000)
         }
 
         if (isMobile) {
@@ -229,8 +233,8 @@ async function setup() {
         }
         log('\nNext suggested commands:')
         log(`\x1b[31m  1. cd ${targetDir}\x1b[0m`)
-        log('\x1b[31m  2. pnpm install\x1b[0m')
-        log('\x1b[31m  3. pnpm dev\x1b[0m')
+        log('\x1b[31m  2. bun install\x1b[0m')
+        log('\x1b[31m  3. bun dev\x1b[0m')
         log('━'.repeat(50) + '\n')
       } catch {
         error('\n\n❌ Setup Failed.')

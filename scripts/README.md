@@ -3,12 +3,12 @@
 If you are developing **Payload Base** itself (not using it as a user), use these commands to toggle between **Developer Mode** (full dependencies) and **Ship Mode** (installer-ready).
 
 1.  **Start Developing**:
-    Restores the full `package.json` so you can run `pnpm install` and test locally.
+    Restores the full `package.json` so you can run `bun install` and test locally.
 
     ```bash
     npm run dev:mode
-    pnpm install
-    pnpm dev
+    bun install
+    bun dev
     ```
 
 2.  **Prepare for Release (Push)**:

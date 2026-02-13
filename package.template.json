@@ -3,7 +3,7 @@
   "version": "1.0.4",
   "description": "A premium Payload 3.0 base template by Kelas Vibe Coding",
   "license": "MIT",
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "bun@1.2.0",
   "type": "module",
   "preferGlobal": true,
   "bin": {
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
-    "buildsafe": "rm -rf .next && pnpm run build",
+    "buildsafe": "rm -rf .next && bun run build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
     "devsafe": "rm -rf .next-dev && cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
     "build:prod": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=4000\" next build",
@@ -24,8 +24,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "prepare": "husky",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "test": "pnpm run test:int && pnpm run test:e2e",
-    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test",
+    "test": "bun run test:int && bun run test:e2e",
+    "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" bunx playwright test",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
     "typecheck": "tsc --noEmit --pretty false"
   },
@@ -144,13 +144,11 @@
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9 || ^10"
+    "bun": "^1.2.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "esbuild",
-      "unrs-resolver"
-    ]
-  }
+  "trustedDependencies": [
+    "sharp",
+    "esbuild",
+    "unrs-resolver"
+  ]
 }
