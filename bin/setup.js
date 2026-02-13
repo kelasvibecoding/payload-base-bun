@@ -52,7 +52,7 @@ function showProgress(message, duration = 2000) {
 async function setup() {
   log('\n' + '━'.repeat(50))
   // Red color for the title
-  log('\x1b[31m   KELAS VIBE CODING - PAYLOAD BASE SETUP\x1b[0m')
+  log('\x1b[31m   KELAS VIBE CODING - PAYLOAD BASE BUNSETUP\x1b[0m')
   log('━'.repeat(50) + '\n')
 
   const keepAbilities = process.argv.includes('--ability')
@@ -89,7 +89,7 @@ async function setup() {
         }
 
         const tempDir = `.temp-payload-base-${Date.now()}`
-        const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base.git`
+        const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
 
         try {
           info('\n🚀 Injecting Agent Ability into current codebase...')
@@ -125,7 +125,7 @@ async function setup() {
 
   // --- MODE: Standard Setup ---
   rl.question('Enter your Project Name: ', async (projectName) => {
-    const targetDir = projectName.trim() || 'my-payload-app'
+    const targetDir = projectName.trim() || 'kelas-vibe-coding-app'
 
     if (fs.existsSync(targetDir)) {
       error(`❌ Error: Directory "${targetDir}" already exists.`)
@@ -134,8 +134,8 @@ async function setup() {
 
     const startSetup = async (token = null) => {
       const repoUrl = token
-        ? `https://${token}@github.com/kelasvibecoding/payload-base.git`
-        : `https://github.com/kelasvibecoding/payload-base.git`
+        ? `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
+        : `https://github.com/kelasvibecoding/payload-base-bun.git`
 
       try {
         log(`\nInitializing project: \x1b[33m${targetDir}\x1b[0m`)
