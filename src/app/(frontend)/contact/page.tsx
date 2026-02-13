@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContactForm } from '@/features/contact/components/ContactForm'
+import { ContactForm } from '@/features/contact/components/contact-form'
 
 export const metadata = {
   title: 'Contact Us',

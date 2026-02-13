@@ -11,6 +11,7 @@ export const SWRProvider = ({ children }: { children: React.ReactNode }) => {
         fetcher,
         revalidateOnFocus: false,
         revalidateIfStale: false,
+        dedupingInterval: 5000, // Dedupe requests within 5s window
       }}
     >
       {children}

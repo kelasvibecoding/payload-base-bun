@@ -23,7 +23,7 @@ Specialized domains belong in `src/features/[feature-name]/`.
 ```
 src/
 ├── features/
-│   ├── [feature-name]/
+│   ├── [feature-name]/       # kebab-case (e.g., user-profile)
 │   │   ├── components/       # Feature-specific UI components
 │   │   ├── hooks/            # Feature-specific hooks
 │   │   ├── services/         # API calls / Server Actions
@@ -32,6 +32,14 @@ src/
 │   │   ├── schemas.ts         # Feature-specific validation (e.g. Zod)
 │   │   └── actions.ts         # Feature-specific Server Actions
 ```
+
+## Naming Conventions
+1.  **Directories**: Always use `kebab-case` for feature folders (e.g., `src/features/landing-page`).
+2.  **Files**:
+    - **Components**: Use `kebab-case.tsx` for file names (e.g., `hero-section.tsx`) to match shadcn/ui patterns, but export `PascalCase` components.
+    - **Hooks**: Use `kebab-case.ts` (e.g. `use-auth.ts`) or `camelCase.ts` depending on the project preference, but be consistent within a feature.
+    - **Utilities**: Use `kebab-case.ts` or `camelCase.ts`.
+3.  **Exports**: Named exports are preferred over default exports for better tree-shaking and refactoring safety.
 
 ## Migration & Implementation Rules
 1.  **New Features**: Always start in `src/features/[new-feature]`.

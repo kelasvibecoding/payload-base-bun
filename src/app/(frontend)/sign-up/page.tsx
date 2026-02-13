@@ -3,15 +3,16 @@
 import { Suspense } from 'react'
 import { GoogleAuthButton } from '@/features/auth/components/google-auth-button'
 import {
-  Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { BackgroundMesh } from '@/features/app-shell/components/background-mesh'
+import { GlassCard } from '@/features/app-shell/components/glass-card'
+import { motion } from 'framer-motion'
 
 function GoogleAuthButtonFallback() {
   return (
@@ -23,31 +24,80 @@ function GoogleAuthButtonFallback() {
 
 export default function SignUpPage() {
   return (
-    <div className="container flex h-screen w-full flex-col items-center justify-center">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
-          <CardDescription>Enter your details or join with social login.</CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-          <Suspense fallback={<GoogleAuthButtonFallback />}>
-            <GoogleAuthButton text="Join with Google" />
-          </Suspense>
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-wrap items-center justify-between gap-2">
-          <div className="text-muted-foreground text-sm">
-            Already have an account?{' '}
-            <Link href="/sign-in" className="text-primary hover:underline">
-              Sign In
-            </Link>
-          </div>
-        </CardFooter>
-      </Card>
-    </div>
+    <BackgroundMesh>
+      <div className="relative z-10 flex flex-1 w-full flex-col items-center justify-center py-12">
+        <GlassCard>
+          <CardHeader className="space-y-2 pb-6 text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/5 dark:bg-white/5 ring-1 ring-foreground/10 dark:ring-white/10"
+            >
+              <div className="h-10 w-10 text-foreground dark:text-white">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                  />
+                </svg>
+              </div>
+            </motion.div>
+            <CardTitle className="bg-gradient-to-b from-foreground to-foreground/60 dark:from-white dark:to-white/60 bg-clip-text text-3xl font-bold tracking-tight text-transparent font-outfit">
+              Create Account
+            </CardTitle>
+            <CardDescription className="text-muted-foreground text-base">
+              Join us today! Choose your preferred sign-up method.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <Suspense fallback={<GoogleAuthButtonFallback />}>
+                <GoogleAuthButton text="Join with Google" />
+              </Suspense>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="relative py-2"
+            >
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-foreground/10 dark:border-white/10" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Quick Access</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-center"
+            >
+              <p className="text-muted-foreground text-sm">
+                Already have an account?{' '}
+                <Link href="/sign-in" className="text-foreground dark:text-white hover:text-foreground/80 dark:hover:text-white/80 transition-colors font-medium">
+                  Sign In
+                </Link>
+              </p>
+            </motion.div>
+          </CardContent>
+        </GlassCard>
+      </div>
+    </BackgroundMesh>
   )
 }

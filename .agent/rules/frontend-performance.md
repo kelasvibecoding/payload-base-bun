@@ -28,9 +28,18 @@ Ensure the main thread remains responsive after the HTML lands.
 - **Responsive Internal Feedback**: Use `useTransition` when performing client-side URL updates or state changes that cause re-renders.
 - **Fade-in Transitions**: Use `template.tsx` with `framer-motion` for subtle (200-300ms) fade-in entry to mask the transition between skeletons and content.
 
-## 4. Performance Audit Checklist
+## 4. Total Blocking Time (TBT) Optimization
+Minimize main-thread blocking to ensure input responsiveness (< 200ms).
+
+- **SWR Deduping**: Configure `SWRProvider` with `dedupingInterval: 5000` to prevent redundant network-driven re-renders.
+- **Package Import Optimization**: Use `experimental.optimizePackageImports` in `next.config.mjs` for heavy libraries like `@payloadcms/ui`, `lucide-react`, and `framer-motion`.
+- **Motion Criticality**: Keep hero animations eager for UX, but use `next/dynamic` for below-fold or decorative animations.
+- **Font Display**: Always use `display: 'swap'` in `next/font` to prevent render-blocking.
+
+## 5. Performance Audit Checklist
 When reviewing or creating pages, ensure:
 - [ ] Primary data fetches are parallelized.
 - [ ] `loading.tsx` is present in the route segment.
 - [ ] Heavy components don't block hydration.
-- [ ] Intent-to-load feedback is provided immediately.
+- [ ] Intent-to-load feedback is provided immediately via `nextjs-toploader`.
+- [ ] SWR deduping is active for data-heavy components.

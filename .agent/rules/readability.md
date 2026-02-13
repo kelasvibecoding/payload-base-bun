@@ -24,3 +24,8 @@ Apply these rules strictly when generating or modifying code to ensure high main
     - **DO NOT** use the words `extended` or `extend` in naming (e.g., avoid `ButtonExtended`, `UserExtend`).
     - Use more specific, functional names instead (e.g., `PrimaryButton`, `AdminUser`, or use composition).
 - **Conciseness vs. Clarity**: Be descriptive but avoid "extended" naming patterns that just append generic words.
+
+## 4. File Naming
+- **Components**: MUST use `kebab-case.tsx` (e.g., `primary-button.tsx`) to match the project standard (Shadcn/UI pattern), while exporting PascalCase components.
+- **Hooks**: Use `kebab-case.ts` (e.g., `use-event-listener.ts`).
+- **Utilities**: Use `kebab-case.ts` (e.g., `date-utils.ts`).

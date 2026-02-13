@@ -22,6 +22,9 @@ const nextConfig = {
 
     return webpackConfig
   },
+  experimental: {
+    optimizePackageImports: ['@payloadcms/ui', 'lucide-react', 'framer-motion', '@radix-ui/react-icons'],
+  },
 }
 
 export default withPayload(withPWA(nextConfig), { devBundleServerPackages: false })
