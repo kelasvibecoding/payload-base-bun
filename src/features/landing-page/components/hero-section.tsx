@@ -3,16 +3,20 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { m, useScroll, useTransform } from 'framer-motion'
 
 interface HeroSectionProps {
   adminRoute?: string
 }
 
 export function HeroSection({ adminRoute = '/admin' }: HeroSectionProps) {
+  const { scrollY } = useScroll()
+  // Disable vertical parallax to prevent layout instability
+  const opacity = useTransform(scrollY, [0, 300], [1, 0])
 
   return (
-    <section className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 pt-20 text-center">
-      <div className="max-w-4xl space-y-8">
+    <section className="relative z-0 flex min-h-[100dvh] flex-col items-center justify-center px-4 text-center">
+      <m.div style={{ opacity }} className="max-w-4xl space-y-8">
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold text-primary backdrop-blur-md border border-primary/20">
             Payload 3.0 Base Template
@@ -45,7 +49,7 @@ export function HeroSection({ adminRoute = '/admin' }: HeroSectionProps) {
             </Link>
           </Button>
         </div>
-      </div>
+      </m.div>
     </section>
   )
 }

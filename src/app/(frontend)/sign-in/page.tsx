@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { BackgroundMesh } from '@/features/app-shell/components/background-mesh'
 import { GlassCard } from '@/features/app-shell/components/glass-card'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 
 function GoogleAuthButtonFallback() {
   return (
@@ -24,11 +24,12 @@ function GoogleAuthButtonFallback() {
 
 export default function SignInPage() {
   return (
-    <BackgroundMesh>
-      <div className="relative z-10 flex flex-1 w-full flex-col items-center justify-center py-12">
+    <div className="relative min-h-screen w-full">
+      <BackgroundMesh />
+      <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center py-12">
         <GlassCard>
           <CardHeader className="space-y-2 pb-6 text-center">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
@@ -49,7 +50,7 @@ export default function SignInPage() {
                   />
                 </svg>
               </div>
-            </motion.div>
+            </m.div>
             <CardTitle className="bg-gradient-to-b from-foreground to-foreground/60 dark:from-white dark:to-white/60 bg-clip-text text-3xl font-bold tracking-tight text-transparent font-outfit">
               Sign In
             </CardTitle>
@@ -58,7 +59,7 @@ export default function SignInPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-6">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
@@ -66,9 +67,9 @@ export default function SignInPage() {
               <Suspense fallback={<GoogleAuthButtonFallback />}>
                 <GoogleAuthButton text="Sign in with Google" />
               </Suspense>
-            </motion.div>
+            </m.div>
             
-            <motion.div 
+            <m.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -80,9 +81,9 @@ export default function SignInPage() {
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">Or share link</span>
               </div>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -94,10 +95,10 @@ export default function SignInPage() {
                   Sign Up
                 </Link>
               </p>
-            </motion.div>
+            </m.div>
           </CardContent>
         </GlassCard>
       </div>
-    </BackgroundMesh>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import { PageShell } from '@/features/app-shell/components/page-shell'
 import { ContactForm } from '@/features/contact/components/contact-form'
 
 export const metadata = {
@@ -8,15 +8,17 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto max-w-2xl px-4 py-20">
-      <div className="mb-10 text-center">
-        <h1 className="mb-4 text-4xl font-bold tracking-tight">Contact Us</h1>
-        <p className="text-muted-foreground">
-          We&apos;d love to hear from you. Please fill out the form below.
-        </p>
-      </div>
+    <PageShell className="font-sans">
+      <div className="container mx-auto max-w-2xl px-4">
+        <div className="mb-10 text-center">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight">Contact Us</h1>
+          <p className="text-muted-foreground">
+            We&apos;d love to hear from you. Please fill out the form below.
+          </p>
+        </div>
 
-      <ContactForm />
-    </div>
+        <ContactForm />
+      </div>
+    </PageShell>
   )
 }

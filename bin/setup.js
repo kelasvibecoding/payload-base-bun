@@ -179,11 +179,26 @@ async function setup() {
           const layoutPath = path.join('src', 'app', '(frontend)', 'layout.tsx')
           if (fs.existsSync(layoutPath)) {
             let layoutContent = fs.readFileSync(layoutPath, 'utf8')
-            const oldBody = /<body className="antialiased">([\s\S]*?)<\/body>/
-            const newBody = `<body className="flex min-h-screen justify-center bg-zinc-100 antialiased dark:bg-zinc-950">
+            const oldBody = /<body className="font-sans antialiased">([\s\S]*?)<\/body>/
+            const newBody = `<body className="flex min-h-screen justify-center bg-zinc-100 font-sans antialiased dark:bg-zinc-950">
+        <NextTopLoader
+          color="#0066FF"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #0066FF,0 0 5px #0066FF"
+        />
+        <Toaster position="top-center" richColors />
         <SWRProvider>
           <div className="relative flex min-h-screen w-full max-w-[480px] flex-col overflow-hidden bg-background shadow-[0_0_50px_rgba(0,0,0,0.1)]">
-            <main className="flex-1 shrink-0">{children}</main>
+            <MotionConfig>
+              <Navbar />
+              <main className="flex-1 shrink-0">{children}</main>
+            </MotionConfig>
           </div>
         </SWRProvider>
       </body>`

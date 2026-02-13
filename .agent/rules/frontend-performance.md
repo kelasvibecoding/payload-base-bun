@@ -7,6 +7,8 @@ glob: "src/app/(frontend)/**/*"
 
 Maintain high performance and instant user feedback by following these core patterns for Next.js App Router.
 
+> **⚡ Critical Constraints**: For strict Zero-JS rules on the shell (Navbar, Hero, Background) to achieve 100/100 Lighthouse, see [`performance-lockdown.md`](./.agent/rules/performance-lockdown.md).
+
 ## 1. Instant Navigation Feedback
 User navigation must trigger immediate visual changes to prevent "dead periods" where the app appears unresponsive while the server fetches data.
 
@@ -27,6 +29,7 @@ Ensure the main thread remains responsive after the HTML lands.
 - **Dynamic Hydration**: Use `next/dynamic` with `{ ssr: false }` for heavy client-side only libraries (e.g., Leaflet Maps, complex charts) to prevent blocking the initial render.
 - **Responsive Internal Feedback**: Use `useTransition` when performing client-side URL updates or state changes that cause re-renders.
 - **Fade-in Transitions**: Use `template.tsx` with `framer-motion` for subtle (200-300ms) fade-in entry to mask the transition between skeletons and content.
+  - ⚠️ **Note**: Framer Motion is prohibited in the initial viewport (Navbar, Hero). See [`performance-lockdown.md`](./.agent/rules/performance-lockdown.md#3-optimized-framer-motion-lazy-loading) for LazyMotion patterns.
 
 ## 4. Total Blocking Time (TBT) Optimization
 Minimize main-thread blocking to ensure input responsiveness (< 200ms).

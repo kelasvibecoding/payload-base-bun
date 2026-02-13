@@ -11,7 +11,7 @@ import dns from 'node:dns'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { loggerOptions } from './lib/logger'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+// import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 // import { resendAdapter } from '@payloadcms/email-resend'
 
 // // Fix for MongoDB Atlas SRV connection issues on Windows
@@ -109,18 +109,18 @@ export default buildConfig({
       ],
     }),
   ],
-  email: nodemailerAdapter({
-    defaultFromAddress: 'info@payloadcms.com',
-    defaultFromName: 'Payload',
-    transportOptions: {
-      host: process.env.SMTP_HOST,
-      port: 587,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    },
-  }),
+  // email: nodemailerAdapter({
+  //   defaultFromAddress: 'info@payloadcms.com',
+  //   defaultFromName: 'Payload',
+  //   transportOptions: {
+  //     host: process.env.SMTP_HOST,
+  //     port: 587,
+  //     auth: {
+  //       user: process.env.SMTP_USER,
+  //       pass: process.env.SMTP_PASS,
+  //     },
+  //   },
+  // }),
   // email: resendAdapter({
   //   defaultFromAddress: 'dev@payloadcms.com',
   //   defaultFromName: 'Payload CMS',

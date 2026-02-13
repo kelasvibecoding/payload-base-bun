@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { cn } from '@/components/lib/utils'
 import { Card } from '@/components/ui/card'
 
@@ -14,11 +11,12 @@ export function GlassCard({
   delay?: number
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className="w-full max-w-md px-4"
+    <div
+      style={{ 
+        animationDelay: `${delay}s`,
+        opacity: 0 // Initial state before animation starts
+      }}
+      className="w-full max-w-md px-4 animate-fade-up"
     >
       <Card className={cn(
         "relative overflow-hidden transition-colors duration-300",
@@ -30,6 +28,6 @@ export function GlassCard({
       )}>
         {children}
       </Card>
-    </motion.div>
+    </div>
   )
 }

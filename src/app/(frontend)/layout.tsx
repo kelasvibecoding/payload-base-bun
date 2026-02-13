@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { Outfit } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import { SWRProvider } from '@/providers/SWRProvider'
+import { Navbar } from '@/features/app-shell/components/navbar'
 import { cn } from '@/components/lib/utils'
 import './globals.css'
 
@@ -28,6 +29,9 @@ export const viewport = {
   themeColor: '#000000',
 }
 
+import { Toaster } from '@/components/ui/sonner'
+import { MotionConfig } from '@/features/app-shell/components/motion-config'
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
@@ -45,8 +49,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           speed={200}
           shadow="0 0 10px #0066FF,0 0 5px #0066FF"
         />
+        <Toaster position="top-right" richColors />
         <SWRProvider>
-          <main>{children}</main>
+          <MotionConfig>
+            <Navbar />
+            <main>{children}</main>
+          </MotionConfig>
         </SWRProvider>
       </body>
     </html>

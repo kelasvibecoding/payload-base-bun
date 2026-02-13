@@ -1,17 +1,39 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { useEffect, useRef } from 'react'
+import { toast } from 'sonner'
 
 export function GoogleAuthButton({ text = 'Continue with Google' }: { text?: string }) {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const oauthError = searchParams.get('oauth_error')
+  const toastShown = useRef(false)
+
+  useEffect(() => {
+    if (oauthError && !toastShown.current) {
+      toast.error('Authentication Error', {
+        description: oauthError,
+        duration: 5000,
+      })
+      toastShown.current = true
+
+      // Clean up the URL
+      const params = new URLSearchParams(searchParams.toString())
+      params.delete('oauth_error')
+      const newPath = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`
+      router.replace(newPath)
+    }
+  }, [oauthError, searchParams, router])
 
   const handleGoogleAuth = () => {
     const encodedCallbackUrl = encodeURIComponent(callbackUrl)
+    const fromPath = encodeURIComponent(window.location.pathname)
     const cacheBust = Date.now()
 
-    window.location.href = `/api/auth/google?callbackUrl=${encodedCallbackUrl}&_cb=${cacheBust}`
+    window.location.href = `/api/auth/google?callbackUrl=${encodedCallbackUrl}&from=${fromPath}&_cb=${cacheBust}`
   }
 
   return (
