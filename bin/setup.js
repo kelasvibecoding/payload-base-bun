@@ -52,7 +52,7 @@ function showProgress(message, duration = 2000) {
 async function setup() {
   log('\n' + '━'.repeat(50))
   // Red color for the title
-  log('\x1b[31m   KELAS VIBE CODING - PAYLOAD BASE BUNSETUP\x1b[0m')
+  log('\x1b[31m   KELAS VIBE CODING - PAYLOAD BASE BUN SETUP\x1b[0m')
   log('━'.repeat(50) + '\n')
 
   const keepAbilities = process.argv.includes('--ability')

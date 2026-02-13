@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { execSync } from 'child_process'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -31,6 +32,11 @@ if (mode === 'dev') {
 
     // Write to package.json
     fs.writeFileSync(pkgPath, JSON.stringify(template, null, 2) + '\n')
+    try {
+      execSync('bunx prettier --write package.json', { stdio: 'inherit' })
+    } catch (e) {
+      console.warn('⚠️ Warning: Prettier failed to format package.json')
+    }
     console.log('✅ Ready! Run "bun install" to get started.')
   } else {
     console.error('❌ Error: package.template.json not found!')
@@ -57,6 +63,11 @@ if (mode === 'dev') {
       if (fs.existsSync(installerPath)) {
         console.log('🚢 Switching to SHIP MODE (Restoring tiny installer package.json)...')
         fs.copyFileSync(installerPath, pkgPath)
+        try {
+          execSync('bunx prettier --write package.template.json package.json', { stdio: 'inherit' })
+        } catch (e) {
+          console.warn('⚠️ Warning: Prettier failed to format package files')
+        }
         console.log('✅ Ready to push!')
       } else {
         // Fallback if backup missing - recreate minimal
@@ -76,6 +87,11 @@ if (mode === 'dev') {
           },
         }
         fs.writeFileSync(pkgPath, JSON.stringify(minimal, null, 2) + '\n')
+        try {
+          execSync('bunx prettier --write package.json', { stdio: 'inherit' })
+        } catch (e) {
+          console.warn('⚠️ Warning: Prettier failed to format package.json')
+        }
         console.log('✅ Ready to push! (Generated fresh installer config)')
       }
     } else {
