@@ -2,12 +2,7 @@
 
 import { Suspense } from 'react'
 import { GoogleAuthButton } from '@/features/auth/components/google-auth-button'
-import {
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { BackgroundMesh } from '@/features/app-shell/components/background-mesh'
@@ -33,9 +28,9 @@ export default function SignInPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/5 dark:bg-white/5 ring-1 ring-foreground/10 dark:ring-white/10"
+              className="bg-foreground/5 ring-foreground/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl ring-1 dark:bg-white/5 dark:ring-white/10"
             >
-              <div className="h-10 w-10 text-foreground dark:text-white">
+              <div className="text-foreground h-10 w-10 dark:text-white">
                 <svg
                   fill="none"
                   stroke="currentColor"
@@ -51,7 +46,7 @@ export default function SignInPage() {
                 </svg>
               </div>
             </m.div>
-            <CardTitle className="bg-gradient-to-b from-foreground to-foreground/60 dark:from-white dark:to-white/60 bg-clip-text text-3xl font-bold tracking-tight text-transparent font-outfit">
+            <CardTitle className="from-foreground to-foreground/60 font-outfit bg-gradient-to-b bg-clip-text text-3xl font-bold tracking-tight text-transparent dark:from-white dark:to-white/60">
               Sign In
             </CardTitle>
             <CardDescription className="text-muted-foreground text-base">
@@ -68,18 +63,18 @@ export default function SignInPage() {
                 <GoogleAuthButton text="Sign in with Google" />
               </Suspense>
             </m.div>
-            
-            <m.div 
+
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
               className="relative py-2"
             >
               <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-foreground/10 dark:border-white/10" />
+                <span className="border-foreground/10 w-full border-t dark:border-white/10" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or share link</span>
+                <span className="bg-background text-muted-foreground px-2">Or share link</span>
               </div>
             </m.div>
 
@@ -91,7 +86,10 @@ export default function SignInPage() {
             >
               <p className="text-muted-foreground text-sm">
                 Don&apos;t have an account?{' '}
-                <Link href="/sign-up" className="text-foreground dark:text-white hover:text-foreground/80 dark:hover:text-white/80 transition-colors font-medium">
+                <Link
+                  href="/sign-up"
+                  className="text-foreground hover:text-foreground/80 font-medium transition-colors dark:text-white dark:hover:text-white/80"
+                >
                   Sign Up
                 </Link>
               </p>

@@ -23,7 +23,12 @@ const nextConfig = {
     return webpackConfig
   },
   experimental: {
-    optimizePackageImports: ['@payloadcms/ui', 'lucide-react', 'framer-motion', '@radix-ui/react-icons'],
+    optimizePackageImports: [
+      '@payloadcms/ui',
+      'lucide-react',
+      'framer-motion',
+      '@radix-ui/react-icons',
+    ],
   },
 }
 

@@ -7,7 +7,7 @@ import { HomeHowItWorks } from '@/features/landing-page/components/home-how-it-w
 // Force Next.js Router Cache Invalidation: Using Landing Page Features
 export default async function HomePage() {
   const payloadConfig = await config
-  
+
   return (
     <PageShell withPadding={false}>
       <HeroSection adminRoute={payloadConfig.routes.admin} />

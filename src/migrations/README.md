@@ -7,31 +7,41 @@ This directory contains the database migrations for the project. Migrations ensu
 All commands should be run using `bun`.
 
 ### Apply Migrations
+
 Runs all pending migrations to update your local database schema.
+
 ```bash
 bun run payload migrate
 ```
 
 ### Create Migration
+
 Generates a new migration file based on changes to your Payload collections.
+
 ```bash
 bun run payload migrate:create your_migration_name
 ```
 
 ### Check Status
+
 Shows which migrations have been applied and which are pending.
+
 ```bash
 bun run payload migrate:status
 ```
 
 ### Rollback Migration
+
 Reverts the last applied migration.
+
 ```bash
 bun run payload migrate:down
 ```
 
 ### Reset Database
+
 Reverts all migrations (use with caution, this will delete data).
+
 ```bash
 bun run payload migrate:reset
 ```

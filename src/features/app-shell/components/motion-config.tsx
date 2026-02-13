@@ -8,11 +8,7 @@ import { LazyMotion, domAnimation, type Variants } from 'framer-motion'
  * It uses the 'domAnimation' subset to keep the initial bundle size small.
  */
 export function MotionConfig({ children }: { children: React.ReactNode }) {
-  return (
-    <LazyMotion features={domAnimation}>
-      {children}
-    </LazyMotion>
-  )
+  return <LazyMotion features={domAnimation}>{children}</LazyMotion>
 }
 
 export const staggeredContainerVariants: Variants = {
@@ -27,8 +23,8 @@ export const staggeredContainerVariants: Variants = {
 
 export const staggeredItemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: {
       duration: 0.5,

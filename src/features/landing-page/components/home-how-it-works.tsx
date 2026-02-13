@@ -20,19 +20,19 @@ const itemVariants = {
 
 export function HomeHowItWorks() {
   return (
-    <section id="how-it-works" className="relative z-10 py-32 px-4 font-sans bg-muted/30">
+    <section id="how-it-works" className="bg-muted/30 relative z-10 px-4 py-32 font-sans">
       <div className="container mx-auto max-w-6xl">
         <m.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
+          <h2 className="text-foreground mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
             How It Works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
             Streamline your workflow with a powerful, opinionated stack designed for modern web
             development.
           </p>
@@ -43,23 +43,23 @@ export function HomeHowItWorks() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 relative"
+          className="relative grid grid-cols-1 gap-8 md:grid-cols-3"
         >
           {/* Connector Line (Desktop) */}
-          <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-border -z-10" />
+          <div className="bg-border absolute top-12 right-[16%] left-[16%] -z-10 hidden h-0.5 md:block" />
 
           <Step
-            icon={<CircleCheck className="w-10 h-10 text-primary" />}
+            icon={<CircleCheck className="text-primary h-10 w-10" />}
             title="Easy Setup"
             description="Get started in minutes with our automated setup scripts and Docker integration."
           />
           <Step
-            icon={<Zap className="w-10 h-10 text-primary" />}
+            icon={<Zap className="text-primary h-10 w-10" />}
             title="Fast Development"
             description="Leverage Hot Module Replacement and Turbopack for instant feedback loops."
           />
           <Step
-            icon={<Rocket className="w-10 h-10 text-primary" />}
+            icon={<Rocket className="text-primary h-10 w-10" />}
             title="Deploy Anywhere"
             description="Build for production with reliable Docker containers or deploy straight to Vercel."
           />
@@ -69,16 +69,24 @@ export function HomeHowItWorks() {
   )
 }
 
-function Step({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+function Step({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode
+  title: string
+  description: string
+}) {
   return (
     <m.div
       variants={itemVariants}
-      className="flex flex-col items-center text-center bg-background/50 backdrop-blur-sm p-6 rounded-2xl border border-border/50 shadow-sm"
+      className="bg-background/50 border-border/50 flex flex-col items-center rounded-2xl border p-6 text-center shadow-sm backdrop-blur-sm"
     >
-      <div className="w-24 h-24 rounded-full bg-background border-4 border-primary/10 flex items-center justify-center mb-6 shadow-sm z-10 transition-transform hover:scale-110 duration-300">
+      <div className="bg-background border-primary/10 z-10 mb-6 flex h-24 w-24 items-center justify-center rounded-full border-4 shadow-sm transition-transform duration-300 hover:scale-110">
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3">{title}</h3>
+      <h3 className="mb-3 text-xl font-bold">{title}</h3>
       <p className="text-muted-foreground leading-relaxed">{description}</p>
     </m.div>
   )
