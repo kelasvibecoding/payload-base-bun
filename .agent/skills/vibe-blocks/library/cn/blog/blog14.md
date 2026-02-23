@@ -1,0 +1,128 @@
+# Blog 14
+
+## Metadata
+- **Category**: Blog
+- **Objective**: Display a featured blog post with a grid of popular posts.
+- **Use Case**: Blog homepages, featured content sections, and editorial-style layouts.
+- **Visual Style**: Mixed layout with side-by-side featured post and responsive grid.
+- **Interactivity**: Hover effects on blog cards and interactive elements.
+
+## Description
+A blog component featuring a prominent header with title and description, a featured blog post displayed in a side-by-side layout with image and text, and a "Popular Posts" section with a responsive grid of additional posts. Each post includes a category badge, title, and description. The layout is fully responsive, adapting the featured post to stack vertically on mobile and maintaining a clean grid for popular posts.
+
+## Source Code
+```tsx
+import { cn } from "@/lib/utils";
+
+import { Badge } from "@/components/ui/badge";
+
+type Category =
+  | "Technology"
+  | "Business"
+  | "Health & Wellness"
+  | "Productivity"
+  | "Innovation";
+
+type Post = {
+  title: string;
+  category: Category;
+  description: string;
+  image: string;
+};
+
+const posts: Post[] = [
+  {
+    title: "Exploring the Future of AI in Modern Technology Trends",
+    category: "Technology",
+    description:
+      "Discover how AI is transforming industries and learn about the latest advancements in artificial intelligence. Discover how AI is transforming industries and learn about the latest advancements in artificial intelligence.",
+    image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
+  },
+  {
+    title: "Strategies for Effective Business Growth in 2025",
+    category: "Business",
+    description:
+      "Learn proven strategies to grow your business and stay competitive in the ever-evolving market landscape.",
+    image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
+  },
+  {
+    title: "Top Wellness Trends to Improve Your Health in 2025",
+    category: "Health & Wellness",
+    description:
+      "Explore the top wellness trends that can help you achieve a healthier and more balanced lifestyle.",
+    image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-3.svg",
+  },
+  {
+    title: "Boosting Productivity with Smart Tools and Techniques",
+    category: "Productivity",
+    description:
+      "Find out how to enhance your productivity using the latest tools and techniques for better time management.",
+    image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-4.svg",
+  },
+];
+
+interface Blog14Props {
+  className?: string;
+}
+
+const Blog14 = ({ className }: Blog14Props) => {
+  return (
+    <section className={cn("py-32", className)}>
+      <div className="container">
+        <div className="mb-16 text-center">
+          <h1 className="text-5xl font-medium md:text-6xl">
+            Insights and Trends Blog
+          </h1>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-muted-foreground">
+            Stay updated with the latest insights, trends, and tips across
+            various topics to keep ahead of the curve.
+          </p>
+        </div>
+        <div className="mx-auto max-w-7xl">
+          <div className="my-16 grid grid-cols-1 items-center gap-8 md:grid-cols-2 lg:gap-16">
+            <img
+              src={posts[0].image}
+              alt="placeholder"
+              className="aspect-video rounded-lg object-cover"
+            />
+            <div className="flex flex-col items-start gap-4">
+              <Badge variant="secondary" className="shrink">
+                {posts[0].category}
+              </Badge>
+              <h2 className="text-2xl font-semibold text-balance md:max-w-lg lg:text-3xl">
+                {posts[0].title}
+              </h2>
+              <p className="text-muted-foreground md:max-w-lg">
+                {posts[0].description}
+              </p>
+            </div>
+          </div>
+          <p className="text-2xl font-medium md:text-3xl">Popular Posts</p>
+          <div className="mt-8 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-6">
+            {posts.slice(1).map((post) => (
+              <div key={post.title} className="flex flex-col items-start gap-4">
+                <img
+                  src={post.image}
+                  alt="placeholder"
+                  className="aspect-video rounded-lg object-cover"
+                />
+                <Badge variant="secondary" className="shrink">
+                  {post.category}
+                </Badge>
+                <h3 className="text-xl font-semibold text-balance md:max-w-md">
+                  {post.title}
+                </h3>
+                <p className="text-muted-foreground md:max-w-md">
+                  {post.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export { Blog14 };
+```
