@@ -64,3 +64,17 @@ Before calling `notify_user` on any feature, verify:
 - [ ] **Performance**: 0 hydration errors? Layout matches skeletons?
 - [ ] **Design**: Icon sizes standardized? Font pairing followed?
 - [ ] **Cleanup**: `task.md` updated? Walkthrough complete?
+
+## 6. Auto-Stop Safety Protocol
+
+Pause work and surface context to the user when these triggers fire:
+
+| Trigger | Action |
+|---------|--------|
+| **5+ files changed** in a session | Report impact scope to user before continuing |
+| **Same error occurs 3x** | Run 5-Whys root cause analysis, present fix plan to user |
+| **3+ edits to the same file** | Pause and evaluate if refactoring is needed |
+| **Architecture change** (new layer, new dep) | Require explicit user confirmation |
+| **Breaking change** (API, data structure, DB schema) | Require explicit user confirmation |
+
+This protocol prevents "runaway" sessions and keeps the user in control of large changes.

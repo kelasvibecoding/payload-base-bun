@@ -23,7 +23,12 @@ Choose an extreme to anchor your design:
 - **Luxury Refined**: High-end materials, gold/silver accents, ultra-thin lines, serif pairings.
 - **Industrial Utilitarian**: Monospace fonts, blueprint-like grids, high-density data.
 
-## 3. Typography Rules
+## 3. Component Sourcing (Vibe Blocks)
+- **Primary Source**: ALWAYS search the `.agent/skills/vibe-blocks` library before building complex layouts from scratch. It contains 2,000+ pre-built React/Tailwind blocks.
+- **Relume vs Native**: Prefer `cn` (Shadcn/Custom) source for deep Payload integration, but use `rl` (Relume) for heavy marketing layouts.
+- **Adaptation**: Never just copy-paste; adapt the vibe-block structural code to match the chosen "Aesthetic Direction" (colors, fonts, borders).
+
+## 4. Typography Rules
 - **NEVER** use: Inter, Roboto, Arial, or standard system fonts as the primary display choice.
 - **ALWAYS**: Choose a "hero" font with personality for headings. Pair it with a highly legible, refined body font.
 - **ACTION**: Look for fonts like *Outfit, Syne, Cabinet Grotesk, Bricolage Grotesque, Cl Clash* or distinctive Google Fonts that carry character.
@@ -61,3 +66,4 @@ Choose an extreme to anchor your design:
 - [ ] Is there a "purple gradient on white" background? (If yes, EXPLORE OTHER PALETTES).
 - [ ] Does it look like a standard dashboard template? (If yes, PIVOT to a specific aesthetic).
 - [ ] Is the layout predictable? (If yes, ADD ASYMMETRY or OVERLAP).
+- [ ] Did you build a complex section from scratch without checking `vibe-blocks` first? (If yes, SEARCH vibe-blocks first).

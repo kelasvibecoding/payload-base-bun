@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Payload Base - Private Setup Script
+ * Antigravity x PayloadCMS Boilerplate - Setup Script
  * Developed with ❤️ by Kelas Vibe Coding
  */
 
@@ -20,6 +20,62 @@ const log = (msg) => console.log(msg)
 const error = (msg) => console.error(`\x1b[31m${msg}\x1b[0m`)
 const success = (msg) => console.log(`\x1b[32m${msg}\x1b[0m`)
 const info = (msg) => console.log(`\x1b[34m${msg}\x1b[0m`)
+
+// --- Help Flag ---
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  log(`
+\x1b[31m  Antigravity × PayloadCMS Boilerplate\x1b[0m
+${'━'.repeat(50)}
+
+Usage:
+  npx payload-base-bun <project-name> [options]
+  npx payload-base-bun --abilityonly
+
+Commands:
+  <project-name>     Create a new Payload CMS + Next.js project
+  --abilityonly      Inject Antigravity agent configs into existing project
+
+Options:
+  --ability          Include Antigravity agent ability (requires Access Key)
+  --mobile           Apply mobile-first layout (max-width: 480px)
+  --db=<adapter>     Pre-select DB adapter:
+                       sqlite    (default — local file, no setup needed)
+                       mongodb   (requires MongoDB URI)
+                       postgres  (requires PostgreSQL connection string)
+  --help, -h         Show this help message
+
+Examples:
+  npx payload-base-bun my-app
+  npx payload-base-bun my-app --ability
+  npx payload-base-bun my-app --mobile --db=postgres
+  npx payload-base-bun --abilityonly
+${'━'.repeat(50)}
+`)
+  process.exit(0)
+}
+
+/**
+ * Validate project name — lowercase, numbers, hyphens, dots, underscores only.
+ * @param {string} name
+ * @returns {string|null} error message or null if valid
+ */
+function validateProjectName(name) {
+  if (!name || name.trim().length === 0) return 'Project name cannot be empty.'
+  if (name.length > 50) return 'Project name must be 50 characters or fewer.'
+  if (/^[.-]/.test(name)) return 'Project name cannot start with a dot or hyphen.'
+  if (!/^[a-z0-9._-]+$/.test(name))
+    return 'Project name must contain only lowercase letters, numbers, hyphens, dots, or underscores.'
+  return null
+}
+
+// Parse --db flag
+const dbArg = process.argv.find((a) => a.startsWith('--db='))
+const dbAdapter = dbArg ? dbArg.split('=')[1] : 'sqlite'
+const validAdapters = ['sqlite', 'mongodb', 'postgres']
+if (dbArg && !validAdapters.includes(dbAdapter)) {
+  error(`\u274c Invalid --db value: "${dbAdapter}". Valid options: ${validAdapters.join(', ')}`)
+  process.exit(1)
+}
 
 /**
  * Visual Progress Bar
@@ -51,8 +107,7 @@ function showProgress(message, duration = 2000) {
 
 async function setup() {
   log('\n' + '━'.repeat(50))
-  // Red color for the title
-  log('\x1b[31m   KELAS VIBE CODING - PAYLOAD BASE BUN SETUP\x1b[0m')
+  log('\x1b[31m   ANTIGRAVITY × PAYLOADCMS BOILERPLATE SETUP\x1b[0m')
   log('━'.repeat(50) + '\n')
 
   const keepAbilities = process.argv.includes('--ability')
@@ -78,6 +133,46 @@ async function setup() {
     }
   }
 
+  const updateAgentContext = (projectPath, appType, projectName = 'Payload-Base-Bun') => {
+    if (!appType || !appType.trim()) return
+
+    const contextPath = path.join(projectPath, 'CONTEXT.md')
+    if (fs.existsSync(contextPath)) {
+      let content = fs.readFileSync(contextPath, 'utf8')
+      content = content.replace(
+        /To provide a production-grade, highly-scalable headless CMS boilerplate.*/,
+        `To build a production-grade, highly-scalable **${appType.trim()}** application using a Feature-Based Architecture (FBA), SOLID principles, and Single Source of Truth (SSOT).`,
+      )
+      content = content.replace(
+        /\*\*Project Name:\*\* Payload-Base-Bun/,
+        `**Project Name:** ${projectName}`,
+      )
+      fs.writeFileSync(contextPath, content)
+    }
+
+    const missionPath = path.join(projectPath, 'mission.md')
+    if (fs.existsSync(missionPath)) {
+      let content = fs.readFileSync(missionPath, 'utf8')
+      content = content.replace(
+        /Understand and adapt the Antigravity Workspace Implementation.*/,
+        `Build a high-quality ${appType.trim()} platform using Payload CMS and Next.js.`,
+      )
+      fs.writeFileSync(missionPath, content)
+    }
+    info(`\n  ℹ️  Agent Context tuned for: ${appType.trim()}`)
+  }
+
+  const updateGitignore = (projectPath) => {
+    const gitignorePath = path.join(projectPath, '.gitignore')
+    if (fs.existsSync(gitignorePath)) {
+      let content = fs.readFileSync(gitignorePath, 'utf8')
+      if (!content.includes('.agent')) {
+        content += '\n# Antigravity AI\n.agent\n.antigravity\n'
+        fs.writeFileSync(gitignorePath, content)
+      }
+    }
+  }
+
   // --- MODE: Ability Only (Injection) ---
   if (abilityOnly) {
     rl.question(
@@ -88,36 +183,54 @@ async function setup() {
           process.exit(1)
         }
 
-        const tempDir = `.temp-payload-base-${Date.now()}`
-        const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
+        rl.question(
+          '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
+          async (appType) => {
+            const tempDir = `.temp-payload-base-${Date.now()}`
+            const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
 
-        try {
-          info('\n🚀 Injecting Agent Ability into current codebase...')
-          process.stdout.write(`\rCloning source...`)
-          execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
+            try {
+              info('\n🚀 Injecting Agent Ability into current codebase...')
+              process.stdout.write(`\rCloning source...`)
+              execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
 
-          await showProgress('Merging Agent configurations', 1500)
+              await showProgress('Merging Agent configurations', 1500)
 
-          const agentSrc = path.join(tempDir, '.agent')
-          const cursorSrc = path.join(tempDir, '.cursor')
+              const agentSrc = path.join(tempDir, '.agent')
+              const antigravitySrc = path.join(tempDir, '.antigravity')
+              const contextSrc = path.join(tempDir, 'CONTEXT.md')
+              const agentsSrc = path.join(tempDir, 'AGENTS.md')
+              const missionSrc = path.join(tempDir, 'mission.md')
 
-          if (fs.existsSync(agentSrc)) copyDir(agentSrc, path.join(process.cwd(), '.agent'))
-          if (fs.existsSync(cursorSrc)) copyDir(cursorSrc, path.join(process.cwd(), '.cursor'))
+              if (fs.existsSync(agentSrc)) copyDir(agentSrc, path.join(process.cwd(), '.agent'))
+              if (fs.existsSync(antigravitySrc))
+                copyDir(antigravitySrc, path.join(process.cwd(), '.antigravity'))
+              if (fs.existsSync(contextSrc))
+                fs.copyFileSync(contextSrc, path.join(process.cwd(), 'CONTEXT.md'))
+              if (fs.existsSync(agentsSrc))
+                fs.copyFileSync(agentsSrc, path.join(process.cwd(), 'AGENTS.md'))
+              if (fs.existsSync(missionSrc))
+                fs.copyFileSync(missionSrc, path.join(process.cwd(), 'mission.md'))
 
-          // Cleanup temp
-          fs.rmSync(tempDir, { recursive: true, force: true })
+              updateAgentContext(process.cwd(), appType, path.basename(process.cwd()))
+              updateGitignore(process.cwd())
 
-          log('\n' + '━'.repeat(50))
-          success('✨ AGENT ABILITY INJECTED SUCCESSFULLY!')
-          log('━'.repeat(50))
-          info('Your current codebase is now optimized for AI tools (Cursor/Antigravity).')
-          log('\n')
-        } catch {
-          error('\n\n❌ Injection Failed.')
-          error('Check your Access Key and Internet connection.')
-        } finally {
-          rl.close()
-        }
+              // Cleanup temp
+              fs.rmSync(tempDir, { recursive: true, force: true })
+
+              log('\n' + '━'.repeat(50))
+              success('✨ AGENT ABILITY INJECTED SUCCESSFULLY!')
+              log('━'.repeat(50))
+              info('Your current codebase is now optimized for Antigravity AI.')
+              log('\n')
+            } catch {
+              error('\n\n❌ Injection Failed.')
+              error('Check your Access Key and Internet connection.')
+            } finally {
+              rl.close()
+            }
+          },
+        )
       },
     )
     return
@@ -125,14 +238,23 @@ async function setup() {
 
   // --- MODE: Standard Setup ---
   rl.question('Enter your Project Name: ', async (projectName) => {
-    const targetDir = projectName.trim() || 'kelas-vibe-coding-app'
+    const trimmed = projectName.trim() || 'payload-base-app'
 
+    // Validate project name
+    const nameError = validateProjectName(trimmed)
+    if (nameError) {
+      error(`❌ Invalid project name: ${nameError}`)
+      rl.close()
+      process.exit(1)
+    }
+
+    const targetDir = trimmed
     if (fs.existsSync(targetDir)) {
       error(`❌ Error: Directory "${targetDir}" already exists.`)
       process.exit(1)
     }
 
-    const startSetup = async (token = null) => {
+    const startSetup = async (token = null, appType = '') => {
       const repoUrl = token
         ? `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
         : `https://github.com/kelasvibecoding/payload-base-bun.git`
@@ -169,6 +291,24 @@ async function setup() {
             'PAYLOAD_SECRET=YOUR_SECRET_HERE',
             `PAYLOAD_SECRET=${secret}`,
           )
+
+          // Inject DATABASE_URL based on --db flag
+          if (dbAdapter === 'mongodb') {
+            envContent = envContent.replace(
+              /DATABASE_URL=.*/,
+              'DATABASE_URL=mongodb://localhost:27017/my-payload-app',
+            )
+            info('  ℹ️  DATABASE_URL set for MongoDB. Update with your connection string.')
+          } else if (dbAdapter === 'postgres') {
+            envContent = envContent.replace(
+              /DATABASE_URL=.*/,
+              'DATABASE_URL=postgresql://user:password@localhost:5432/my-payload-app',
+            )
+            info('  ℹ️  DATABASE_URL set for Postgres. Update with your connection string.')
+          } else {
+            info('  ℹ️  Using SQLite (default). DB file: ./local.db')
+          }
+
           fs.writeFileSync('.env', envContent)
           await showProgress('Configuring environment variables & Generating Secret', 1000)
         }
@@ -240,13 +380,20 @@ async function setup() {
             }
           }
           fs.rmSync('package.installer.json', { force: true })
+          fs.rmSync('CONTRIBUTING.md', { force: true })
 
           fs.rmSync('.github', { recursive: true, force: true })
 
           if (!keepAbilities) {
             await showProgress('Removing Agent-specific configurations', 1000)
             fs.rmSync('.agent', { recursive: true, force: true })
-            fs.rmSync('.cursor', { recursive: true, force: true })
+            fs.rmSync('.antigravity', { recursive: true, force: true })
+            fs.rmSync('CONTEXT.md', { force: true })
+            fs.rmSync('AGENTS.md', { force: true })
+            fs.rmSync('mission.md', { force: true })
+          } else {
+            updateAgentContext(projectPath, appType, projectName)
+            updateGitignore(projectPath)
           }
         } catch {
           // Cleanup errors are non-critical - files may not exist
@@ -257,7 +404,7 @@ async function setup() {
         log('━'.repeat(50))
         log(`Location: ${projectPath}`)
         if (keepAbilities) {
-          info('✨ Agent Ability enabled! Your project is optimized for AI tools.')
+          info('✨ Agent Ability enabled! Your project is optimized for Antigravity AI.')
         }
         log('\nNext suggested commands:')
         log(`\x1b[31m  1. cd ${targetDir}\x1b[0m`)
@@ -282,7 +429,12 @@ async function setup() {
             error('❌ Error: Access Key is required for --ability.')
             process.exit(1)
           }
-          await startSetup(token)
+          rl.question(
+            '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
+            async (appType) => {
+              await startSetup(token, appType)
+            },
+          )
         },
       )
     } else {

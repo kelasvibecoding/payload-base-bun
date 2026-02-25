@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { USER_ROLE_OPTIONS } from '@/features/auth/constants'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -25,16 +26,7 @@ export const Users: CollectionConfig = {
       type: 'select',
       required: true,
       defaultValue: 'admin',
-      options: [
-        {
-          label: 'Admin',
-          value: 'admin',
-        },
-        {
-          label: 'Staff',
-          value: 'staff',
-        },
-      ],
+      options: [...USER_ROLE_OPTIONS],
       saveToJWT: true,
     },
     {

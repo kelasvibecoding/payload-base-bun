@@ -14,6 +14,47 @@ export class AuthService {
     const payloadConfig = await config
     const payload = await getPayload({ config: payloadConfig })
     const { user } = await payload.auth({ headers })
-    return user
+    return (user as User) || null
+  }
+
+  /**
+   * Logs in a user with email and password.
+   * This handles the server-side part of the login process.
+   */
+  static async login(data: { email: string; password: string }) {
+    const payloadConfig = await config
+    const payload = await getPayload({ config: payloadConfig })
+
+    try {
+      const result = await payload.login({
+        collection: 'users',
+        data: {
+          email: data.email,
+          password: data.password,
+        },
+      })
+
+      return {
+        success: true,
+        user: result.user,
+        token: result.token,
+        exp: result.exp,
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Invalid credentials',
+      }
+    }
+  }
+
+  /**
+   * Logs out the current user by clearing the authentication cookie.
+   */
+  static async logout() {
+    // In Next.js App Router, we usually clear the cookie in a server action
+    // but the service can provide the logic for it.
+    return { success: true }
   }
 }

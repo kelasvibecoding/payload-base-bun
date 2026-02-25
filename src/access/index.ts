@@ -1,87 +1,39 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Access, AccessArgs, PayloadRequest, Where } from 'payload'
+import type { Access, AccessArgs, PayloadRequest } from 'payload'
 import type { User } from '../payload-types'
+import { isAdmin, isStaff, isAuthenticated } from './predicates'
+import { ownerFilter } from './filters'
+
+// Export all helpers for convenient usage elsewhere
+export * from './predicates'
+export * from './filters'
 
 /* ==========================================================================
-   Boolean Helpers (Context-Agnostic)
+   Common Payload Access Control Policies
    ========================================================================== */
 
 /**
- * Checks if the user is an admin.
+ * Policy: Open access to anyone (public).
  */
-export const isAdmin = (
-  args: { req?: PayloadRequest; user?: User | null | any } | AccessArgs | any,
-): boolean => {
-  const user = args?.user || args?.req?.user
-  return user?.role === 'admin' || false
-}
-
-/**
- * Checks if the user is staff.
- */
-export const isStaff = (
-  args: { req?: PayloadRequest; user?: User | null | any } | AccessArgs | any,
-): boolean => {
-  const user = args?.user || args?.req?.user
-  return user?.role === 'staff' || false
-}
-
-/**
- * Checks if the user is authenticated.
- */
-export const isAuthenticated = (
-  args: { req?: PayloadRequest; user?: User | null | any } | AccessArgs | any,
-): boolean => {
-  const user = args?.user || args?.req?.user
-  return Boolean(user)
-}
-
-/**
- * Helper specifically for admin panel access.
- */
-export const canAccessAdmin = (
-  args: { req?: PayloadRequest; user?: User | null | any } | AccessArgs | any,
-): boolean => {
-  return isAdmin(args) || isStaff(args)
-}
-
-/**
- * Checks if the user is an admin or the owner (based on matching IDs).
- */
-export const isAdminOrSelf = (args: { req: PayloadRequest; id?: string | number }): boolean => {
-  const user = args?.req?.user as User | undefined
-  if (!user) return false
-  if (isAdmin(args)) return true
-  return user.id === args?.id
-}
-
-/* ==========================================================================
-   Ownership Filter Logic
-   ========================================================================== */
-
-/**
- * Internal helper to generate ownership filters.
- */
-const ownerFilter = (user: User | null | undefined, fieldName: string): Where => ({
-  [fieldName]: {
-    equals: user?.id,
-  },
-})
-
-/* ==========================================================================
-   Payload Access Control Functions
-   ========================================================================== */
-
 export const anyone: Access = () => true
 
+/**
+ * Policy: Restrict access to administrators only.
+ */
 export const admin: Access = (args: AccessArgs) => isAdmin(args)
 
+/**
+ * Policy: Restrict access to authenticated users only.
+ */
 export const authenticated: Access = (args: AccessArgs) => isAuthenticated(args)
 
+/**
+ * Policy: Restrict access to admins or staff members.
+ */
 export const adminOrStaff: Access = (args: AccessArgs) => isAdmin(args) || isStaff(args)
 
 /**
- * Allows admins all, or users their own records based on 'user' field.
+ * Policy: Allows admins full access, or users access to records they own
+ * (based on a 'user' relationship field).
  */
 export const adminOrOwner: Access = (args: AccessArgs) => {
   if (isAdmin(args)) return true
@@ -89,9 +41,20 @@ export const adminOrOwner: Access = (args: AccessArgs) => {
 }
 
 /**
- * Allows admins all, or users their own record (Users collection).
+ * Policy: Allows admins full access, or users access to their own record
+ * (specifically for the Users collection using 'id').
  */
 export const adminOrSelfAccess: Access = (args: AccessArgs) => {
   if (isAdmin(args)) return true
   return ownerFilter(args.req?.user as User, 'id')
+}
+
+/**
+ * Helper specifically for checking if a user can access the admin panel via collection-level access.
+ */
+export const isAdminOrSelf = (args: { req: PayloadRequest; id?: string | number }): boolean => {
+  const user = args?.req?.user as User | undefined
+  if (!user) return false
+  if (isAdmin(args)) return true
+  return user.id === args?.id
 }

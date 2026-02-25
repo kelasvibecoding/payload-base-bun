@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react'
 import { GoogleAuthButton } from '@/features/auth/components/google-auth-button'
+import { SignUpForm } from '@/features/auth/components/sign-up-form'
 import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -21,7 +22,7 @@ export default function SignUpPage() {
   return (
     <div className="relative min-h-screen w-full">
       <BackgroundMesh />
-      <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center py-12">
+      <div className="relative z-10 flex min-h-screen w-full flex-col items-center justify-center pt-28 pb-12">
         <GlassCard>
           <CardHeader className="space-y-2 pb-6 text-center">
             <m.div
@@ -74,8 +75,16 @@ export default function SignUpPage() {
                 <span className="border-foreground/10 w-full border-t dark:border-white/10" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background text-muted-foreground px-2">Quick Access</span>
+                <span className="bg-background text-muted-foreground px-2">Or continue with email</span>
               </div>
+            </m.div>
+
+            <m.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <SignUpForm />
             </m.div>
 
             <m.div

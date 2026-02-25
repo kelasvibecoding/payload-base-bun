@@ -65,7 +65,7 @@ src/
 ├── payload-types.ts         # Automatically generated TypeScript types
 └── payload.config.ts        # Primary Payload configuration
 
-ai-doc/                      # Planning & AI documentation artifacts
+docs/                        # Planning & AI documentation artifacts
 ```
 
 ## Best Practices
@@ -92,8 +92,8 @@ ai-doc/                      # Planning & AI documentation artifacts
 - **HTML Validity**: Ensure standard HTML rules are followed (e.g., no `<div>` inside `<p>`). Use `<span>` for block-like styling inside paragraphs if necessary.
 
 ### 6. Documentation & Planning
-- **Centralized AI Artifacts**: All AI-generated outputs—including implementation plans, architecture definitions, code audits, logs, analysis reports, and research notes—MUST be saved to the `/ai-doc` directory.
-- **Organization**: Use subfolders if necessary (e.g., `/ai-doc/plans`, `/ai-doc/audits`) to keep the directory clean.
+- **Centralized AI Artifacts**: All AI-generated outputs—including implementation plans, architecture definitions, code audits, logs, analysis reports, and research notes—MUST be saved to the `docs/` directory.
+- **Organization**: Follow the `docs/` subfolder structure (`/docs/design` for plans, `/docs/prd` for requirements, `/docs/adr` for architecture decisions) to keep the repository clean.
 - **Format**: Use Markdown (`.md`) for documentation and standard formats (txt/json/csv) for logs and data.
 
 ## Common Commands

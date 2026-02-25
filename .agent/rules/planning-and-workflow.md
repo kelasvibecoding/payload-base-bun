@@ -16,16 +16,15 @@ Maintain a structured approach to development by planning first and implementing
 - **DON'T proceed with vague or incomplete instructions**.
 
 ## 2. Strategic Plan Documentation
-- **CHECK if `plans/` folder exists** before creating it.
-- **CREATE `plans/` folder** only if it doesn't exist.
-- **ORGANIZE all plans** in the `plans/` folder.
+- **CHECK if `docs/design/` folder exists** before creating plans.
+- **ORGANIZE all plans** in the `docs/design/` folder.
 - **ASK user** if the strategic plan is final before implementation.
 - **REQUEST permission** to write finalized plans to markdown.
 - **USE filename format** `feature-scope.md` for strategic plans.
 - **DOCUMENT completed plans** to avoid re-planning the same features.
 - **REFERENCE existing plans** when similar features are requested.
 - **UPDATE plans** only when user explicitly requests changes.
-- **MAINTAIN organized structure** in the plans folder.
+- **MAINTAIN organized structure** in the docs folder.
 
 ## 3. Strategy Planning Template
 When starting a new feature, use the following structure:

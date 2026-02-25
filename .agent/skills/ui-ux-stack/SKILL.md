@@ -23,8 +23,9 @@ Your design should feel cohesive between the **Payload Admin Panel** and the **C
 - **Visual Texture**: Avoid solid flat backgrounds. Use grain overlays, noise, or gradient meshes to create depth.
 - **Dynamic Response**: Implement micro-interactions (hover states, spring animations) that feel alive.
 
-### 2. Shadcn-First Implementation
-- **Primitives**: Always start with Shadcn UI primitives in `@/components/ui`.
+### 2. Component Ecosystem (Vibe Blocks & Shadcn)
+- **Vibe Blocks First**: Always search `.agent/skills/vibe-blocks` for marketing sections, complex bento grids, and layouts before building from scratch.
+- **Primitives**: Start with Shadcn UI primitives in `@/components/ui`.
 - **Atomic Modification**: Customize components via Tailwind classes, not by overriding the core Radix primitives unless necessary.
 - **Theming**: Use CSS variables for colors (`--primary`, `--background`, etc.) to ensure seamless light/dark mode support.
 - **Safe Merging**: Always use the `cn` utility (from `@/lib/utils`) for merging Tailwind classes and conditional logic.
@@ -137,4 +138,7 @@ python3 .agent/skills/ui-ux-stack/scripts/search.py "suspense caching image" --s
 - [ ] Accessible focus states (visible rings).
 
 ---
-*Reference the `software-architecture` skill for backend/service-layer structure and `senior-fullstack` for full tech stack integration.*
+*Reference:* 
+- *The `vibe-blocks` skill for grabbing 2,000+ pre-built React/Tailwind layouts.*
+- *The `software-architecture` skill for backend/service-layer structure.*
+- *The `senior-fullstack` skill for full tech stack integration.*
