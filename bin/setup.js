@@ -245,7 +245,10 @@ async function setup() {
   }
 
   // --- MODE: Standard Setup ---
-  rl.question('Enter your Project Name: ', async (projectName) => {
+  const args = process.argv.slice(2)
+  const projectNameArg = args.find((a) => !a.startsWith('-'))
+
+  const handleProjectSetup = async (projectName) => {
     const trimmed = projectName.trim() || 'payload-base-app'
 
     // Validate project name
@@ -446,7 +449,13 @@ async function setup() {
     } else {
       await startSetup()
     }
-  })
+  }
+
+  if (projectNameArg) {
+    await handleProjectSetup(projectNameArg)
+  } else {
+    rl.question('Enter your Project Name: ', handleProjectSetup)
+  }
 }
 
 setup()
