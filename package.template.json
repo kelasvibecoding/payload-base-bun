@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "packageManager": "bun@1.2.0",
-  "type": "module", 
+  "type": "module",
   "preferGlobal": true,
   "bin": {
     "payload-base-bun": "./bin/setup.js"
