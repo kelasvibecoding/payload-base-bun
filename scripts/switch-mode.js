@@ -71,15 +71,21 @@ if (mode === 'dev') {
         console.log('✅ Ready to push!')
       } else {
         // Fallback if backup missing - recreate minimal
-        console.log('⚠️ Installer backup missing. Creating fresh minimal package.json...')
         const minimal = {
-          name: '@kelasvibecoding/payload-base',
-          version: '1.0.6',
+          name: '@kelasvibecoding/payload-base-bun',
+          version: '1.0.4',
           description: 'Installer for Payload Base Template',
+          publishConfig: {
+            registry: 'https://npm.pkg.github.com'
+          },
+          repository: {
+            type: 'git',
+            url: 'https://github.com/kelasvibecoding/payload-base-bun.git'
+          },
           license: 'MIT',
           type: 'module',
           bin: {
-            'payload-base': './bin/setup.js',
+            'payload-base-bun': './bin/setup.js',
           },
           scripts: {
             'dev:mode': 'node scripts/switch-mode.js dev',

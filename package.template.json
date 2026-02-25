@@ -2,12 +2,19 @@
   "name": "@kelasvibecoding/payload-base-bun",
   "version": "1.0.4",
   "description": "A premium Payload 3.0 base template by Kelas Vibe Coding",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kelasvibecoding/payload-base-bun.git"
+  },
   "license": "MIT",
   "packageManager": "bun@1.2.0",
   "type": "module", 
   "preferGlobal": true,
   "bin": {
-    "payload-base": "./bin/setup.js"
+    "payload-base-bun": "./bin/setup.js"
   },
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build && node scripts/post-build.js",

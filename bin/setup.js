@@ -28,8 +28,8 @@ if (process.argv.includes('--help') || process.argv.includes('-h')) {
 ${'━'.repeat(50)}
 
 Usage:
-  npx payload-base-bun <project-name> [options]
-  npx payload-base-bun --abilityonly
+  npx @kelasvibecoding/payload-base-bun <project-name> [options]
+  npx @kelasvibecoding/payload-base-bun --abilityonly
 
 Commands:
   <project-name>     Create a new Payload CMS + Next.js project
@@ -45,10 +45,10 @@ Options:
   --help, -h         Show this help message
 
 Examples:
-  npx payload-base-bun my-app
-  npx payload-base-bun my-app --ability
-  npx payload-base-bun my-app --mobile --db=postgres
-  npx payload-base-bun --abilityonly
+  npx @kelasvibecoding/payload-base-bun my-app
+  npx @kelasvibecoding/payload-base-bun my-app --ability
+  npx @kelasvibecoding/payload-base-bun my-app --mobile --db=postgres
+  npx @kelasvibecoding/payload-base-bun --abilityonly
 ${'━'.repeat(50)}
 `)
   process.exit(0)
@@ -134,15 +134,15 @@ async function setup() {
   }
 
   const updateAgentContext = (projectPath, appType, projectName = 'Payload-Base-Bun') => {
-    if (!appType || !appType.trim()) return
-
     const contextPath = path.join(projectPath, 'CONTEXT.md')
     if (fs.existsSync(contextPath)) {
       let content = fs.readFileSync(contextPath, 'utf8')
-      content = content.replace(
-        /To provide a production-grade, highly-scalable headless CMS boilerplate.*/,
-        `To build a production-grade, highly-scalable **${appType.trim()}** application using a Feature-Based Architecture (FBA), SOLID principles, and Single Source of Truth (SSOT).`,
-      )
+      if (appType && appType.trim()) {
+        content = content.replace(
+          /To provide a production-grade, highly-scalable headless CMS boilerplate.*/,
+          `To build a production-grade, highly-scalable **${appType.trim()}** application using a Feature-Based Architecture (FBA), SOLID principles, and Single Source of Truth (SSOT).`,
+        )
+      }
       content = content.replace(
         /\*\*Project Name:\*\* Payload-Base-Bun/,
         `**Project Name:** ${projectName}`,
@@ -153,13 +153,18 @@ async function setup() {
     const missionPath = path.join(projectPath, 'mission.md')
     if (fs.existsSync(missionPath)) {
       let content = fs.readFileSync(missionPath, 'utf8')
-      content = content.replace(
-        /Understand and adapt the Antigravity Workspace Implementation.*/,
-        `Build a high-quality ${appType.trim()} platform using Payload CMS and Next.js.`,
-      )
+      if (appType && appType.trim()) {
+        content = content.replace(
+          /Understand and adapt the Antigravity Workspace Implementation.*/,
+          `Build a high-quality ${appType.trim()} platform using Payload CMS and Next.js.`,
+        )
+      }
       fs.writeFileSync(missionPath, content)
     }
-    info(`\n  ℹ️  Agent Context tuned for: ${appType.trim()}`)
+
+    if (appType && appType.trim()) {
+      info(`\n  ℹ️  Agent Context tuned for: ${appType.trim()}`)
+    }
   }
 
   const updateGitignore = (projectPath) => {
@@ -173,10 +178,42 @@ async function setup() {
     }
   }
 
+  const injectAbilities = async (token, appType, projectName) => {
+    const tempDir = `.temp-payload-base-${Date.now()}`
+    const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base-ability.git`
+
+    info('\n🚀 Fetching Agent Ability configurations...')
+    process.stdout.write(`\rCloning source...`)
+    execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
+
+    await showProgress('Merging Agent configurations', 1500)
+
+    const agentSrc = path.join(tempDir, '.agent')
+    const antigravitySrc = path.join(tempDir, '.antigravity')
+    const contextSrc = path.join(tempDir, 'CONTEXT.md')
+    const agentsSrc = path.join(tempDir, 'AGENTS.md')
+    const missionSrc = path.join(tempDir, 'mission.md')
+
+    if (fs.existsSync(agentSrc)) copyDir(agentSrc, path.join(process.cwd(), '.agent'))
+    if (fs.existsSync(antigravitySrc))
+      copyDir(antigravitySrc, path.join(process.cwd(), '.antigravity'))
+    if (fs.existsSync(contextSrc))
+      fs.copyFileSync(contextSrc, path.join(process.cwd(), 'CONTEXT.md'))
+    if (fs.existsSync(agentsSrc))
+      fs.copyFileSync(agentsSrc, path.join(process.cwd(), 'AGENTS.md'))
+    if (fs.existsSync(missionSrc))
+      fs.copyFileSync(missionSrc, path.join(process.cwd(), 'mission.md'))
+
+    updateAgentContext(process.cwd(), appType, projectName)
+    updateGitignore(process.cwd())
+
+    fs.rmSync(tempDir, { recursive: true, force: true })
+  }
+
   // --- MODE: Ability Only (Injection) ---
   if (abilityOnly) {
     rl.question(
-      'Enter your Access Key (Provider for --abilityonly purchase 💎): ',
+      'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
       async (token) => {
         if (!token) {
           error('❌ Error: Access Key is required for --abilityonly.')
@@ -186,37 +223,8 @@ async function setup() {
         rl.question(
           '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
           async (appType) => {
-            const tempDir = `.temp-payload-base-${Date.now()}`
-            const repoUrl = `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
-
             try {
-              info('\n🚀 Injecting Agent Ability into current codebase...')
-              process.stdout.write(`\rCloning source...`)
-              execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
-
-              await showProgress('Merging Agent configurations', 1500)
-
-              const agentSrc = path.join(tempDir, '.agent')
-              const antigravitySrc = path.join(tempDir, '.antigravity')
-              const contextSrc = path.join(tempDir, 'CONTEXT.md')
-              const agentsSrc = path.join(tempDir, 'AGENTS.md')
-              const missionSrc = path.join(tempDir, 'mission.md')
-
-              if (fs.existsSync(agentSrc)) copyDir(agentSrc, path.join(process.cwd(), '.agent'))
-              if (fs.existsSync(antigravitySrc))
-                copyDir(antigravitySrc, path.join(process.cwd(), '.antigravity'))
-              if (fs.existsSync(contextSrc))
-                fs.copyFileSync(contextSrc, path.join(process.cwd(), 'CONTEXT.md'))
-              if (fs.existsSync(agentsSrc))
-                fs.copyFileSync(agentsSrc, path.join(process.cwd(), 'AGENTS.md'))
-              if (fs.existsSync(missionSrc))
-                fs.copyFileSync(missionSrc, path.join(process.cwd(), 'mission.md'))
-
-              updateAgentContext(process.cwd(), appType, path.basename(process.cwd()))
-              updateGitignore(process.cwd())
-
-              // Cleanup temp
-              fs.rmSync(tempDir, { recursive: true, force: true })
+              await injectAbilities(token, appType, path.basename(process.cwd()))
 
               log('\n' + '━'.repeat(50))
               success('✨ AGENT ABILITY INJECTED SUCCESSFULLY!')
@@ -255,9 +263,8 @@ async function setup() {
     }
 
     const startSetup = async (token = null, appType = '') => {
-      const repoUrl = token
-        ? `https://${token}@github.com/kelasvibecoding/payload-base-bun.git`
-        : `https://github.com/kelasvibecoding/payload-base-bun.git`
+      // The base boilerplate is always public
+      const repoUrl = `https://github.com/kelasvibecoding/payload-base-bun.git`
 
       try {
         log(`\nInitializing project: \x1b[33m${targetDir}\x1b[0m`)
@@ -384,16 +391,15 @@ async function setup() {
 
           fs.rmSync('.github', { recursive: true, force: true })
 
-          if (!keepAbilities) {
-            await showProgress('Removing Agent-specific configurations', 1000)
-            fs.rmSync('.agent', { recursive: true, force: true })
-            fs.rmSync('.antigravity', { recursive: true, force: true })
-            fs.rmSync('CONTEXT.md', { force: true })
-            fs.rmSync('AGENTS.md', { force: true })
-            fs.rmSync('mission.md', { force: true })
-          } else {
-            updateAgentContext(projectPath, appType, projectName)
-            updateGitignore(projectPath)
+          // Strip any legacy agent artifacts first to be safe
+          fs.rmSync('.agent', { recursive: true, force: true })
+          fs.rmSync('.antigravity', { recursive: true, force: true })
+          fs.rmSync('CONTEXT.md', { force: true })
+          fs.rmSync('AGENTS.md', { force: true })
+          fs.rmSync('mission.md', { force: true })
+
+          if (keepAbilities && token) {
+            await injectAbilities(token, appType, projectName)
           }
         } catch {
           // Cleanup errors are non-critical - files may not exist
@@ -423,7 +429,7 @@ async function setup() {
 
     if (keepAbilities) {
       rl.question(
-        'Enter your Access Key (Available only with the Ebook/ Class purchase 💎): ',
+        'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
         async (token) => {
           if (!token) {
             error('❌ Error: Access Key is required for --ability.')

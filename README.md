@@ -26,25 +26,41 @@
 
 ## ⚡ Quick Start
 
+### 🔐 Authenticating with GitHub Packages
+
+This boilerplate is published securely via the GitHub Packages registry. Before you can download it via `npx`, you must authenticate your machine by creating a global `.npmrc` file.
+
+1. **Get your Access Key**: This is provided to you upon purchasing the Ebook/Class. It acts as both your NPM authentication token and your Agent setup token.
+2. **Create the `.npmrc` file in your home directory**:
+   - **Mac/Linux:** `~/.npmrc`
+   - **Windows:** `C:\Users\YourUsername\.npmrc`
+3. Add the following content to the file, replacing `PAID_ACCESS_KEY` with the token provided in the class:
+```ini
+@kelasvibecoding:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=PAID_ACCESS_KEY
+```
+
+### Setup Scripts
+
 ```bash
 # Standard setup (SQLite — default, no DB required)
-npx payload-base-bun my-project
+npx @kelasvibecoding/payload-base-bun my-project
 cd my-project && bun install && bun dev
 
 # With Postgres pre-configured in .env
-npx payload-base-bun my-project --db=postgres
+npx @kelasvibecoding/payload-base-bun my-project --db=postgres
 
 # With MongoDB pre-configured in .env
-npx payload-base-bun my-project --db=mongodb
+npx @kelasvibecoding/payload-base-bun my-project --db=mongodb
 
 # With Agent Ability (Access Key required — Ebook/Class purchase)
-npx payload-base-bun my-project --ability
+npx @kelasvibecoding/payload-base-bun my-project --ability
 
 # Mobile layout variant (max-width: 480px)
-npx payload-base-bun my-project --mobile
+npx @kelasvibecoding/payload-base-bun my-project --mobile
 
 # Show all options
-npx payload-base-bun --help
+npx @kelasvibecoding/payload-base-bun --help
 ```
 
 > See [Getting Started Guide](docs/guides/getting-started.md) for full setup options.
@@ -59,7 +75,7 @@ Inject or update the Antigravity agent configurations (`.agent/`) into your exis
 
 ```bash
 # Inject Agent Ability into your existing Payload CMS project
-npx payload-base-bun --abilityonly
+npx @kelasvibecoding/payload-base-bun --abilityonly
 ```
 
 You will be prompted for your **Access Key**. The script will then:
@@ -298,7 +314,7 @@ A: Yes. Set `DATABASE_URL=postgresql://...` in `.env`. The `payload.config.ts` a
 A: Skills are context packs your agent loads automatically when working on specific areas (e.g., loading Payload documentation rules when editing collections). They prevent context exhaustion and keep responses accurate.
 
 **Q: Can I inject agent ability into an existing Payload project?**
-A: Yes — run `npx payload-base-bun --abilityonly`. The script verifies `src/payload.config.ts` exists before proceeding.
+A: Yes — run `npx @kelasvibecoding/payload-base-bun --abilityonly`. The script verifies `src/payload.config.ts` exists before proceeding.
 
 ---
 

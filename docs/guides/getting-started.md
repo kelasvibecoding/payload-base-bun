@@ -6,21 +6,35 @@
 
 ## ⚡ Quick Start
 
+### 🔐 Authenticating with GitHub Packages
+
+This boilerplate is published securely via the GitHub Packages registry. Before you can download it via `npx`, you must authenticate your machine by creating a global `.npmrc` file.
+
+1. **Get your Access Key**: This is provided to you upon purchasing the Ebook/Class. It acts as both your NPM authentication token and your Agent setup token.
+2. **Create the `.npmrc` file in your home directory**:
+   - **Mac/Linux:** `~/.npmrc`
+   - **Windows:** `C:\Users\YourUsername\.npmrc`
+3. Add the following content to the file, replacing `PAID_ACCESS_KEY` with the token provided in the class:
+```ini
+@kelasvibecoding:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=PAID_ACCESS_KEY
+```
+
 ### Standard Setup (Public)
 
 ```bash
 # Standard setup (SQLite — default, no DB required)
-npx payload-base-bun my-project
+npx @kelasvibecoding/payload-base-bun my-project
 cd my-project && bun install && bun dev
 
 # With Postgres pre-configured in .env
-npx payload-base-bun my-project --db=postgres
+npx @kelasvibecoding/payload-base-bun my-project --db=postgres
 
 # With MongoDB pre-configured in .env
-npx payload-base-bun my-project --db=mongodb
+npx @kelasvibecoding/payload-base-bun my-project --db=mongodb
 
 # Show all options
-npx payload-base-bun --help
+npx @kelasvibecoding/payload-base-bun --help
 ```
 
 ### With Agent Ability (Ebook/Class Access)
@@ -29,7 +43,7 @@ If you have a premium access key from the Kelas Vibe Coding ebook or class:
 
 ```bash
 # Includes .agent/ and .antigravity/ AI configurations
-npx payload-base-bun my-project --ability
+npx @kelasvibecoding/payload-base-bun my-project --ability
 ```
 
 You will be prompted for your **Access Key** during setup.
@@ -40,7 +54,7 @@ If you already have a project and want to add the AI configurations:
 
 ```bash
 # Run from your project root
-npx payload-base-bun --abilityonly
+npx @kelasvibecoding/payload-base-bun --abilityonly
 ```
 
 This copies `.agent/` (rules, workflows, and skills) into your current codebase.
@@ -49,7 +63,7 @@ This copies `.agent/` (rules, workflows, and skills) into your current codebase.
 
 ```bash
 # Applies mobile-first layout constraints (max-width: 480px)
-npx payload-base-bun my-project --mobile
+npx @kelasvibecoding/payload-base-bun my-project --mobile
 ```
 
 ---
@@ -147,7 +161,7 @@ Pre-configures `DATABASE_URL` in `.env` at project creation:
 | `postgres` | `postgresql://user:password@localhost:5432/my-payload-app` | Update with your connection string |
 
 ```bash
-npx payload-base-bun my-project --db=postgres
+npx @kelasvibecoding/payload-base-bun my-project --db=postgres
 ```
 
 ---
@@ -156,6 +170,6 @@ npx payload-base-bun my-project --db=postgres
 
 | Mode | Requires Key | What You Get |
 |------|-------------|--------------|
-| Standard (`npx payload-base-bun`) | ❌ No | Public boilerplate |
+| Standard (`npx @kelasvibecoding/payload-base-bun`) | ❌ No | Public boilerplate |
 | `--ability` | ✅ Yes (Ebook/Class) | + Antigravity agent rules, skills, workflows |
 | `--abilityonly` | ✅ Yes | Antigravity agent configs only (inject into existing project) |
