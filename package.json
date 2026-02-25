@@ -1,7 +1,7 @@
 {
   "name": "@kelasvibecoding/payload-base",
   "version": "1.0.6",
-  "description": "Installer for Payload Base Template",
+  "description": "Agentic coding TypeScript boilerplate — Sub-agent workflows, built-in quality checks, and context engineering for Payload CMS + Next.js applications.",
   "license": "MIT",
   "type": "module",
   "bin": {

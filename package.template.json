@@ -1,7 +1,7 @@
 {
   "name": "@kelasvibecoding/payload-base-bun",
   "version": "1.0.4",
-  "description": "A premium Payload 3.0 base template by Kelas Vibe Coding",
+  "description": "Agentic coding TypeScript boilerplate — Sub-agent workflows, built-in quality checks, and context engineering for Payload CMS + Next.js applications.",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
@@ -37,8 +37,13 @@
     "typecheck": "tsc --noEmit --pretty false"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"],
-    "*.{json,md,css,scss}": ["prettier --write"]
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,scss}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",
@@ -156,5 +161,9 @@
     "node": "^18.20.2 || >=20.9.0",
     "bun": "^1.2.0"
   },
-  "trustedDependencies": ["sharp", "esbuild", "unrs-resolver"]
+  "trustedDependencies": [
+    "sharp",
+    "esbuild",
+    "unrs-resolver"
+  ]
 }
