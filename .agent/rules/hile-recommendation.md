@@ -32,5 +32,12 @@ Present the options as follows:
    - Impact: [High]
    - Effort: [High/Medium]
 
-## 3. Wait for Approval
+## 3. Complexity Assessment Criteria
+Use this checklist when evaluating implementation options:
+- **Low effort, high impact**: (Recommended) Immediate implementation.
+- **Medium effort, high impact**: (Acceptable) Needs clear roadmap.
+- **High effort, low impact**: (Question this approach) Suggest alternative.
+- **High effort, high impact**: (Only if absolutely necessary) Requires strategic justification.
+
+## 4. Wait for Approval
 Never start implementing a complex feature without the user selecting an option or confirming the approach.

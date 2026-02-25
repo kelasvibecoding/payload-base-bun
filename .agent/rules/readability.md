@@ -1,7 +1,7 @@
 ---
 trigger: always_on
 glob: "**/*"
-description: Apply readability rules strictly to ensure high maintainability and clarity.
+description: Coding standards for readability, naming, and file organization.
 ---
 
 # Coding Standards: Readability & Naming
@@ -15,6 +15,9 @@ Apply these rules strictly when generating or modifying code to ensure high main
 
 ## 2. Code Splitting & Modularization
 - **Split Large Functions**: If a function or component grows too large, split it into smaller, focused sub-functions or sub-components.
+- **The "God Function" Prevention**:
+    - **Length Threshold**: Aim to keep functions under **50 lines**. Any function exceeding this should be scrutinized for splitting.
+    - **Sub-task Limit**: A function should handle a maximum of **two distinct sub-tasks**. If it does more (e.g., Validate + Fetch + Transform + Notify), split it using the SRP pattern in `fba-solid-ssot.md`.
 - **Single Responsibility**: Each piece of code should do one thing well.
 - **Functional Composition**: Prefer composing small, pure functions over large monolithic blocks.
 

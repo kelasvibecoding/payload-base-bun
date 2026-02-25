@@ -162,6 +162,17 @@ src/components/ui/button.tsx
 src/components/ui/input.tsx
 ```
 
+### Rule: Shared/Global Placement
+For code that is NOT specific to a single feature and needs to be shared globally:
+
+- **Server-side functions (Shared)** → `src/utilities/`
+- **Client-side hooks (Shared)** → `src/hooks/`
+- **API endpoints** → `src/app/(payload)/api/`
+- **Components (Shared/Generic)** → `src/components/`
+
+> [!IMPORTANT]
+> Always prefer placing code in `src/features/[name]/` first. Only use these shared directories for truly generic logic used by 3+ features.
+
 ---
 
 ## 3. SOLID Principles Enforcement

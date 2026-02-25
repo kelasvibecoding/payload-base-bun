@@ -231,7 +231,14 @@ async function setup() {
 
         try {
           fs.rmSync('bin', { recursive: true, force: true })
-          fs.rmSync('scripts', { recursive: true, force: true })
+          if (fs.existsSync('scripts')) {
+            const files = fs.readdirSync('scripts')
+            for (const file of files) {
+              if (file !== 'post-build.js') {
+                fs.rmSync(path.join('scripts', file), { recursive: true, force: true })
+              }
+            }
+          }
           fs.rmSync('package.installer.json', { force: true })
 
           fs.rmSync('.github', { recursive: true, force: true })

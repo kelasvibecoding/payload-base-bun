@@ -43,9 +43,20 @@ Choose an extreme to anchor your design:
 ## 6. Spatial Composition
 - **Break the Grid**: Allow elements to overlap or spill out of their containers.
 - **Asymmetry**: Use intentional asymmetry to create visual interest.
+- **Asymmetry**: Use intentional asymmetry to create visual interest.
 - **Diagonal Flow**: Use slanted sections or diagonal element placements to guide the eye.
 
-## 7. Anti-Slop Checklist
+## 7. Icon Standardization
+- **Library**: ALWAYS use `lucide-react`.
+- **Sizing**: 
+  - `h-4 w-4`: Inline text, small buttons.
+  - `h-5 w-5`: Navigation links, standard buttons.
+  - `h-6 w-6`: Cards, section headers, features.
+  - `h-12 w-12`: Hero features or large card accents.
+- **Styling**: Use semantic colors (`text-primary`, `text-muted-foreground`) or specific brand tints. Avoid solid black or random hex codes.
+- **Stroke**: Keep stroke-width at 2px (default) unless a "light/luxury" approach is chosen (1.5px).
+
+## 8. Anti-Slop Checklist
 - [ ] Are we using "Inter" or a system font? (If yes, CHANGE IT).
 - [ ] Is there a "purple gradient on white" background? (If yes, EXPLORE OTHER PALETTES).
 - [ ] Does it look like a standard dashboard template? (If yes, PIVOT to a specific aesthetic).

@@ -30,6 +30,11 @@ If Framer Motion is required for complex interactions below the fold:
 - Use `LazyMotion` with the `domAnimation` subset (imported from `framer-motion`).
 - **MANDATORY**: Use the `m` component (e.g., `m.div`) instead of the standard `motion.div`. 
 - **CRITICAL**: Using `motion` within `LazyMotion` will throw a runtime error and break tree-shaking (*"Uncaught Error: You have rendered a `motion` component within a `LazyMotion` component"*).
+- **CSS-FIRST ENTRANCES**: Simple entrance effects (fade-in, slide-up) MUST use Tailwind `animate-in` or CSS keyframes. Framer Motion is reserved for:
+    - Scroll-linked animations.
+    - Complex layout transitions (`layoutId`).
+    - Orchestrated staggered lists that cannot be achieved with `delay-[ms]`.
+    - Drag/gesture interactions.
 - Ensure heavy interaction JS is deferred and does not block the initial hydration of the page.
 
 ## 4. Hydration Tax Management
