@@ -47,8 +47,9 @@ Options:
 Examples:
   npx @kelasvibecoding/payload-base-bun my-app
   npx @kelasvibecoding/payload-base-bun my-app --ability
+  npx @kelasvibecoding/payload-base-bun my-app --ability --token="github_pat_123..."
   npx @kelasvibecoding/payload-base-bun my-app --mobile --db=postgres
-  npx @kelasvibecoding/payload-base-bun --abilityonly
+  npx @kelasvibecoding/payload-base-bun --abilityonly --token="github_pat_123..."
 ${'━'.repeat(50)}
 `)
   process.exit(0)
@@ -113,6 +114,10 @@ async function setup() {
   const keepAbilities = process.argv.includes('--ability')
   const abilityOnly = process.argv.includes('--abilityonly')
   const isMobile = process.argv.includes('--mobile')
+
+  // Parse --token flag
+  const tokenArg = process.argv.find((a) => a.startsWith('--token='))
+  const cliToken = tokenArg ? tokenArg.split('=')[1] : null
 
   /**
    * Helper: Copy Directory Recursively (Basic Node.js 16+ compatible)
@@ -212,35 +217,42 @@ async function setup() {
 
   // --- MODE: Ability Only (Injection) ---
   if (abilityOnly) {
-    rl.question(
-      'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
-      async (token) => {
-        if (!token) {
-          error('❌ Error: Access Key is required for --abilityonly.')
-          process.exit(1)
-        }
+    const askAppTypeAndInject = async (token) => {
+      if (!token) {
+        error('❌ Error: Access Key is required for --abilityonly.')
+        process.exit(1)
+      }
 
-        rl.question(
-          '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
-          async (appType) => {
-            try {
-              await injectAbilities(token, appType, path.basename(process.cwd()))
+      rl.question(
+        '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
+        async (appType) => {
+          try {
+            await injectAbilities(token, appType, path.basename(process.cwd()))
 
-              log('\n' + '━'.repeat(50))
-              success('✨ AGENT ABILITY INJECTED SUCCESSFULLY!')
-              log('━'.repeat(50))
-              info('Your current codebase is now optimized for Antigravity AI.')
-              log('\n')
-            } catch {
-              error('\n\n❌ Injection Failed.')
-              error('Check your Access Key and Internet connection.')
-            } finally {
-              rl.close()
-            }
-          },
-        )
-      },
-    )
+            log('\n' + '━'.repeat(50))
+            success('✨ AGENT ABILITY INJECTED SUCCESSFULLY!')
+            log('━'.repeat(50))
+            info('Your current codebase is now optimized for Antigravity AI.')
+            log('\n')
+          } catch {
+            error('\n\n❌ Injection Failed.')
+            error('Check your Access Key and Internet connection.')
+          } finally {
+            rl.close()
+          }
+        },
+      )
+    }
+
+    if (cliToken) {
+      info('\n🔑 Using Access Key provided via --token flag.')
+      await askAppTypeAndInject(cliToken)
+    } else {
+      rl.question(
+        'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
+        askAppTypeAndInject,
+      )
+    }
     return
   }
 
@@ -431,21 +443,28 @@ async function setup() {
     }
 
     if (keepAbilities) {
-      rl.question(
-        'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
-        async (token) => {
-          if (!token) {
-            error('❌ Error: Access Key is required for --ability.')
-            process.exit(1)
-          }
-          rl.question(
-            '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
-            async (appType) => {
-              await startSetup(token, appType)
-            },
-          )
-        },
-      )
+      const askAppTypeAndStart = async (token) => {
+        if (!token) {
+          error('❌ Error: Access Key is required for --ability.')
+          process.exit(1)
+        }
+        rl.question(
+          '\nWhat type of application are you building? (e.g. e-commerce, portfolio) (Leave blank for generic): ',
+          async (appType) => {
+            await startSetup(token, appType)
+          },
+        )
+      }
+
+      if (cliToken) {
+        info('\n🔑 Using Access Key provided via --token flag.')
+        await askAppTypeAndStart(cliToken)
+      } else {
+        rl.question(
+          'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
+          askAppTypeAndStart,
+        )
+      }
     } else {
       await startSetup()
     }

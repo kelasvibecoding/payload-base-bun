@@ -50,9 +50,11 @@ npx github:kelasvibecoding/payload-base-bun my-project --db=mongodb
 
 If you have purchased the Ebook/Class, you will be provided an **Access Key** (a secure GitHub Personal Access Token). This token allows the setup script to instantly authenticate and inject the private cognitive architecture into your project.
 
+To bypass the interactive prompt, you can pass your token directly via the `--token` flag:
+
 ```bash
 # Inject the .agent/ and .antigravity/ AI configurations during setup
-npx github:kelasvibecoding/payload-base-bun my-project --ability
+npx github:kelasvibecoding/payload-base-bun my-project --ability --token="YOUR_ACCESS_KEY"
 ```
 
 You will be prompted:

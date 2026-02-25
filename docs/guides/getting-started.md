@@ -33,9 +33,11 @@ npx github:kelasvibecoding/payload-base-bun --help
 
 If you have purchased the Ebook/Class, you will be provided an **Access Key** (a secure GitHub Personal Access Token). This token allows the setup script to instantly authenticate and securely merge the private cognitive architecture into your project.
 
+To bypass the interactive prompt, you can pass your token directly via the `--token` flag:
+
 ```bash
 # Includes .agent/ and .antigravity/ AI configurations
-npx github:kelasvibecoding/payload-base-bun my-project --ability
+npx github:kelasvibecoding/payload-base-bun my-project --ability --token="YOUR_ACCESS_KEY"
 ```
 
 You will be prompted for your **Access Key** during setup. Paste it in when requested.
