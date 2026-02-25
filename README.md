@@ -26,38 +26,43 @@
 
 ## ⚡ Quick Start
 
-### 🔐 Authenticating with GitHub Packages
+### 🌍 Two-Part Architecture
 
-This boilerplate is published securely via the GitHub Packages registry. Before you can download it via `npx`, you must authenticate your machine by creating a global `.npmrc` file.
+This boilerplate operates on a **Public Base + Private Ability** model:
+1. **Public Base (`payload-base-bun`)**: The core Payload CMS + Next.js repository. It is 100% open-source and free to use natively.
+2. **Private Ability (`payload-base-ability`)**: The proprietary AI agent workflows, architectural rules, and context skills. This is restricted entirely to Kelas Vibe Coding members and is injected dynamically via a secure Access Key.
 
-1. **Get your Access Key**: This is provided to you upon purchasing the Ebook/Class. It acts as both your NPM authentication token and your Agent setup token.
-2. **Create the `.npmrc` file in your home directory**:
-   - **Mac/Linux:** `~/.npmrc`
-   - **Windows:** `C:\Users\YourUsername\.npmrc`
-3. Add the following content to the file, replacing `PAID_ACCESS_KEY` with the token provided in the class:
-```ini
-@kelasvibecoding:registry=https://npm.pkg.github.com/
-//npm.pkg.github.com/:_authToken=PAID_ACCESS_KEY
-```
+### Standard Setup (Public)
 
-### Setup Scripts
+You do **not** need an Access Key or any authentication to use the base boilerplate.
 
 ```bash
 # Standard setup (SQLite — default, no DB required)
-npx @kelasvibecoding/payload-base-bun my-project
+npx github:kelasvibecoding/payload-base-bun my-project
 cd my-project && bun install && bun dev
 
-# With Postgres pre-configured in .env
-npx @kelasvibecoding/payload-base-bun my-project --db=postgres
+# With Postgres or MongoDB pre-configured in .env
+npx github:kelasvibecoding/payload-base-bun my-project --db=postgres
+npx github:kelasvibecoding/payload-base-bun my-project --db=mongodb
+```
 
-# With MongoDB pre-configured in .env
-npx @kelasvibecoding/payload-base-bun my-project --db=mongodb
+### Setup with Agent Ability (Ebook/Class Access)
 
-# With Agent Ability (Access Key required — Ebook/Class purchase)
-npx @kelasvibecoding/payload-base-bun my-project --ability
+If you have purchased the Ebook/Class, you will be provided an **Access Key** (a secure GitHub Personal Access Token). This token allows the setup script to instantly authenticate and inject the private cognitive architecture into your project.
 
+```bash
+# Inject the .agent/ and .antigravity/ AI configurations during setup
+npx github:kelasvibecoding/payload-base-bun my-project --ability
+```
+
+You will be prompted:
+`Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎):`
+Paste your key, and the script will securely clone and merge the private repository into your new workspace.
+
+```bash
 # Mobile layout variant (max-width: 480px)
-npx @kelasvibecoding/payload-base-bun my-project --mobile
+npx github:kelasvibecoding/payload-base-bun my-project --mobile
+```
 
 # Show all options
 npx @kelasvibecoding/payload-base-bun --help
@@ -75,15 +80,15 @@ Inject or update the Antigravity agent configurations (`.agent/`) into your exis
 
 ```bash
 # Inject Agent Ability into your existing Payload CMS project
-npx @kelasvibecoding/payload-base-bun --abilityonly
+npx github:kelasvibecoding/payload-base-bun --abilityonly
 ```
 
 You will be prompted for your **Access Key**. The script will then:
 
-1. ✅ Verify `src/payload.config.ts` exists (confirms Payload CMS project)
-2. 📥 Clone the latest agent configurations
+1. 🔐 Authenticate using your access key
+2. 📥 Securely clone the private `payload-base-ability` repository
 3. 🔄 Merge `.agent/` rules, workflows, and skills into your project
-4. 🧹 Clean up temporary files
+4. 🧹 Clean up all temporary files
 
 ### What Gets Updated
 
@@ -314,7 +319,7 @@ A: Yes. Set `DATABASE_URL=postgresql://...` in `.env`. The `payload.config.ts` a
 A: Skills are context packs your agent loads automatically when working on specific areas (e.g., loading Payload documentation rules when editing collections). They prevent context exhaustion and keep responses accurate.
 
 **Q: Can I inject agent ability into an existing Payload project?**
-A: Yes — run `npx @kelasvibecoding/payload-base-bun --abilityonly`. The script verifies `src/payload.config.ts` exists before proceeding.
+A: Yes — run `npx github:kelasvibecoding/payload-base-bun --abilityonly`. You will need your Access Key from the class to authenticate and pull from the private ability repository.
 
 ---
 

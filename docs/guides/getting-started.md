@@ -6,64 +6,56 @@
 
 ## ⚡ Quick Start
 
-### 🔐 Authenticating with GitHub Packages
-
-This boilerplate is published securely via the GitHub Packages registry. Before you can download it via `npx`, you must authenticate your machine by creating a global `.npmrc` file.
-
-1. **Get your Access Key**: This is provided to you upon purchasing the Ebook/Class. It acts as both your NPM authentication token and your Agent setup token.
-2. **Create the `.npmrc` file in your home directory**:
-   - **Mac/Linux:** `~/.npmrc`
-   - **Windows:** `C:\Users\YourUsername\.npmrc`
-3. Add the following content to the file, replacing `PAID_ACCESS_KEY` with the token provided in the class:
-```ini
-@kelasvibecoding:registry=https://npm.pkg.github.com/
-//npm.pkg.github.com/:_authToken=PAID_ACCESS_KEY
-```
+### 🌍 Two-Part Architecture
+- **Public Base (`payload-base-bun`)**: 100% open-source core Payload CMS + Next.js repository.
+- **Private Ability (`payload-base-ability`)**: Proprietary AI agent workflows, architectural rules, and context skills. Injected dynamically via a secure Access Key.
 
 ### Standard Setup (Public)
 
+You do **not** need an Access Key or any authentication to perform a standard setup.
+
 ```bash
 # Standard setup (SQLite — default, no DB required)
-npx @kelasvibecoding/payload-base-bun my-project
+npx github:kelasvibecoding/payload-base-bun my-project
 cd my-project && bun install && bun dev
 
 # With Postgres pre-configured in .env
-npx @kelasvibecoding/payload-base-bun my-project --db=postgres
+npx github:kelasvibecoding/payload-base-bun my-project --db=postgres
 
 # With MongoDB pre-configured in .env
-npx @kelasvibecoding/payload-base-bun my-project --db=mongodb
+npx github:kelasvibecoding/payload-base-bun my-project --db=mongodb
 
 # Show all options
-npx @kelasvibecoding/payload-base-bun --help
+npx github:kelasvibecoding/payload-base-bun --help
 ```
 
-### With Agent Ability (Ebook/Class Access)
+### Setup with Agent Ability (Ebook/Class Access)
 
-If you have a premium access key from the Kelas Vibe Coding ebook or class:
+If you have purchased the Ebook/Class, you will be provided an **Access Key** (a secure GitHub Personal Access Token). This token allows the setup script to instantly authenticate and securely merge the private cognitive architecture into your project.
 
 ```bash
 # Includes .agent/ and .antigravity/ AI configurations
-npx @kelasvibecoding/payload-base-bun my-project --ability
+npx github:kelasvibecoding/payload-base-bun my-project --ability
 ```
 
-You will be prompted for your **Access Key** during setup.
+You will be prompted for your **Access Key** during setup. Paste it in when requested.
 
 ### Inject Agent Ability into Existing Project
 
-If you already have a project and want to add the AI configurations:
+If you already have a project and want to add the AI configurations retroactively:
 
 ```bash
 # Run from your project root
-npx @kelasvibecoding/payload-base-bun --abilityonly
+npx github:kelasvibecoding/payload-base-bun --abilityonly
 ```
 
-This copies `.agent/` (rules, workflows, and skills) into your current codebase.
+You will be prompted to enter your Access Key to authenticate. This securely clones and copies `.agent/` (rules, workflows, and skills) into your current codebase without touching your normal code files.
 
 ### Mobile Layout Variant
 
 ```bash
 # Applies mobile-first layout constraints (max-width: 480px)
-npx @kelasvibecoding/payload-base-bun my-project --mobile
+npx github:kelasvibecoding/payload-base-bun my-project --mobile
 ```
 
 ---
@@ -161,7 +153,7 @@ Pre-configures `DATABASE_URL` in `.env` at project creation:
 | `postgres` | `postgresql://user:password@localhost:5432/my-payload-app` | Update with your connection string |
 
 ```bash
-npx @kelasvibecoding/payload-base-bun my-project --db=postgres
+npx github:kelasvibecoding/payload-base-bun my-project --db=postgres
 ```
 
 ---
@@ -170,6 +162,6 @@ npx @kelasvibecoding/payload-base-bun my-project --db=postgres
 
 | Mode | Requires Key | What You Get |
 |------|-------------|--------------|
-| Standard (`npx @kelasvibecoding/payload-base-bun`) | ❌ No | Public boilerplate |
+| Standard (`npx github:kelasvibecoding/payload-base-bun`) | ❌ No | Public boilerplate |
 | `--ability` | ✅ Yes (Ebook/Class) | + Antigravity agent rules, skills, workflows |
 | `--abilityonly` | ✅ Yes | Antigravity agent configs only (inject into existing project) |
