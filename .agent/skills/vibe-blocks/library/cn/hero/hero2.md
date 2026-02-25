@@ -1,0 +1,107 @@
+# Hero 2
+
+## Metadata
+- **Category**: Hero Section
+- **Objective**: Introduce a product or service with a high-impact headline and supporting visual, using a layout that prioritizes the image on the left.
+- **Use Case**: Primary above-the-fold component for most business or marketing landing pages where the visual asset should be seen before the text content on desktop.
+- **Visual Style**: Classic marketing aesthetic. Features a centered layout (mobile) that shifts to a 2-column grid (desktop) with the image in the first column. Includes a badge with an icon, large bold typography (`text-6xl`), and a clear primary/secondary button pair. Features a rounded-md aspect-video image.
+- **Interactivity**: Primarily static layout with focused CTA buttons (`primary` and `secondary`) that provide clear navigation paths.
+
+## Source Code
+
+### `hero2.tsx`
+```tsx
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
+interface Hero2Props {
+  badge?: string;
+  heading: string;
+  description: string;
+  buttons?: {
+    primary?: {
+      text: string;
+      url: string;
+    };
+    secondary?: {
+      text: string;
+      url: string;
+    };
+  };
+  image: {
+    src: string;
+    alt: string;
+  };
+  className?: string;
+}
+
+const Hero2 = ({
+  badge = "Your Website Builder",
+  heading = "Blocks Built With Shadcn & Tailwind",
+  description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+  buttons = {
+    primary: {
+      text: "Discover all components",
+      url: "https://www.shadcnblocks.com",
+    },
+    secondary: {
+      text: "View on GitHub",
+      url: "https://www.shadcnblocks.com",
+    },
+  },
+  image = {
+    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
+    alt: "Hero section demo image showing interface components",
+  },
+  className,
+}: Hero2Props) => {
+  return (
+    <section className={cn("py-32", className)}>
+      <div className="container">
+      <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
+          <img
+            src={image.src}
+            alt={image.alt}
+            className="w-full rounded-md object-cover aspect-video"
+          />
+          <div className="gap-5 flex flex-col items-center text-center lg:items-start lg:text-left">
+            {badge && (
+              <Badge variant="outline">
+                {badge}
+                <ArrowUpRight className="ml-2 size-4" />
+              </Badge>
+            )}
+            <h1 className="text-4xl font-bold text-pretty lg:text-6xl">
+              {heading}
+            </h1>
+            <p className="max-w-xl text-muted-foreground lg:text-xl">
+              {description}
+            </p>
+            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
+              {buttons.primary && (
+                <Button asChild className="w-full sm:w-auto">
+                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
+                </Button>
+              )}
+              {buttons.secondary && (
+                <Button asChild variant="outline" className="w-full sm:w-auto">
+                  <a href={buttons.secondary.url}>
+                    {buttons.secondary.text}
+                    <ArrowRight className="size-4" />
+                  </a>
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export { Hero2 };
+```

@@ -27,7 +27,7 @@ Your design should feel cohesive between the **Payload Admin Panel** and the **C
 - **Primitives**: Always start with Shadcn UI primitives in `@/components/ui`.
 - **Atomic Modification**: Customize components via Tailwind classes, not by overriding the core Radix primitives unless necessary.
 - **Theming**: Use CSS variables for colors (`--primary`, `--background`, etc.) to ensure seamless light/dark mode support.
-- **Safe Merging**: Always use the `cn` utility (from `@/components/lib/utils`) for merging Tailwind classes and conditional logic.
+- **Safe Merging**: Always use the `cn` utility (from `@/lib/utils`) for merging Tailwind classes and conditional logic.
 
 ### 3. Semantic Coloring (Standard)
 - **Zero Hex Policy**: DO NOT use hardcoded hex values (e.g., `#ff0000`) in components.

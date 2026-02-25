@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { Input as BaseInput } from '@/components/ui/input'
 import { FloatingLabel } from './label'
 

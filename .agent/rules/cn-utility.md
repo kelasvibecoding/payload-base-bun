@@ -13,17 +13,17 @@ Always use the `cn` utility for merging Tailwind CSS classes in React components
 Never concatenate Tailwind classes using template literals or string addition if there are conditional or conflicting classes. Always import and use the `cn` helper.
 
 ## 1. Import Path
-The `cn` utility is located at `@/components/lib/utils`.
+The `cn` utility is located at `@/lib/utils` (canonical). This is aligned with the Shadcn CLI `components.json` `aliases.utils` setting.
 
 ```typescript
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 ```
 
 ## 2. Usage Pattern
 
 ### ✅ CORRECT (Safe Merging)
 ```tsx
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 
 export function MyComponent({ className, isActive }: { className?: string, isActive?: boolean }) {
   return (

@@ -30,6 +30,13 @@ const nextConfig = {
       '@radix-ui/react-icons',
     ],
   },
+  // Allow network origins for development (e.g. 192.168.x.x)
+  allowedDevOrigins: [
+    'localhost:3000',
+    // Support common local subnet (1)
+    ...Array.from({ length: 254 }, (_, i) => `192.168.1.${i + 1}`),
+    ...Array.from({ length: 254 }, (_, i) => `192.168.1.${i + 1}:3000`),
+  ],
 }
 
 export default withPayload(withPWA(nextConfig), { devBundleServerPackages: false })

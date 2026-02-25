@@ -1,4 +1,4 @@
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { Card } from '@/components/ui/card'
 
 export function GlassCard({

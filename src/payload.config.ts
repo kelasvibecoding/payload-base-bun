@@ -57,6 +57,11 @@ export default buildConfig({
       titleSuffix: '- Payload Base Admin',
     },
   },
+  cors: '*',
+  csrf: [
+    'http://localhost:3000',
+    ...Array.from({ length: 254 }, (_, i) => `http://192.168.1.${i + 1}:3000`),
+  ],
   collections: [Users, Media, Posts, ContactRequests, OAuth],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '864a8383b7ed11af189db510',

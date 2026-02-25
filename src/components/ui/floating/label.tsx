@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Label } from '@/components/ui/label'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface FloatingLabelProps extends React.ComponentPropsWithoutRef<typeof Label> {
   id: string

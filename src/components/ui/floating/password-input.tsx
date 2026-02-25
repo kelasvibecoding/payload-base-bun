@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import { Eye, EyeOff } from 'lucide-react'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { Input as BaseInput } from '@/components/ui/input'
 import { FloatingLabel } from './label'
 import { Button } from '@/components/ui/button'

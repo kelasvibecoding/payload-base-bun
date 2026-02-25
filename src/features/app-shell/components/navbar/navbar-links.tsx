@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import { useScrollTo } from '@/hooks/use-scroll-to'
 
 export function NavbarLinks() {

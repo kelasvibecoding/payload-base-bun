@@ -4,7 +4,7 @@ import { Outfit } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 import { SWRProvider } from '@/providers/SWRProvider'
 import { Navbar } from '@/features/app-shell/components/navbar'
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 import './globals.css'
 
 const inter = Inter({

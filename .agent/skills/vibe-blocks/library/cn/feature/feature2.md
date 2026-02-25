@@ -1,0 +1,87 @@
+# Feature 2
+
+## Metadata
+- **Category**: Feature
+- **Objective**: Two-column feature section with image on the left and text on the right (mirrored layout of Feature 1).
+- **Use Case**: Alternative feature sections for alternating image/text layouts on long-form landing pages.
+- **Visual Style**: "Mirrored Split" layout. Identical to Feature 1 but with image placed first (left column) and text second (right). Uses `md:gap-16` for wider spacing between columns.
+- **Interactivity**: Static layout with standard button hover states.
+
+## Source Code
+
+### `feature2.tsx`
+```tsx
+import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
+
+interface Feature2Props {
+  title: string;
+  description?: string;
+  imageSrc: string;
+  imageAlt: string;
+  buttonPrimary: {
+    text: string;
+    href: string;
+  };
+  buttonSecondary: {
+    text: string;
+    href: string;
+  };
+  className?: string;
+}
+
+const Feature2 = ({
+  title = "Blocks built with Shadcn & Tailwind",
+  description = "Hundreds of finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
+  imageSrc = "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
+  imageAlt = "placeholder hero",
+  buttonPrimary = {
+    text: "Get Started",
+    href: "https://shadcnblocks.com",
+  },
+  buttonSecondary = {
+    text: "Learn More",
+    href: "https://shadcnblocks.com",
+  },
+  className,
+}: Feature2Props) => {
+  return (
+    <section className={cn("py-32", className)}>
+      <div className="container">
+        <div className="grid items-center gap-8 md:gap-16 lg:grid-cols-2">
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="max-h-96 w-full rounded-md object-cover"
+          />
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <h2 className="my-6 mt-0 text-4xl font-semibold text-balance lg:text-5xl">
+              {title}
+            </h2>
+            {description && (
+              <p className="mb-8 max-w-xl text-muted-foreground lg:text-lg">
+                {description}
+              </p>
+            )}
+            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
+              <Button asChild>
+                <a href={buttonPrimary.href} target="_blank">
+                  {buttonPrimary.text}
+                </a>
+              </Button>
+              <Button variant="outline" asChild>
+                <a href={buttonSecondary.href} target="_blank">
+                  {buttonSecondary.text}
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export { Feature2 };
+```

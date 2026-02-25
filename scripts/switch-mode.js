@@ -33,7 +33,7 @@ if (mode === 'dev') {
     // Write to package.json
     fs.writeFileSync(pkgPath, JSON.stringify(template, null, 2) + '\n')
     try {
-      execSync('bunx prettier --write package.json', { stdio: 'inherit' })
+      execSync('bunx prettier --write package.json', { stdio: 'ignore' })
     } catch {
       console.warn('⚠️ Warning: Prettier failed to format package.json')
     }
@@ -64,7 +64,7 @@ if (mode === 'dev') {
         console.log('🚢 Switching to SHIP MODE (Restoring tiny installer package.json)...')
         fs.copyFileSync(installerPath, pkgPath)
         try {
-          execSync('bunx prettier --write package.template.json package.json', { stdio: 'inherit' })
+          execSync('bunx prettier --write package.template.json package.json', { stdio: 'ignore' })
         } catch {
           console.warn('⚠️ Warning: Prettier failed to format package files')
         }
@@ -88,7 +88,7 @@ if (mode === 'dev') {
         }
         fs.writeFileSync(pkgPath, JSON.stringify(minimal, null, 2) + '\n')
         try {
-          execSync('bunx prettier --write package.json', { stdio: 'inherit' })
+          execSync('bunx prettier --write package.json', { stdio: 'ignore' })
         } catch {
           console.warn('⚠️ Warning: Prettier failed to format package.json')
         }

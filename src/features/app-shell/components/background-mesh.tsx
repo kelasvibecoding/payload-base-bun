@@ -1,4 +1,4 @@
-import { cn } from '@/components/lib/utils'
+import { cn } from '@/lib/utils'
 
 export function BackgroundMesh({ className }: { className?: string }) {
   // Standalone background component to strictly decouple visual effects from page layout.
