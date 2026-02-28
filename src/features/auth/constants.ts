@@ -28,4 +28,3 @@ export const DEFAULT_ROLE_REDIRECTS: Record<string, string> = {
   staff: '/',
   customer: '/',
 }
-

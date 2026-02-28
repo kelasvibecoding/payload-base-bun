@@ -93,7 +93,7 @@ interface Props {
   converters?: JSXConvertersFunction<NodeTypes>
 }
 
-export default function RichText(props: Props) {
+export function RichText(props: Props) {
   const { className, enableGutter = false, enableProse = true, data, converters, ...rest } = props
 
   if (!data || !data.root || !data.root.children) return null

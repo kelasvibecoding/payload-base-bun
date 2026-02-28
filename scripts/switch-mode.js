@@ -76,11 +76,11 @@ if (mode === 'dev') {
           version: '1.0.4',
           description: 'Installer for Payload Base Template',
           publishConfig: {
-            registry: 'https://npm.pkg.github.com'
+            registry: 'https://npm.pkg.github.com',
           },
           repository: {
             type: 'git',
-            url: 'https://github.com/kelasvibecoding/payload-base-bun.git'
+            url: 'https://github.com/kelasvibecoding/payload-base-bun.git',
           },
           license: 'MIT',
           type: 'module',

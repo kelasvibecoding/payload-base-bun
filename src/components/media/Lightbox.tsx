@@ -15,7 +15,7 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel'
 import type { Media } from '@/payload-types'
-import { MediaImage } from './Image'
+import { MediaImage } from './image'
 
 interface MediaLightboxProps {
   images: (Media | string)[]

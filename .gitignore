@@ -58,3 +58,4 @@ bun-error.log
 
 # Setup Temporary Files
 .temp-payload-base-*/
+.agent

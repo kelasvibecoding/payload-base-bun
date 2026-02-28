@@ -18,6 +18,7 @@ export default defineConfig([
       'dist/',
       'build/',
       'src-midpanel/',
+      'reference/',
     ],
   },
   {

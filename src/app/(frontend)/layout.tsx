@@ -31,12 +31,15 @@ export const viewport = {
 
 import { Toaster } from '@/components/ui/sonner'
 import { MotionConfig } from '@/features/app-shell/components/motion-config'
+import { NextIntlProvider } from '@/features/blogs/components/next-intl-provider'
+import { getUserLocale } from '@/utilities/get-locale'
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
+  const locale = await getUserLocale()
 
   return (
-    <html lang="en" className={cn(inter.variable, outfit.variable)} suppressHydrationWarning>
+    <html lang={locale} className={cn(inter.variable, outfit.variable)} suppressHydrationWarning>
       <body className="font-sans antialiased">
         <NextTopLoader
           color="#0066FF"
@@ -51,10 +54,12 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         />
         <Toaster position="top-right" richColors />
         <SWRProvider>
-          <MotionConfig>
-            <Navbar />
-            <main>{children}</main>
-          </MotionConfig>
+          <NextIntlProvider>
+            <MotionConfig>
+              <Navbar />
+              <main>{children}</main>
+            </MotionConfig>
+          </NextIntlProvider>
         </SWRProvider>
       </body>
     </html>

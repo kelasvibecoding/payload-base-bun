@@ -10,6 +10,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 📖 Table of Contents
+
 1. [Quick Start](#-quick-start)
 2. [Updating Existing Projects](#-updating-existing-projects)
 3. [Why Agentic Coding?](#-why-agentic-coding)
@@ -29,6 +30,7 @@
 ### 🌍 Two-Part Architecture
 
 This boilerplate operates on a **Public Base + Private Ability** model:
+
 1. **Public Base (`payload-base-bun`)**: The core Payload CMS + Next.js repository. It is 100% open-source and free to use natively.
 2. **Private Ability (`payload-base-ability`)**: The proprietary AI agent workflows, architectural rules, and context skills. This is restricted entirely to Kelas Vibe Coding members and is injected dynamically via a secure Access Key.
 
@@ -67,8 +69,10 @@ npx github:kelasvibecoding/payload-base-bun my-project --mobile
 ```
 
 # Show all options
+
 npx @kelasvibecoding/payload-base-bun --help
-```
+
+````
 
 > See [Getting Started Guide](docs/guides/getting-started.md) for full setup options.
 
@@ -83,7 +87,7 @@ Inject or update the Antigravity agent configurations (`.agent/`) into your exis
 ```bash
 # Inject Agent Ability into your existing Payload CMS project
 npx github:kelasvibecoding/payload-base-bun --abilityonly
-```
+````
 
 You will be prompted for your **Access Key**. The script will then:
 
@@ -94,11 +98,11 @@ You will be prompted for your **Access Key**. The script will then:
 
 ### What Gets Updated
 
-| Target | Path | Contents |
-|--------|------|----------|
-| Agent rules | `.agent/rules/` | 35+ modular Payload-specific rules |
-| Workflows | `.agent/workflows/` | `/implement`, `/plan`, `/review`, `/diagnose`, `/adr` |
-| Skills | `.agent/skills/` | Payload, FBA, Media, E2E, Zod, UI/UX skills |
+| Target      | Path                | Contents                                              |
+| ----------- | ------------------- | ----------------------------------------------------- |
+| Agent rules | `.agent/rules/`     | 35+ modular Payload-specific rules                    |
+| Workflows   | `.agent/workflows/` | `/implement`, `/plan`, `/review`, `/diagnose`, `/adr` |
+| Skills      | `.agent/skills/`    | Payload, FBA, Media, E2E, Zod, UI/UX skills           |
 
 Your `src/`, `package.json`, `payload.config.ts`, and all project files are **never touched**.
 
@@ -107,11 +111,13 @@ Your `src/`, `package.json`, `payload.config.ts`, and all project files are **ne
 ## 🚀 Why Agentic Coding?
 
 Traditional AI coding struggles with:
+
 - ❌ Losing context in long sessions
 - ❌ Declining code quality over time
 - ❌ No architectural enforcement
 
 **This boilerplate solves it through:**
+
 - ✅ Structured workflows that enforce FBA-SOLID-SSOT on every feature
 - ✅ Built-in quality gates (lint, typecheck, E2E) before every commit
 - ✅ Auto-stop protocol that prevents runaway sessions
@@ -125,65 +131,65 @@ Skills are AI context packs loaded automatically when working in specific areas.
 
 ### Core Skills
 
-| Skill | Purpose |
-|-------|---------|
-| `payload-cms-development` | Payload collections, hooks, access control, endpoints |
-| `payload-cms-docs` | Official Payload CMS 3.0 reference documentation |
-| `fba-solid-ssot` | Feature-Based Architecture + SOLID + Single Source of Truth |
-| `feature-based-architecture` | FBA patterns and directory structure guidelines |
-| `senior-fullstack` | Production-grade patterns for Payload + Next.js |
-| `software-architecture` | System design, architectural decision-making |
+| Skill                        | Purpose                                                     |
+| ---------------------------- | ----------------------------------------------------------- |
+| `payload-cms-development`    | Payload collections, hooks, access control, endpoints       |
+| `payload-cms-docs`           | Official Payload CMS 3.0 reference documentation            |
+| `fba-solid-ssot`             | Feature-Based Architecture + SOLID + Single Source of Truth |
+| `feature-based-architecture` | FBA patterns and directory structure guidelines             |
+| `senior-fullstack`           | Production-grade patterns for Payload + Next.js             |
+| `software-architecture`      | System design, architectural decision-making                |
 
 ### Frontend & UI Skills
 
-| Skill | Purpose |
-|-------|---------|
-| `ui-ux-stack` | Shadcn UI, Tailwind CSS 4, design system patterns |
-| `vibe-blocks` | 2,000+ UI component library (Relume + Custom/Shadcn) |
-| `web-design-guidelines` | Accessibility, UX best practices, design auditing |
-| `vercel-react-best-practices` | React/Next.js performance optimization (Vercel) |
-| `performance-lockdown` | 100/100 Lighthouse: Zero-JS shell, TBT optimization |
-| `performance-mastery` | App Router responsiveness, streaming, Suspense |
+| Skill                         | Purpose                                              |
+| ----------------------------- | ---------------------------------------------------- |
+| `ui-ux-stack`                 | Shadcn UI, Tailwind CSS 4, design system patterns    |
+| `vibe-blocks`                 | 2,000+ UI component library (Relume + Custom/Shadcn) |
+| `web-design-guidelines`       | Accessibility, UX best practices, design auditing    |
+| `vercel-react-best-practices` | React/Next.js performance optimization (Vercel)      |
+| `performance-lockdown`        | 100/100 Lighthouse: Zero-JS shell, TBT optimization  |
+| `performance-mastery`         | App Router responsiveness, streaming, Suspense       |
 
 ### Data & Validation Skills
 
-| Skill | Purpose |
-|-------|---------|
+| Skill                 | Purpose                                             |
+| --------------------- | --------------------------------------------------- |
 | `payload-option-sync` | Sync Payload select options → Zod → Frontend (SSOT) |
-| `zod-form-validation` | Zod + React Hook Form + Payload schema alignment |
-| `media-mastery` | Image optimization, Sharp, next/image, WebP/AVIF |
+| `zod-form-validation` | Zod + React Hook Form + Payload schema alignment    |
+| `media-mastery`       | Image optimization, Sharp, next/image, WebP/AVIF    |
 
 ### Tooling Skills
 
-| Skill | Purpose |
-|-------|---------|
-| `code-intelligence` | ast-grep structural search, advanced refactoring |
-| `skill-rule-creator` | Creating new skills and agent rules |
+| Skill                | Purpose                                          |
+| -------------------- | ------------------------------------------------ |
+| `code-intelligence`  | ast-grep structural search, advanced refactoring |
+| `skill-rule-creator` | Creating new skills and agent rules              |
 
 ### Document & File Skills
 
-| Skill | Purpose |
-|-------|---------|
+| Skill          | Purpose                                  |
+| -------------- | ---------------------------------------- |
 | `docx-mastery` | .docx creation, editing, tracked changes |
-| `pdf-mastery` | PDF extraction, generation, form filling |
-| `pptx-mastery` | PowerPoint creation and OOXML editing |
+| `pdf-mastery`  | PDF extraction, generation, form filling |
+| `pptx-mastery` | PowerPoint creation and OOXML editing    |
 | `xlsx-mastery` | Excel modeling, formulas, financial data |
 
 ---
 
 ## 🤖 Agentic Workflow Commands
 
-| Command | Purpose | When to Use |
-|---------|---------|-------------|
-| `/implement` | Scale-aware full lifecycle: detect → plan → code → verify | Any new feature |
-| `/start` | Environment initialization | Right after cloning |
-| `/plan` | Generate design doc in `docs/design/` | Before coding |
-| `/review` | FBA-SOLID-SSOT + security compliance check | Post-implementation |
-| `/diagnose` | Root cause analysis (5-Whys) | Debugging |
-| `/reverse-engineer` | Generate PRD + Design Doc from existing code | Documentation, onboarding, pre-refactor |
-| `/adr` | Architecture Decision Record in `docs/adr/` | Irreversible decisions |
-| `/lint-typecheck` | Generate types, lint, typecheck | Before committing |
-| `/test-e2e` | Run Playwright E2E tests | After major changes |
+| Command             | Purpose                                                   | When to Use                             |
+| ------------------- | --------------------------------------------------------- | --------------------------------------- |
+| `/implement`        | Scale-aware full lifecycle: detect → plan → code → verify | Any new feature                         |
+| `/start`            | Environment initialization                                | Right after cloning                     |
+| `/plan`             | Generate design doc in `docs/design/`                     | Before coding                           |
+| `/review`           | FBA-SOLID-SSOT + security compliance check                | Post-implementation                     |
+| `/diagnose`         | Root cause analysis (5-Whys)                              | Debugging                               |
+| `/reverse-engineer` | Generate PRD + Design Doc from existing code              | Documentation, onboarding, pre-refactor |
+| `/adr`              | Architecture Decision Record in `docs/adr/`               | Irreversible decisions                  |
+| `/lint-typecheck`   | Generate types, lint, typecheck                           | Before committing                       |
+| `/test-e2e`         | Run Playwright E2E tests                                  | After major changes                     |
 
 ---
 
@@ -227,20 +233,20 @@ graph LR
 
 ### Included Collections
 
-| Collection | Description |
-|---|---|
-| `Users` | Auth users with RBAC roles |
-| `Media` | File uploads with Sharp optimization |
-| `Posts` | Content with versioning + drafts |
-| `ContactRequests` | Form submission storage |
-| `OAuth` | OAuth provider token storage |
+| Collection        | Description                          |
+| ----------------- | ------------------------------------ |
+| `Users`           | Auth users with RBAC roles           |
+| `Media`           | File uploads with Sharp optimization |
+| `Posts`           | Content with versioning + drafts     |
+| `ContactRequests` | Form submission storage              |
+| `OAuth`           | OAuth provider token storage         |
 
 ### Included Plugins
 
-| Plugin | Purpose |
-|---|---|
-| `vercelBlobStorage` | Cloud media storage via Vercel Blob |
-| `uuidPlugin` | UUID-based document IDs |
+| Plugin               | Purpose                                 |
+| -------------------- | --------------------------------------- |
+| `vercelBlobStorage`  | Cloud media storage via Vercel Blob     |
+| `uuidPlugin`         | UUID-based document IDs                 |
 | `importExportPlugin` | Bulk data import/export for collections |
 
 ---
@@ -298,6 +304,7 @@ bun run typecheck  # TypeScript
 ```
 
 E2E tests live co-located with features:
+
 ```
 src/features/[name]/tests/e2e/
 ├── [feature].e2e.spec.ts

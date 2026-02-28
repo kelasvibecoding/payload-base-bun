@@ -2,7 +2,7 @@ import React from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-const Welcome: React.FC = async () => {
+export const Welcome: React.FC = async () => {
   const payload = await getPayload({ config })
   const { totalDocs: userCount } = await payload.count({ collection: 'users' })
   const { totalDocs: mediaCount } = await payload.count({ collection: 'media' })
@@ -91,4 +91,3 @@ const Welcome: React.FC = async () => {
   )
 }
 
-export default Welcome

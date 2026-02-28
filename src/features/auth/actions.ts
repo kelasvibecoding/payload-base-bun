@@ -5,8 +5,6 @@ import { AuthService } from './services/auth.service'
 import { loginSchema, signUpSchema, type LoginValues, type SignUpValues } from './schemas'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { USER_ROLE_VALUES } from './constants'
-
 export async function loginAction(values: LoginValues) {
   const validated = loginSchema.safeParse(values)
   if (!validated.success) {
@@ -24,7 +22,7 @@ export async function loginAction(values: LoginValues) {
       maxAge: result.exp ? result.exp - Math.floor(Date.now() / 1000) : 60 * 60 * 24 * 7,
       path: '/',
     })
-    return { success: true, role: (result.user as any).role }
+    return { success: true, role: result.user?.role }
   }
 
   return { success: false, error: result.error || 'Invalid email or password' }

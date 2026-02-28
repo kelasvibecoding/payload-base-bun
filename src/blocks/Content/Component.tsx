@@ -1,14 +1,13 @@
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import type { ContentBlock as ContentBlockType } from '@/payload-types'
+import { RichText } from '@/components/rich-text'
 import { cn } from '@/lib/utils'
 import React from 'react'
-import RichText from '@/components/RichText'
 
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import type { ContentBlock as ContentBlockProps } from '@/payload-types'
-
-export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
+export const ContentBlock: React.FC<ContentBlockType> = (props) => {
   const { columns } = props
 
-  const colsSpanClasses = {
+  const colsSpanClasses: Record<string, string> = {
     full: '12',
     half: '6',
     oneThird: '4',
@@ -20,12 +19,12 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
       <div className="grid grid-cols-4 gap-x-16 gap-y-8 lg:grid-cols-12">
         {columns &&
           columns.length > 0 &&
-          columns.map((col, index) => {
+          columns.map((col, index: number) => {
             const { richText, size } = col
 
             return (
               <div
-                className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
+                className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size as string]}`, {
                   'md:col-span-2': size !== 'full',
                 })}
                 key={index}

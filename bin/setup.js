@@ -204,8 +204,7 @@ async function setup() {
       copyDir(antigravitySrc, path.join(process.cwd(), '.antigravity'))
     if (fs.existsSync(contextSrc))
       fs.copyFileSync(contextSrc, path.join(process.cwd(), 'CONTEXT.md'))
-    if (fs.existsSync(agentsSrc))
-      fs.copyFileSync(agentsSrc, path.join(process.cwd(), 'AGENTS.md'))
+    if (fs.existsSync(agentsSrc)) fs.copyFileSync(agentsSrc, path.join(process.cwd(), 'AGENTS.md'))
     if (fs.existsSync(missionSrc))
       fs.copyFileSync(missionSrc, path.join(process.cwd(), 'mission.md'))
 

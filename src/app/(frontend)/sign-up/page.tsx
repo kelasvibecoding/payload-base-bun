@@ -10,9 +10,12 @@ import { BackgroundMesh } from '@/features/app-shell/components/background-mesh'
 import { GlassCard } from '@/features/app-shell/components/glass-card'
 import { m } from 'framer-motion'
 
+import { Spinner } from '@/components/ui/spinner'
+
 function GoogleAuthButtonFallback() {
   return (
     <Button variant="outline" className="h-12 w-full border-2" disabled>
+      <Spinner className="mr-2" />
       Loading...
     </Button>
   )
@@ -75,7 +78,9 @@ export default function SignUpPage() {
                 <span className="border-foreground/10 w-full border-t dark:border-white/10" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background text-muted-foreground px-2">Or continue with email</span>
+                <span className="bg-background text-muted-foreground px-2">
+                  Or continue with email
+                </span>
               </div>
             </m.div>
 

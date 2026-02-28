@@ -72,6 +72,8 @@ export interface Config {
     posts: Post;
     'contact-requests': ContactRequest;
     oauth: Oauth;
+    categories: Category;
+    comments: Comment;
     exports: Export;
     imports: Import;
     'payload-kv': PayloadKv;
@@ -87,6 +89,8 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     'contact-requests': ContactRequestsSelect<false> | ContactRequestsSelect<true>;
     oauth: OauthSelect<false> | OauthSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     exports: ExportsSelect<false> | ExportsSelect<true>;
     imports: ImportsSelect<false> | ImportsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -98,10 +102,10 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'id') | ('en' | 'id')[];
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'en' | 'id';
   user: User;
   jobs: {
     tasks: {
@@ -242,8 +246,36 @@ export interface Media {
  */
 export interface Post {
   id: string;
+  /**
+   * Post title that appears in the browser tab and navigation
+   */
   title: string;
-  content?: {
+  /**
+   * Featured image that appears at the top of the post
+   */
+  heroImage?: (string | null) | Media;
+  /**
+   * Main content of the post.
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Conclusion section content.
+   */
+  conclusion?: {
     root: {
       type: string;
       children: {
@@ -258,6 +290,83 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Select related posts to suggest to readers
+   */
+  relatedPosts?: (string | Post)[] | null;
+  /**
+   * Select categories to organize this post
+   */
+  categories?: (string | Category)[] | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+  };
+  /**
+   * Date and time when the post will be published
+   */
+  publishedAt?: string | null;
+  /**
+   * Select authors for this post
+   */
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
+  /**
+   * Toggle to allow or disable comments for this post
+   */
+  enableComments?: boolean | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  /**
+   * The user who created this document
+   */
+  createdBy?: (string | null) | User;
+  /**
+   * The user who last updated this document
+   */
+  updatedBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  /**
+   * Category title for organizing content
+   */
+  title: string;
+  /**
+   * Order number for sorting categories (lower numbers appear first)
+   */
+  order?: number | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  /**
+   * The user who created this document
+   */
+  createdBy?: (string | null) | User;
+  /**
+   * The user who last updated this document
+   */
+  updatedBy?: (string | null) | User;
+  parent?: (string | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -353,16 +462,48 @@ export interface Oauth {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: string;
+  /**
+   * Select the post this comment belongs to
+   */
+  doc: string | Post;
+  name: string;
+  /**
+   * Commenter email address
+   */
+  email: string;
+  /**
+   * Comment content
+   */
+  comment: string;
+  /**
+   * The user who created this document
+   */
+  createdBy?: (string | null) | User;
+  /**
+   * The user who last updated this document
+   */
+  updatedBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "exports".
  */
 export interface Export {
   id: string;
   name?: string | null;
-  format?: ('csv' | 'json') | null;
+  format: 'csv' | 'json';
   limit?: number | null;
   page?: number | null;
   sort?: string | null;
   sortOrder?: ('asc' | 'desc') | null;
+  locale?: ('all' | 'en' | 'id') | null;
   drafts?: ('yes' | 'no') | null;
   selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
   fields?: string[] | null;
@@ -394,7 +535,7 @@ export interface Export {
  */
 export interface Import {
   id: string;
-  collectionSlug: 'users';
+  collectionSlug: string;
   importMode?: ('create' | 'update' | 'upsert') | null;
   matchField?: string | null;
   status?: ('pending' | 'completed' | 'partial' | 'failed') | null;
@@ -560,6 +701,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'oauth';
         value: string | Oauth;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: string | Comment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -690,9 +839,33 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  heroImage?: T;
   content?: T;
+  conclusion?: T;
+  relatedPosts?: T;
+  categories?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
+  enableComments?: T;
+  slug?: T;
+  slugLock?: T;
+  createdBy?: T;
+  updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -731,6 +904,44 @@ export interface OauthSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  order?: T;
+  slug?: T;
+  slugLock?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  doc?: T;
+  name?: T;
+  email?: T;
+  comment?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "exports_select".
  */
 export interface ExportsSelect<T extends boolean = true> {
@@ -740,6 +951,7 @@ export interface ExportsSelect<T extends boolean = true> {
   page?: T;
   sort?: T;
   sortOrder?: T;
+  locale?: T;
   drafts?: T;
   selectionToUse?: T;
   fields?: T;
@@ -865,11 +1077,12 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface TaskCreateCollectionExport {
   input: {
     name?: string | null;
-    format?: ('csv' | 'json') | null;
+    format: 'csv' | 'json';
     limit?: number | null;
     page?: number | null;
     sort?: string | null;
     sortOrder?: ('asc' | 'desc') | null;
+    locale?: ('all' | 'en' | 'id') | null;
     drafts?: ('yes' | 'no') | null;
     selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
     fields?: string[] | null;
@@ -883,9 +1096,12 @@ export interface TaskCreateCollectionExport {
       | number
       | boolean
       | null;
+    id?: string | null;
+    batchSize?: number | null;
     userID?: string | null;
     userCollection?: string | null;
-    exportsCollection?: string | null;
+    exportCollection?: string | null;
+    maxLimit?: number | null;
   };
   output?: unknown;
 }
@@ -895,35 +1111,14 @@ export interface TaskCreateCollectionExport {
  */
 export interface TaskCreateCollectionImport {
   input: {
-    collectionSlug: 'users' | 'media' | 'posts' | 'contact-requests' | 'oauth' | 'exports' | 'imports';
-    importMode?: ('create' | 'update' | 'upsert') | null;
-    matchField?: string | null;
-    status?: ('pending' | 'completed' | 'partial' | 'failed') | null;
-    summary?: {
-      imported?: number | null;
-      updated?: number | null;
-      total?: number | null;
-      issues?: number | null;
-      issueDetails?:
-        | {
-            [k: string]: unknown;
-          }
-        | unknown[]
-        | string
-        | number
-        | boolean
-        | null;
-    };
-    user?: string | null;
+    importId: string;
+    importCollection: string;
+    userID?: string | null;
     userCollection?: string | null;
-    importsCollection?: string | null;
-    file?: {
-      data?: string | null;
-      mimetype?: string | null;
-      name?: string | null;
-    };
-    format?: ('csv' | 'json') | null;
+    batchSize?: number | null;
     debug?: boolean | null;
+    defaultVersionStatus?: ('draft' | 'published') | null;
+    maxLimit?: number | null;
   };
   output?: unknown;
 }
@@ -951,6 +1146,17 @@ export interface BannerBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeBlock".
+ */
+export interface CodeBlock {
+  language?: ('typescript' | 'javascript' | 'css') | null;
+  code: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -987,10 +1193,24 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
-  size?: ('thumbnail' | 'card') | null;
-  priority?: boolean | null;
-  loading?: ('lazy' | 'eager') | null;
+  media?: {
+    mediaType?: ('upload' | 'video') | null;
+    media?: (string | null) | Media;
+    /**
+     * Paste YouTube URL - supported formats:
+     *
+     * • https://www.youtube.com/watch?v=VIDEO_ID
+     * • https://youtu.be/VIDEO_ID
+     * • https://youtube.com/watch?v=VIDEO_ID
+     *
+     * URLs will be automatically converted to embed URLs.
+     */
+    videoUrl?: string | null;
+  };
+  minHeight: '150px' | '350px' | '500px' | 'screen';
+  mediaLayout?: ('full' | 'contained') | null;
+  objectFit?: ('cover' | 'contain') | null;
+  sectionSpacing?: ('none' | 'small' | 'medium' | 'large' | 'xlarge') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';

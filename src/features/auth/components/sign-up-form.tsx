@@ -37,7 +37,7 @@ export function SignUpForm() {
       } else {
         toast.error(result.error || 'Failed to create account')
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('An unexpected error occurred')
     } finally {
       setIsLoading(false)
@@ -89,13 +89,17 @@ export function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <FloatingPasswordInput label="Confirm Password" {...field} autoComplete="new-password" />
+                <FloatingPasswordInput
+                  label="Confirm Password"
+                  {...field}
+                  autoComplete="new-password"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full h-12 text-base font-semibold" disabled={isLoading}>
+        <Button type="submit" className="h-12 w-full text-base font-semibold" disabled={isLoading}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Create Account
         </Button>

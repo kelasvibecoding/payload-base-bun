@@ -7,6 +7,7 @@
 ## ⚡ Quick Start
 
 ### 🌍 Two-Part Architecture
+
 - **Public Base (`payload-base-bun`)**: 100% open-source core Payload CMS + Next.js repository.
 - **Private Ability (`payload-base-ability`)**: Proprietary AI agent workflows, architectural rules, and context skills. Injected dynamically via a secure Access Key.
 
@@ -99,21 +100,22 @@ npx github:kelasvibecoding/payload-base-bun my-project --mobile
 
 ## 🤖 Agentic Workflow Commands
 
-| Command | Purpose | When to Use |
-|---------|---------|-------------|
-| `/start` | Environment initialization | Right after cloning |
-| `/plan` | Generate a strategic design doc | Before coding a feature |
-| `/implement` | Full lifecycle: scale detect → plan → code → verify | Any new feature |
-| `/review` | FBA-SOLID-SSOT compliance check | Post-implementation |
-| `/reverse-engineer` | Generate PRD + Design Doc from existing code | Documentation, pre-refactor |
-| `/diagnose` | Root cause analysis (5-Whys) | Debugging |
-| `/adr` | Document architecture decisions | Irreversible choices |
-| `/lint-typecheck` | Run lint + type check | Before committing |
-| `/test-e2e` | Run E2E tests | After major changes |
+| Command             | Purpose                                             | When to Use                 |
+| ------------------- | --------------------------------------------------- | --------------------------- |
+| `/start`            | Environment initialization                          | Right after cloning         |
+| `/plan`             | Generate a strategic design doc                     | Before coding a feature     |
+| `/implement`        | Full lifecycle: scale detect → plan → code → verify | Any new feature             |
+| `/review`           | FBA-SOLID-SSOT compliance check                     | Post-implementation         |
+| `/reverse-engineer` | Generate PRD + Design Doc from existing code        | Documentation, pre-refactor |
+| `/diagnose`         | Root cause analysis (5-Whys)                        | Debugging                   |
+| `/adr`              | Document architecture decisions                     | Irreversible choices        |
+| `/lint-typecheck`   | Run lint + type check                               | Before committing           |
+| `/test-e2e`         | Run E2E tests                                       | After major changes         |
 
 ### How It Works With Antigravity
 
 When you start your workspace, Antigravity instantly configures itself based on:
+
 - **`CONTEXT.md`**: Reads the project's technology stack and core architectural principles (FBA-SOLID-SSOT).
 - **`mission.md`**: An active task tracker. You (or the AI) can update this file sequentially so the agent stays on track during a long coding session.
 - **`.antigravity/rules.md`**: Provides the persona (Senior Payload / Next.js Architect) and enforces the "Artifact-First" (Think-Act-Reflect) loop automatically.
@@ -121,12 +123,15 @@ When you start your workspace, Antigravity instantly configures itself based on:
 Every workflow command naturally feeds into this setup. For example:
 
 1. **Initialize the project** after cloning:
+
    > "Hey agent, please run the `/start` workflow to prepare this project."
 
 2. **Plan a new feature**:
+
    > "I need to build a new Blog feature. Run `/plan` for a new blog system with posts, categories, and author relationships."
 
 3. **Implement the feature**:
+
    > "The plan looks good. Let's `/implement` the blog feature according to `docs/design/feature-scope.md`."
 
 4. **Verify quality**:
@@ -148,11 +153,11 @@ NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
 Pre-configures `DATABASE_URL` in `.env` at project creation:
 
-| Value | DATABASE_URL written | Notes |
-|-------|---------------------|-------|
-| `sqlite` (default) | *(none — uses `file:./local.db`)* | No DB server needed |
-| `mongodb` | `mongodb://localhost:27017/my-payload-app` | Update with your Atlas URI |
-| `postgres` | `postgresql://user:password@localhost:5432/my-payload-app` | Update with your connection string |
+| Value              | DATABASE_URL written                                       | Notes                              |
+| ------------------ | ---------------------------------------------------------- | ---------------------------------- |
+| `sqlite` (default) | _(none — uses `file:./local.db`)_                          | No DB server needed                |
+| `mongodb`          | `mongodb://localhost:27017/my-payload-app`                 | Update with your Atlas URI         |
+| `postgres`         | `postgresql://user:password@localhost:5432/my-payload-app` | Update with your connection string |
 
 ```bash
 npx github:kelasvibecoding/payload-base-bun my-project --db=postgres
@@ -162,8 +167,8 @@ npx github:kelasvibecoding/payload-base-bun my-project --db=postgres
 
 ## 🔑 Access Keys
 
-| Mode | Requires Key | What You Get |
-|------|-------------|--------------|
-| Standard (`npx github:kelasvibecoding/payload-base-bun`) | ❌ No | Public boilerplate |
-| `--ability` | ✅ Yes (Ebook/Class) | + Antigravity agent rules, skills, workflows |
-| `--abilityonly` | ✅ Yes | Antigravity agent configs only (inject into existing project) |
+| Mode                                                     | Requires Key         | What You Get                                                  |
+| -------------------------------------------------------- | -------------------- | ------------------------------------------------------------- |
+| Standard (`npx github:kelasvibecoding/payload-base-bun`) | ❌ No                | Public boilerplate                                            |
+| `--ability`                                              | ✅ Yes (Ebook/Class) | + Antigravity agent rules, skills, workflows                  |
+| `--abilityonly`                                          | ✅ Yes               | Antigravity agent configs only (inject into existing project) |

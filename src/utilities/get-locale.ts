@@ -1,0 +1,50 @@
+'use server'
+
+import { defaultLocale, locales, type Locale } from '@/i18n/config'
+import logger from '@/lib/logger'
+import { cookies, headers } from 'next/headers'
+
+export async function getUserLocale(): Promise<string> {
+  try {
+    // Check cookies first (for client-side preference)
+    const cookieStore = await cookies()
+    const cookieLocale = cookieStore.get('locale')?.value
+
+    if (cookieLocale && locales.includes(cookieLocale as Locale)) {
+      return cookieLocale
+    }
+
+    // Check Accept-Language header
+    const headersList = await headers()
+    const acceptLanguage = headersList.get('accept-language')
+
+    if (acceptLanguage) {
+      // Parse Accept-Language header and find first matching locale
+      const preferredLocales = acceptLanguage
+        .split(',')
+        .map((lang) => lang.split(';')[0].trim().split('-')[0])
+
+      for (const lang of preferredLocales) {
+        if (locales.includes(lang as Locale)) {
+          return lang
+        }
+      }
+    }
+
+    // Fallback to default locale
+    return defaultLocale
+  } catch (error) {
+    // In case of any error, fallback to default
+    logger.warn(
+      `Error getting user locale: ${error instanceof Error ? error.message : String(error)}`,
+    )
+    return defaultLocale
+  }
+}
+
+export async function setUserLocale(locale: Locale) {
+  ;(await cookies()).set('locale', locale, {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+  })
+}

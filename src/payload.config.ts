@@ -26,13 +26,20 @@ dns.setDefaultResultOrder('ipv4first')
 // Force Node.js to use the configured DNS servers
 dns.promises.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { Posts } from './collections/Posts'
-import { ContactRequests } from './collections/ContactRequests'
-import { OAuth } from './collections/OAuth'
+import { Users } from './collections/users'
+import { Media } from './collections/media'
+import { Posts } from './collections/content/posts'
+import { Categories } from './collections/content/categories'
+import { Comments } from './collections/content/comments'
+import { ContactRequests } from './collections/contact-requests'
+import { OAuth } from './collections/oauth'
 
 import { uuidPlugin } from './plugins/uuid'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import { en } from '@payloadcms/translations/languages/en'
+import { id } from '@payloadcms/translations/languages/id'
+import { getServerSideURL } from './utilities/get-url'
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,16 +48,40 @@ export default buildConfig({
   logger: {
     options: loggerOptions,
   },
+  localization: {
+    locales: [
+      {
+        label: {
+          en: 'English',
+          id: 'Inggris',
+        },
+        code: 'en',
+      },
+      {
+        label: {
+          en: 'Indonesian',
+          id: 'Indonesia',
+        },
+        code: 'id',
+      },
+    ],
+    defaultLocale: 'id',
+    fallback: true,
+  },
+  i18n: {
+    fallbackLanguage: 'id',
+    supportedLanguages: { en, id },
+  },
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
     components: {
-      beforeDashboard: ['/components/admin/Welcome'],
+      beforeDashboard: ['/components/admin/welcome#Welcome'],
       graphics: {
-        Icon: '/components/admin/Graphics#Icon',
-        Logo: '/components/admin/Graphics#Logo',
+        Icon: '/components/admin/graphics#Icon',
+        Logo: '/components/admin/graphics#Logo',
       },
     },
     meta: {
@@ -62,7 +93,7 @@ export default buildConfig({
     'http://localhost:3000',
     ...Array.from({ length: 254 }, (_, i) => `http://192.168.1.${i + 1}:3000`),
   ],
-  collections: [Users, Media, Posts, ContactRequests, OAuth],
+  collections: [Users, Media, Posts, ContactRequests, OAuth, Categories, Comments],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '864a8383b7ed11af189db510',
   typescript: {
@@ -112,6 +143,18 @@ export default buildConfig({
           import: false,
         },
       ],
+    }),
+    nestedDocsPlugin({
+      collections: ['categories'],
+      generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ''),
+    }),
+    seoPlugin({
+      collections: ['posts'],
+      generateTitle: ({ doc }) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        doc?.title ? `${(doc as any).title} | Payload Base` : 'Payload Base',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      generateURL: ({ doc }) => `${getServerSideURL()}/blogs/${(doc as any).slug}`,
     }),
   ],
   // email: nodemailerAdapter({

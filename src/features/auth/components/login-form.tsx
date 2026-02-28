@@ -34,17 +34,17 @@ export function LoginForm() {
       const result = await loginAction(values)
       if (result.success) {
         toast.success('Logged in successfully')
-        
+
         // Role-aware redirection
         const roleRedirect = result.role ? DEFAULT_ROLE_REDIRECTS[result.role] : null
-        const targetUrl = callbackUrl !== '/' ? callbackUrl : (roleRedirect || '/')
-        
+        const targetUrl = callbackUrl !== '/' ? callbackUrl : roleRedirect || '/'
+
         router.push(targetUrl)
         router.refresh()
       } else {
         toast.error(result.error || 'Invalid email or password')
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error('An unexpected error occurred')
     } finally {
       setIsLoading(false)
@@ -72,13 +72,17 @@ export function LoginForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <FloatingPasswordInput label="Password" {...field} autoComplete="current-password" />
+                <FloatingPasswordInput
+                  label="Password"
+                  {...field}
+                  autoComplete="current-password"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full h-12 text-base font-semibold" disabled={isLoading}>
+        <Button type="submit" className="h-12 w-full text-base font-semibold" disabled={isLoading}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Sign In
         </Button>

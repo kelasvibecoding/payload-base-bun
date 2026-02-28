@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
-const AlertBox: React.FC = () => {
+export const AlertBox: React.FC = () => {
   return (
     <Alert>
       <AlertTitle>Heads up!</AlertTitle>
@@ -9,5 +9,3 @@ const AlertBox: React.FC = () => {
     </Alert>
   )
 }
-
-export default AlertBox

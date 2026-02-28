@@ -50,6 +50,14 @@ export const adminOrSelfAccess: Access = (args: AccessArgs) => {
 }
 
 /**
+ * Policy: Allows authenticated users full access, or public access to published records.
+ */
+export const authenticatedOrPublished: Access = ({ req: { user } }) => {
+  if (user) return true
+  return { _status: { equals: 'published' } }
+}
+
+/**
  * Helper specifically for checking if a user can access the admin panel via collection-level access.
  */
 export const isAdminOrSelf = (args: { req: PayloadRequest; id?: string | number }): boolean => {
