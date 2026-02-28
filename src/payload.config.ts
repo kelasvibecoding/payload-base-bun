@@ -7,24 +7,12 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import dns from 'node:dns'
-// import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+// import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { loggerOptions } from './lib/logger'
 // import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 // import { resendAdapter } from '@payloadcms/email-resend'
-
-// // Fix for MongoDB Atlas SRV connection issues on Windows
-// // This forces Node to use a reliable DNS provider for the SRV lookup
-// dns.setServers(['8.8.8.8', '1.1.1.1'])
-// dns.setDefaultResultOrder('verbatim')
-
-// Configure DNS settings BEFORE any connections
-dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
-dns.setDefaultResultOrder('ipv4first')
-
-// Force Node.js to use the configured DNS servers
-dns.promises.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
 
 import { Users } from './collections/users'
 import { Media } from './collections/media'
@@ -40,6 +28,32 @@ import { en } from '@payloadcms/translations/languages/en'
 import { id } from '@payloadcms/translations/languages/id'
 import { getServerSideURL } from './utilities/get-url'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
+
+// Configure DNS settings BEFORE any connections (required for MongoDB SRV lookup)
+// Only applies when DATABASE_URL is a MongoDB connection string
+if (process.env.DATABASE_URL?.startsWith('mongodb')) {
+  dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
+  dns.setDefaultResultOrder('ipv4first')
+  dns.promises.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1'])
+}
+
+/**
+ * Database Mode Detection
+ *
+ * - DATABASE_URL starts with 'mongodb' → MongoDB Atlas (cloud deploy / Vercel)
+ * - No DATABASE_URL                   → SQLite local file (Tauri desktop / dev)
+ *   Override SQLite path via SQLITE_URL env (e.g. for custom data directory)
+ */
+const isMongoDb = process.env.DATABASE_URL?.startsWith('mongodb')
+
+/**
+ * Storage Mode Detection
+ *
+ * - UPLOADTHING_TOKEN present → UploadThing (cloud, team shared mode)
+ * - No token                  → Local disk /media folder (dev & Tauri solo mode)
+ *   The Media collection already sets staticDir: 'media' as the fallback.
+ */
+const isCloudStorage = Boolean(process.env.UPLOADTHING_TOKEN)
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -105,36 +119,37 @@ export default buildConfig({
   //     connectionString: process.env.DATABASE_URL || '',
   //   },
   // }),
-  db: process.env.DATABASE_URL?.startsWith('mongodb')
+  db: isMongoDb
     ? mongooseAdapter({
         url: process.env.DATABASE_URL || '',
       })
     : sqliteAdapter({
         idType: 'uuid',
         client: {
-          url: 'file:./local.db',
+          // Override via SQLITE_URL for custom data directory (e.g. Tauri app data folder)
+          url: process.env.SQLITE_URL || 'file:./local.db',
         },
       }),
   sharp,
   plugins: [
-    vercelBlobStorage({
-      collections: {
-        media: {
-          prefix: 'media',
-        },
-      },
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    }),
-    // Cloud storage using Uploadthing (alternative)
-    // uploadthingStorage({
-    //   collections: {
-    //     media: true,
-    //   },
-    //   options: {
-    //     token: process.env.UPLOADTHING_TOKEN,
-    //     acl: 'public-read',
-    //   },
-    // }),
+    // ─── Storage ──────────────────────────────────────────────────────────────
+    // UploadThing (cloud) when UPLOADTHING_TOKEN is set.
+    // When not set, Payload falls back to the Media collection's
+    // staticDir: 'media' — files are saved locally to the /media folder.
+    ...(isCloudStorage
+      ? [
+          uploadthingStorage({
+            collections: {
+              media: true,
+            },
+            options: {
+              token: process.env.UPLOADTHING_TOKEN,
+              acl: 'public-read',
+            },
+          }),
+        ]
+      : []),
+    // ─── Plugins ──────────────────────────────────────────────────────────────
     uuidPlugin(),
     importExportPlugin({
       collections: [
