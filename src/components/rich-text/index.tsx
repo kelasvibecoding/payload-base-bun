@@ -16,9 +16,9 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 // Import blocks
-import { BannerBlock } from '@/blocks/Banner/Component'
-import { ContentBlock } from '@/blocks/Content/Component'
-import { MediaBlock } from '@/blocks/Media/Component'
+import { BannerBlock } from '@/blocks/banner/component'
+import { ContentBlock } from '@/blocks/content/component'
+import { MediaBlock } from '@/blocks/media-block/component'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode | SerializedLinkNode | SerializedUploadNode
 
