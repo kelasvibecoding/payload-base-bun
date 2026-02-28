@@ -1,30 +1,13 @@
 # Core Artifact Templates
 
 When a user approves of your brainstorming and the feature direction is locked in, you **MUST** generate outputs exactly according to the markdown templates below. 
-Because this project strictly follows **Feature-Based Architecture (FBA)**, we do not write massive, monolithic PRDs. We create a master PRD folder, and child PRD files for each feature.
+Because this project uses **Feature-Based Architecture (FBA)**, the PRD is generated as a single, unified document, but internally separated by distinct Features.
 
 **[CRITICAL INSTRUCTION]:** Variables wrapped in brackets like `[Feature Name]` or `[Problem]` are placeholders. You MUST replace them with dynamic, context-specific information derived from the interview phase.
 
----
 
-## Artifact 1: Master Blueprint & Folder Manifest 
 
-Start by outputting a Code Block representing the FBA PRD Folder tree, then output the Master Document.
-
-```text
-docs/
-└── prd/
-    └── [project-name-kebab-case]/
-        ├── 00-master-overview.md
-        ├── features/
-        │   ├── 01-[feature-one].md
-        │   ├── 02-[feature-two].md
-        │   └── 03-[feature-three].md
-        ├── Task-List.md
-        └── Design-Brief.md
-```
-
-### 1B: The Master Overview (`00-master-overview.md`)
+## Artifact 1: The Unified Master PRD
 
 ```markdown
 # Master PRD: [Project Name]
@@ -42,92 +25,76 @@ docs/
 - **Objective**: What are we building and why? Let's solve [Problem].
 - **Success Metrics**: How do we know this system is successful globally? (e.g., Conversion up 20%, Server Cost reduced).
 
+## 1.1 User Personas & Pain Points
+*(Identify at least 2 key user personas and their critical pain point based on your 5-Whys discovery cycle.)*
+- **[Persona Name]**: [Pain Point Description]. Why it matters: [Impact on Business/Life].
+- **[Persona Name]**: [Pain Point Description]. Why it matters: [Impact on Business/Life].
+
 ## 2. Global Constraints & Standards
 - **Technical Requirements**: Platform, performance (Lighthouse 100/100), Zero-JS app shell, scaling needs (10k vs 10M records).
-- **Compliance/Security**: Data privacy, universal access control rules, Multi-tenancy isolation.
-- **Data Migration & Initialization**: Strategy for migrating old data to the new schema or initializing default states.
+- **Compliance & Privacy**: GDPR/PII compliance, data residency, mandated Audit Logging for sensitive fields.
+- **Universal Access Control**: Global RBAC rules (e.g., "Owner-only edit" across all collections).
 
-## 3. FBA Feature Index
-*The following features are broken down in the `features/` directory.*
-- [ ] `01-[Feature Name]`
-- [ ] `02-[Feature Name]`
-- [ ] `03-[Feature Name]`
-```
+## 3. Feature Breakdowns
+*(You MUST repeat the following 3.X block for EVERY major feature identified during brainstorming. Do not skip any features.)*
 
----
+### 3.X Feature: [Feature Name]
 
-## Artifact 2: The First Feature PRD (`features/01-[feature].md`)
-
-*Generate the template for the **first** feature ONLY to save tokens. Ask the user if they want the others.*
-
-```markdown
-# Feature PRD: [Feature Name]
-
-## 1. Feature Goal & Metrics
+#### 3.X.1 Goal & Metrics
 - **Objective**: What problem does *this specific feature* solve?
 - **KPI**: Specific success metric (e.g., 0 hydration errors, 90% form completion).
 
-## 2. Feature Brainstorm & Prioritization (MoSCoW)
+#### 3.X.2 MoSCoW Prioritization
+- 🔴 **Must Have (MVP Core)**: [Requirement 1 Name] - Detailed explanation.
+- 🟡 **Should Have (Fast-Follows)**: [Requirement 2 Name] - High business value, not MVP blocking.
+- 🟢 **Could Have (Nice to Have)**: [Requirement 3 Name] - UX polish.
+- 🚫 **Won't Have**: [Requirement 4 Name] - Explicitly excluded.
 
-### 🔴 Must Have (MVP Core)
-- **[Requirement 1 Name]**: Detailed explanation.
-  - *Acceptance Criteria*: User can do X, data is saved, Y is triggered.
+#### 3.X.3 User Flow & Error Paths
+- **1. [Start]**: [Trigger Action]
+- **2. [Process]**: [System Logic / Loop]
+  - *Error Path*: [What happens if failure]
+- **3. [End]**: [Final State / Redirect]
 
-### 🟡 Should Have (Fast-Follows)
-- **[Requirement 2 Name]**: High business value but not blocking the MVP launch.
+#### 3.X.4 Payload Architecture & Data Mapping
+- **Schema Mapping (Collections/Globals)**:
+| Collection | Field Name | Type | Relationship / Audit Needed? |
+|---|---|---|---|
+| `[Collection]` | `[field]` | `[type]` | `[rel or (Audit: Yes)]` |
 
-### 🟢 Could Have (Nice to Have)
-- **[Requirement 3 Name]**: UX polish or non-critical integrations.
+- **Security (Access Control)**: Define exactly who can `read`, `create`, `update`, and `delete`.
+- **Logic Hooks**: List any `beforeChange`, `afterRead`, or `afterDelete` business rules required.
+- **Frontend Strategy**: React Server Components vs Client Components boundary map.
 
-### 🚫 Won't Have (Out of Scope for now)
-- **[Requirement 4 Name]**: Explicitly excluded to prevent scope creep.
-
-## 3. User Flow
-1. **Entry Point**: Where does the user start?
-2. **Core Loop**: What steps do they take?
-3. **Exit Point**: Where are they redirected after success?
-4. **Error Path**: What happens if validation fails?
-
-**Flowchart Diagram**: 
-\`\`\`mermaid
-flowchart TD
-  %% Replace with actual feature flow
-  A[Start] --> B(Action)
-\`\`\`
-
-## 4. Architecture & Data Scale
-- **Data Volume Expectation**: Define if this feature handles 100 rows, 10,000 rows, or 10M+ rows (impacts pagination & transaction limits).
-- **Frontend Components**: Server Components vs Client Components mapping.
-- **Backend/Payload CMS**: Impacted collections, globals, or payload hooks context.
-
-**Database ERD**: 
-\`\`\`mermaid
-erDiagram
-  %% Replace with actual ERD mapping
-  COLLECTION {
-    string field
-  }
-\`\`\`
-
-**Sequence Diagram**: 
-\`\`\`mermaid
-sequenceDiagram
-  %% Replace with actual sequence
-  User->>Frontend: Action
-\`\`\`
-```
+#### 3.X.5 Edge Case Matrix
+| Scenario | Problem | Resolution Strategy |
+|---|---|---|
+| `[Case]` | `[What if...]` | `[Mitigation]` |
 
 ---
 
-## Artifact 3: Development Task List (Todo Flow)
+## 4. Open Questions & Technical Risks
+*(Identify any technical unknowns or project risks discovered during the 5-Whys cycle.)*
+- **[Unknown 1]**: [Why it's a risk] -> [Task to resolve it].
+- **[Risk 2]**: [Mitigation Plan].
+
+## 5. Timeline & Iteration Phases
+- **Phase 1 (MVP)**: All "Must Have" features.
+- **Phase 2 (Fast Follows)**: "Should Have" features.
+- **Phase 3 (Optimization)**: "Could Have" features and high-Lighthouse performance polish.
+```
+
+
+
+## Artifact 2: Development Task List (Todo Flow)
 *This translates the PRD into an actionable checklist using the FBA-SOLID-SSOT architecture format.*
 
 ```markdown
-# 📋 Development Task List: [Feature Name]
+# 📋 Development Task List: [Project Name]
 
 ## Phase 1: Foundation (Parallel Execution)
 ### Backend / Payload CMS Team
-- [ ] Create `[collection-name]` collection inside `src/collections/[name]`.
+- [ ] Create collections inside `src/collections/[name]`.
 - [ ] Centralize options/constants into `src/features/[feature]/constants.ts` (SSOT rule).
 - [ ] Define ERD fields (e.g., `title`, `status`, `tracking`).
 - [ ] Write `access` control logic (`src/features/[feature]/services/access.ts`).
@@ -139,7 +106,7 @@ sequenceDiagram
 - [ ] Build statically responsive Skeleton UI (`loading.tsx`).
 
 ## Phase 2: Core Logic & Integration
-- [ ] **Data Fetching**: Hook up Server Component to fetch from Local API. Handle data layer in `src/features/[feature]/services/`.
+- [ ] **Data Fetching**: Hook up Server Component to fetch from Local API (Data layer in `src/features/[feature]/services/`).
 - [ ] **Mutations/Flow**: Write business logic in `src/features/[feature]/hooks/`.
 - [ ] **Zod Schema**: Colocate form validation in `src/features/[feature]/schema.ts`.
 - [ ] Connect Frontend Form to Server Action using `useTransition`.
@@ -150,13 +117,13 @@ sequenceDiagram
 - [ ] Optimize 100/100 Lighthouse performance (Zero-JS shell check).
 ```
 
----
 
-## Artifact 4: Google Stitch Design Brief
+
+## Artifact 3: Google Stitch Design Brief
 *A ready-to-use prompt payload that the developer can copy and paste into Google Stitch (`mcp_stitch`) to automatically generate the React UI wireframes.*
 
 ```markdown
-# 🎨 Google Stitch Design Brief: [Feature Name]
+# 🎨 Google Stitch Design Brief
 *Copy and paste the prompt below into Google Stitch.*
 
 **Suggested Device Type**: [Desktop / Mobile / Responsive]
@@ -178,9 +145,9 @@ Design a stunning, responsive [Page Type, e.g., Dashboard Overview / Data Table 
 - Ensure the state includes a visual representation of an "Empty State" or "Skeleton Loading" pattern.
 ```
 
----
 
-## Artifact 5: Gemini Canvas MVP Preview
+
+## Artifact 4: Gemini Canvas MVP Preview
 *Use the powerful Gemini Canvas feature to output a working HTML/React representation of the UI.*
 
 **Instruction:** You must generate a functional MVP app within the Gemini Canvas using React with Tailwind classes (or HTML/CSS/JS if React is unsupported). 

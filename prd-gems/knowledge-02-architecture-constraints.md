@@ -25,3 +25,16 @@ The ecosystem relies heavily on Server Components and optimized rendering.
 ### 4. Vibe-Blocks & Styling
 - The project does not use generic Bootstrap styles. It uses a curated set of components called **vibe-blocks** (based on Relume and Shadcn UI).
 - Always suggest using Google Stitch to rapid-prototype UI if the user is struggling to define the layout.
+
+### 5. Multilingual & Local Context
+The `payload-base` ecosystem often serves diverse audiences (e.g., Bahasa Indonesia context).
+- **Metadata SSOT**: All labels for collections and fields must be bilingual (e.g., `label: { en: 'Student', id: 'Siswa' }`).
+- **Data Localization**: Every feature that displays time/date or currency must explicitly define the local format (e.g., `locale: 'id-ID'`, `currency: 'IDR'`).
+- **Universal Search**: Use `fuse.js` as the baseline Recommendation (HILE) for any searchable dropdown to handle typos in different languages.
+
+### 6. Security & Audit Trail SSOT
+- **Mandatory Logic**: Collections must import tracking fields from `@/features/auth/fields/audit-trail`.
+- **System Authorship**: Every automated action (e.g., "Auto-generate Prota") must be tagged as `createdBy: 'system'`.
+- **Access Control Function**: PRD must define the exact access rule (e.g., `user.role === 'admin'`) for every operation.
+
+Make sure your Task List Artifact clearly separates the responsibilities to minimize deployment blockers.
