@@ -1,11 +1,35 @@
-import React from 'react'
+import fs from 'fs'
+import path from 'path'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export const Welcome: React.FC = async () => {
-  const payload = await getPayload({ config })
-  const { totalDocs: userCount } = await payload.count({ collection: 'users' })
-  const { totalDocs: mediaCount } = await payload.count({ collection: 'media' })
+  let userCount = 0
+  let mediaCount = 0
+
+  try {
+    const payload = await getPayload({ config })
+    const { totalDocs: uCount } = await payload.count({ collection: 'users' })
+    const { totalDocs: mCount } = await payload.count({ collection: 'media' })
+    userCount = uCount
+    mediaCount = mCount
+  } catch (e) {
+    console.warn('Welcome Dashboard: Could not fetch stats (likely build phase)', e)
+  }
+
+  // Read version from tauri.conf.json
+  let version = '0.0.0'
+  try {
+    const tauriConfigPath = path.resolve(__dirname, '../../../../src-tauri/tauri.conf.json')
+    const tauriConfig = JSON.parse(fs.readFileSync(tauriConfigPath, 'utf8'))
+    version = tauriConfig.version
+  } catch (e) {
+    console.error('Failed to read tauri.conf.json version', e)
+  }
 
   const now = new Date()
   const timeFormatter = new Intl.DateTimeFormat('en-GB', {
@@ -32,7 +56,7 @@ export const Welcome: React.FC = async () => {
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
               <h2 className="from-primary mb-3 bg-gradient-to-r to-purple-400 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent">
-                Welcome to your Dashboard
+                Payload Base v{version} — Dashboard
               </h2>
               <p className="text-muted-foreground/80 max-w-2xl text-lg">
                 You&apos;re managing a high-performance content ecosystem. Here is your real-time

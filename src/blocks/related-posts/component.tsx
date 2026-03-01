@@ -5,7 +5,7 @@ import React from 'react'
 import type { Post } from '@/payload-types'
 
 import { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
-import { PostCard } from '@/features/blogs/components/post-card'
+import { PostCard } from '@/features/blog/components/post-card'
 
 export type RelatedPostsProps = {
   className?: string

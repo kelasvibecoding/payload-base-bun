@@ -4,7 +4,7 @@
  */
 
 // Validation constants
-import { COMMENT_LIMITS } from '@/features/blogs/constants'
+import { COMMENT_LIMITS } from '@/features/blog/constants'
 
 const {
   COMMENT_MAX_LENGTH,

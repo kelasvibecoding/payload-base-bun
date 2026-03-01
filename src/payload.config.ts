@@ -104,8 +104,8 @@ export default buildConfig({
   },
   cors: '*',
   csrf: [
-    'http://localhost:3000',
-    ...Array.from({ length: 254 }, (_, i) => `http://192.168.1.${i + 1}:3000`),
+    'http://localhost:3300',
+    ...Array.from({ length: 254 }, (_, i) => `http://192.168.1.${i + 1}:3300`),
   ],
   collections: [Users, Media, Posts, ContactRequests, OAuth, Categories, Comments],
   editor: lexicalEditor(),
@@ -169,7 +169,7 @@ export default buildConfig({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         doc?.title ? `${(doc as any).title} | Payload Base` : 'Payload Base',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      generateURL: ({ doc }) => `${getServerSideURL()}/blogs/${(doc as any).slug}`,
+      generateURL: ({ doc }) => `${getServerSideURL()}/blog/${(doc as any).slug}`,
     }),
   ],
   // email: nodemailerAdapter({

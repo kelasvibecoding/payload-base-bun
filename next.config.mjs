@@ -12,7 +12,17 @@ const nextConfig = {
   // Output standalone for Docker/Self-hosted (Vercel ignores this and does its own optimization)
   output: 'standalone',
   distDir: process.env.NODE_ENV === 'development' ? '.next-dev' : '.next',
-  serverExternalPackages: ['payload'],
+  serverExternalPackages: [
+    'payload',
+    'mongoose',
+    'sharp',
+    'mongodb',
+    'graphql',
+    'pino',
+    'pino-pretty',
+    '@payloadcms/db-mongodb',
+    '@payloadcms/db-sqlite',
+  ],
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
@@ -24,7 +34,6 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: [
-      '@payloadcms/ui',
       'lucide-react',
       'framer-motion',
       '@radix-ui/react-icons',
@@ -32,10 +41,10 @@ const nextConfig = {
   },
   // Allow network origins for development (e.g. 192.168.x.x)
   allowedDevOrigins: [
-    'localhost:3000',
+    'localhost:3300',
     // Support common local subnet (1)
     ...Array.from({ length: 254 }, (_, i) => `192.168.1.${i + 1}`),
-    ...Array.from({ length: 254 }, (_, i) => `192.168.1.${i + 1}:3000`),
+    ...Array.from({ length: 254 }, (_, i) => `192.168.1.${i + 1}:3300`),
   ],
 }
 

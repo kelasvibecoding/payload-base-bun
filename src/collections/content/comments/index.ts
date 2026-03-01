@@ -9,10 +9,10 @@ import {
   securityAfterChange,
   securityBeforeChange,
   securityBeforeValidate,
-} from '@/features/blogs/hooks/comment-security-hooks'
-import { revalidatePost } from '@/features/blogs/hooks/revalidate-post'
+} from '@/features/blog/hooks/comment-security-hooks'
+import { revalidatePost } from '@/features/blog/hooks/revalidate-post'
 
-import { COMMENT_LIMITS } from '@/features/blogs/constants'
+import { COMMENT_LIMITS } from '@/features/blog/constants'
 
 export const Comments: CollectionConfig = {
   slug: 'comments',

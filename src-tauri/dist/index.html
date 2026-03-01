@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payload Base — Initializing</title>
+    <style>
+      :root {
+        --bg: #0a0a0c;
+        --accent: #0066ff;
+        --text: #ffffff;
+        --subtext: #88888b;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .container {
+        text-align: center;
+        animation: fadeIn 0.8s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 30px;
+        filter: drop-shadow(0 0 20px rgba(0, 102, 255, 0.3));
+        border-radius: 24px;
+        background: linear-gradient(135deg, #121214 0%, #0a0a0c 100%);
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
+      }
+      p {
+        color: var(--subtext);
+        font-size: 14px;
+        margin-bottom: 40px;
+        min-height: 20px;
+      }
+      .loader-container {
+        width: 240px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 0 auto;
+        position: relative;
+      }
+      .loader-bar {
+        position: absolute;
+        height: 100%;
+        width: 40%;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        animation: loading 1.5s infinite ease-in-out;
+        border-radius: 10px;
+      }
+      @keyframes loading {
+        0% {
+          left: -40%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+      .status {
+        margin-top: 20px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        font-weight: 700;
+        opacity: 0.8;
+      }
+      .footer {
+        position: absolute;
+        bottom: 30px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img src="logo.png" alt="Payload Base" class="logo" />
+      <h1 id="title">Initializing Engine</h1>
+      <p id="description">Starting local database and server sync...</p>
+
+      <div class="loader-container">
+        <div class="loader-bar"></div>
+      </div>
+
+      <div id="status-text" class="status">System Status: Preparing</div>
+    </div>
+
+    <div class="footer">Payload Base v0.1.13 — Local Desktop Instance</div>
+
+    <script>
+      const title = document.getElementById('title');
+      const description = document.getElementById('description');
+      const statusText = document.getElementById('status-text');
+
+      const phases = [
+        { t: 0, title: 'Initializing Engine', desc: 'Setting up local environment...', status: 'PREPARING' },
+        { t: 3000, title: 'Launching Database', desc: 'Connecting to local SQLite instance...', status: 'CONNECTING DB' },
+        { t: 7000, title: 'Starting Sidecar', desc: 'Waking up the local web server...', status: 'BOOTING SERVER' },
+        { t: 15000, title: 'Finalizing Sync', desc: 'Payload core is loading modules...', status: 'READYING UI' },
+        { t: 25000, title: 'Almost Ready', desc: 'Hang tight, initial boot takes a moment...', status: 'FINALIZING' }
+      ];
+
+      phases.forEach(phase => {
+        setTimeout(() => {
+          title.textContent = phase.title;
+          description.textContent = phase.desc;
+          statusText.textContent = `System Status: ${phase.status}`;
+        }, phase.t);
+      });
+    </script>
+  </body>
+</html>

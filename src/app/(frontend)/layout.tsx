@@ -31,7 +31,7 @@ export const viewport = {
 
 import { Toaster } from '@/components/ui/sonner'
 import { MotionConfig } from '@/features/app-shell/components/motion-config'
-import { NextIntlProvider } from '@/features/blogs/components/next-intl-provider'
+import { NextIntlProvider } from '@/features/blog/components/next-intl-provider'
 import { getUserLocale } from '@/utilities/get-locale'
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

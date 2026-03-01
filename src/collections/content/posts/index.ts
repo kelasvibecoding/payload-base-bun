@@ -18,7 +18,7 @@ import { generatePreviewPath } from '../../../utilities/generate-preview-path'
 
 import { auditTrailFields, auditTrailHooks } from '@/features/auth/fields/audit-trail'
 import { populateAuthors } from './hooks/populate-authors'
-import { revalidateDelete, revalidatePost } from '@/features/blogs/hooks/revalidate-post'
+import { revalidateDelete, revalidatePost } from '@/features/blog/hooks/revalidate-post'
 import {
   MetaDescriptionField,
   MetaImageField,

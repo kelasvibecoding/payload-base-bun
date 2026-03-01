@@ -298,7 +298,7 @@ export async function GET(request: NextRequest) {
     // 6. Set cookie and redirect
     const absoluteCallbackUrl = callbackUrl.startsWith('http')
       ? callbackUrl
-      : `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}${callbackUrl}`
+      : `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3300'}${callbackUrl}`
 
     const response = NextResponse.redirect(absoluteCallbackUrl)
 
