@@ -12,8 +12,19 @@
 /out/
 /build
 
+# PWA (Automatically generated build artifacts)
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map
+
 # Payload CMS
 /media
+
+# Tauri Bundled Runtime Sidecars
+# (downloaded via: bun run setup:runtimes)
+/src-tauri/bin/*.exe
+/src-tauri/bin/*.zip
 
 # Environment
 .env

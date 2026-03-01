@@ -1,6 +1,6 @@
 use std::fs::{self, File};
 use std::io::Write;
-use std::process::{Child, Command, Stdio};
+use std::process::{Child, Command};
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
 use std::sync::{Arc, Mutex};
@@ -226,25 +226,41 @@ fn setup_windows_sidecar(
       }
   }
 
+  // ─── Phase 3: Bundled Runtime Resolution ──────────────────────────────────
+  // We use runtimes bundled inside the app via tauri.conf.json `externalBin`.
+  // This means the app works with zero pre-installed runtime on the user's machine.
   let server_url = "http://localhost:3300";
-  let mut cmd_name = "bun";
-  
-  // In release mode, prioritize Node.js if available, as Next.js standalone
-  // is officially built for the Node runtime and resolve issues on Windows/Bun.
-  if !cfg!(debug_assertions) {
-      if Command::new("node")
-          .arg("-v")
-          .stdout(Stdio::null())
-          .stderr(Stdio::null())
-          .status()
-          .map(|s| s.success())
-          .unwrap_or(false) 
-      {
-          cmd_name = "node";
-      }
-  }
 
-  let mut cmd = Command::new(cmd_name);
+  let resource_dir = handle.path().resource_dir()?;
+  let node_bin = resource_dir.join("bin").join("node-x86_64-pc-windows-msvc.exe");
+  let bun_bin  = resource_dir.join("bin").join("bun-x86_64-pc-windows-msvc.exe");
+
+  log_st!("Checking bundled runtimes in: {:?}", resource_dir);
+  log_st!("node bin exists: {}", node_bin.exists());
+  log_st!("bun  bin exists: {}", bun_bin.exists());
+
+  // Prefer Node.js for Next.js Standalone (official support, better Windows stability)
+  let runtime_path = if node_bin.exists() {
+      log_st!("Using bundled Node.js runtime");
+      node_bin
+  } else if bun_bin.exists() {
+      log_st!("Node.js not found, falling back to bundled Bun runtime");
+      bun_bin
+  } else {
+      let msg = format!(
+          "CRITICAL: No bundled runtime found. Checked:\n  {:?}\n  {:?}\nReinstall the application.",
+          node_bin, bun_bin
+      );
+      log_st!("{}", msg);
+      return Err(msg.into());
+  };
+
+  // Strip UNC prefix (\\?\) — required for Windows path compatibility with Node/Bun
+  let clean_runtime = runtime_path.to_string_lossy().replace("\\\\?\\", "");
+  log_st!("Using runtime: {}", clean_runtime);
+  println!("Using bundled runtime: {}", clean_runtime);
+
+  let mut cmd = Command::new(&clean_runtime);
 
   // ─── Module Hunting (Simplified with Resource Map) ───
   if cfg!(debug_assertions) {
@@ -324,7 +340,8 @@ fn setup_windows_sidecar(
       println!("Sidecar process spawned successfully.");
     }
     Err(e) => {
-      eprintln!("Failed to spawn Payload server: {}. Make sure Bun is installed.", e);
+      eprintln!("Failed to spawn Payload server with bundled runtime ({}): {}", clean_runtime, e);
+      eprintln!("Check server.log in AppData for details.");
       return Err(e.into());
     }
   }

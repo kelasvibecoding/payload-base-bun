@@ -40,6 +40,10 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
+    "externalBin": [
+      "bin/node",
+      "bin/bun"
+    ],
     "windows": {
       "nsis": {
         "installMode": "perMachine",

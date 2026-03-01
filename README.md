@@ -7,6 +7,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15+-black?logo=next.js)](https://nextjs.org/)
 [![Bun](https://img.shields.io/badge/Bun-1.2+-f9f1e1?logo=bun)](https://bun.sh/)
 [![Antigravity](https://img.shields.io/badge/Antigravity-Optimized-7c3aed)](https://antigravity.dev/)
+[![Tauri](https://img.shields.io/badge/Tauri-2.0-24c8db?logo=tauri)](https://tauri.app/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 📖 Table of Contents
@@ -248,6 +249,30 @@ graph LR
 | `vercelBlobStorage`  | Cloud media storage via Vercel Blob     |
 | `uuidPlugin`         | UUID-based document IDs                 |
 | `importExportPlugin` | Bulk data import/export for collections |
+
+---
+
+## 🖥️ Desktop Distribution (Tauri)
+
+This boilerplate supports packaging your full-stack application as a **standalone Windows executable** using Tauri 2.0.
+
+### 💎 Zero-Dependency Bundle
+We use a **Bundled Runtime Sidecar** strategy. Your `.exe` installer includes its own Node.js and Bun binaries, meaning your end-users need **zero** prior installation — the app just works out of the box.
+
+### 🛠️ Build Standalone App
+To generate your production-ready `.exe`:
+
+```bash
+bun run tauri:build:exe
+```
+
+This command automatically:
+1. Increments the patch version.
+2. Initializes the database schema.
+3. Downloads & verifies the bundled runtimes (Node.js/Bun).
+4. Compiles the Rust sidecar and packages everything into an installer.
+
+> See [Bundled Runtimes Guide](docs/guides/bundled-runtimes.md) for technical details.
 
 ---
 
