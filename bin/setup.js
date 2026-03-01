@@ -30,10 +30,14 @@ ${'━'.repeat(50)}
 Usage:
   npx @kelasvibecoding/payload-base-bun <project-name> [options]
   npx @kelasvibecoding/payload-base-bun --abilityonly
+  npx @kelasvibecoding/payload-base-bun --tauri
+  npx @kelasvibecoding/payload-base-bun --taurix
 
 Commands:
   <project-name>     Create a new Payload CMS + Next.js project
   --abilityonly      Inject Antigravity agent configs into existing project
+  --tauri            Inject Tauri Desktop config into an existing Payload CMS project
+  --taurix           Inject Tauri Desktop config into an existing regular Next.js project
 
 Options:
   --ability          Include Antigravity agent ability (requires Access Key)
@@ -50,6 +54,8 @@ Examples:
   npx @kelasvibecoding/payload-base-bun my-app --ability --token="github_pat_123..."
   npx @kelasvibecoding/payload-base-bun my-app --mobile --db=postgres
   npx @kelasvibecoding/payload-base-bun --abilityonly --token="github_pat_123..."
+  npx @kelasvibecoding/payload-base-bun --tauri
+  npx @kelasvibecoding/payload-base-bun --taurix
 ${'━'.repeat(50)}
 `)
   process.exit(0)
@@ -113,6 +119,8 @@ async function setup() {
 
   const keepAbilities = process.argv.includes('--ability')
   const abilityOnly = process.argv.includes('--abilityonly')
+  const tauriOnly = process.argv.includes('--tauri')
+  const taurixOnly = process.argv.includes('--taurix')
   const isMobile = process.argv.includes('--mobile')
 
   // Parse --token flag
@@ -251,6 +259,196 @@ async function setup() {
         'Enter your Access Key (Provided in the Kelas Vibe Coding Ebook/Class 💎): ',
         askAppTypeAndInject,
       )
+    }
+    return
+  }
+
+  // --- MODE: Tauri Only (Injection) ---
+  if (tauriOnly) {
+    const payloadConfigPath = path.join(process.cwd(), 'src', 'payload.config.ts')
+    if (!fs.existsSync(payloadConfigPath)) {
+      error('❌ Error: Could not find src/payload.config.ts. Are you in the root of a payload-base-bun project?')
+      process.exit(1)
+    }
+
+    const tempDir = `.temp-payload-base-${Date.now()}`
+    const repoUrl = `https://github.com/kelasvibecoding/payload-base-bun.git`
+
+    try {
+      info('\n🚀 Fetching Tauri Desktop configurations...')
+      process.stdout.write(`\rCloning source...\n`)
+      execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
+
+      await showProgress('Merging Tauri configurations', 1500)
+
+      // Copy src-tauri
+      const tauriSrc = path.join(tempDir, 'src-tauri')
+      if (fs.existsSync(tauriSrc)) {
+        copyDir(tauriSrc, path.join(process.cwd(), 'src-tauri'))
+      }
+
+      // Copy Scripts
+      const scriptsDest = path.join(process.cwd(), 'scripts')
+      if (!fs.existsSync(scriptsDest)) fs.mkdirSync(scriptsDest)
+      
+      const targetScripts = ['download-runtimes.ps1', 'post-build.js', 'bump-version.js', 'init-db-task.ts']
+      targetScripts.forEach(script => {
+        const srcFile = path.join(tempDir, 'scripts', script)
+        if (fs.existsSync(srcFile)) {
+          fs.copyFileSync(srcFile, path.join(scriptsDest, script))
+        }
+      })
+
+      // Patch Package.json
+      const pkgPath = path.join(process.cwd(), 'package.json')
+      if (fs.existsSync(pkgPath)) {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+        pkg.scripts = pkg.scripts || {}
+        pkg.scripts['build:tauri'] = "cross-env NEXT_TURBO=0 rimraf .next && cross-env NEXT_TURBO=0 NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" npx next build --webpack && node scripts/post-build.js"
+        pkg.scripts['tauri:dev'] = "tauri dev"
+        pkg.scripts['tauri:build'] = "tauri build"
+        pkg.scripts['tauri:build:exe'] = "node scripts/bump-version.js && npx tsx scripts/init-db-task.ts && powershell -ExecutionPolicy Bypass -File scripts/download-runtimes.ps1 && bunx tauri build --target x86_64-pc-windows-msvc"
+        pkg.scripts['setup:runtimes'] = "powershell -ExecutionPolicy Bypass -File scripts/download-runtimes.ps1"
+
+        pkg.dependencies = pkg.dependencies || {}
+        pkg.dependencies['@tauri-apps/api'] = "^2"
+        pkg.dependencies['@tauri-apps/plugin-shell'] = "^2"
+        
+        pkg.devDependencies = pkg.devDependencies || {}
+        pkg.devDependencies['@tauri-apps/cli'] = "^2"
+
+        fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2))
+      }
+
+      updateGitignore(process.cwd()) // ensure .gitignore ignores tauri bin files
+
+      // Update gitignore specifically for Tauri
+      const gitignorePath = path.join(process.cwd(), '.gitignore')
+      if (fs.existsSync(gitignorePath)) {
+        let content = fs.readFileSync(gitignorePath, 'utf8')
+        if (!content.includes('/src-tauri/bin/')) {
+          content += '\n# Tauri Bundled Runtime Sidecars\n/src-tauri/bin/*.exe\n/src-tauri/bin/*.zip\n'
+          fs.writeFileSync(gitignorePath, content)
+        }
+      }
+
+      fs.rmSync(tempDir, { recursive: true, force: true })
+
+      log('\n' + '━'.repeat(50))
+      success('✨ TAURI DESKTOP IMPLEMENTED SUCCESSFULLY!')
+      log('━'.repeat(50))
+      info('Your project is now ready to be built as a Windows .exe.')
+      log('\nNext steps:')
+      log('\x1b[31m  1. bun install\x1b[0m')
+      log('\x1b[31m  2. bun run setup:runtimes\x1b[0m')
+      log('\x1b[31m  3. bun run tauri:dev\x1b[0m')
+      log('\n')
+
+    } catch (e) {
+      error('\n\n❌ Tauri Injection Failed: ' + e.message)
+    } finally {
+      rl.close()
+    }
+    return
+  }
+
+  // --- MODE: TauriX Only (Injection for standard Next.js apps) ---
+  if (taurixOnly) {
+    const nextConfigPathMjs = path.join(process.cwd(), 'next.config.mjs')
+    const nextConfigPathJs = path.join(process.cwd(), 'next.config.js')
+    const nextConfigPathTs = path.join(process.cwd(), 'next.config.ts')
+    
+    if (!fs.existsSync(nextConfigPathMjs) && !fs.existsSync(nextConfigPathJs) && !fs.existsSync(nextConfigPathTs)) {
+      error('❌ Error: Could not find next.config file. Are you in the root of a Next.js project?')
+      process.exit(1)
+    }
+
+    const tempDir = `.temp-payload-base-${Date.now()}`
+    const repoUrl = `https://github.com/kelasvibecoding/payload-base-bun.git`
+
+    try {
+      info('\n🚀 Fetching Tauri Desktop configurations for Next.js...')
+      process.stdout.write(`\rCloning source...\n`)
+      execSync(`git clone --quiet --depth=1 ${repoUrl} ${tempDir}`, { stdio: 'inherit' })
+
+      await showProgress('Merging Tauri configurations', 1500)
+
+      // Copy src-tauri
+      const tauriSrc = path.join(tempDir, 'src-tauri')
+      if (fs.existsSync(tauriSrc)) {
+        copyDir(tauriSrc, path.join(process.cwd(), 'src-tauri'))
+      }
+
+      // Convert SQLITE_URL to DATABASE_URL for Prisma/Standard apps
+      const libRsPath = path.join(process.cwd(), 'src-tauri', 'src', 'lib.rs')
+      if (fs.existsSync(libRsPath)) {
+        let libRsContent = fs.readFileSync(libRsPath, 'utf8')
+        libRsContent = libRsContent.replace('std::env::set_var("SQLITE_URL"', 'std::env::set_var("DATABASE_URL"')
+        fs.writeFileSync(libRsPath, libRsContent)
+      }
+
+      // Copy Scripts (excluding init-db-task)
+      const scriptsDest = path.join(process.cwd(), 'scripts')
+      if (!fs.existsSync(scriptsDest)) fs.mkdirSync(scriptsDest)
+      
+      const targetScripts = ['download-runtimes.ps1', 'post-build.js', 'bump-version.js']
+      targetScripts.forEach(script => {
+        const srcFile = path.join(tempDir, 'scripts', script)
+        if (fs.existsSync(srcFile)) {
+          fs.copyFileSync(srcFile, path.join(scriptsDest, script))
+        }
+      })
+
+      // Patch Package.json
+      const pkgPath = path.join(process.cwd(), 'package.json')
+      if (fs.existsSync(pkgPath)) {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'))
+        pkg.scripts = pkg.scripts || {}
+        pkg.scripts['build:tauri'] = "cross-env NEXT_TURBO=0 rimraf .next && cross-env NEXT_TURBO=0 npx next build --webpack && node scripts/post-build.js"
+        pkg.scripts['tauri:dev'] = "tauri dev"
+        pkg.scripts['tauri:build'] = "tauri build"
+        pkg.scripts['tauri:build:exe'] = "node scripts/bump-version.js && powershell -ExecutionPolicy Bypass -File scripts/download-runtimes.ps1 && bunx tauri build --target x86_64-pc-windows-msvc"
+        pkg.scripts['setup:runtimes'] = "powershell -ExecutionPolicy Bypass -File scripts/download-runtimes.ps1"
+
+        pkg.dependencies = pkg.dependencies || {}
+        pkg.dependencies['@tauri-apps/api'] = "^2"
+        pkg.dependencies['@tauri-apps/plugin-shell'] = "^2"
+        
+        pkg.devDependencies = pkg.devDependencies || {}
+        pkg.devDependencies['@tauri-apps/cli'] = "^2"
+
+        fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2))
+      }
+
+      updateGitignore(process.cwd()) // ensure .gitignore ignores tauri bin files
+
+      // Update gitignore specifically for Tauri
+      const gitignorePath = path.join(process.cwd(), '.gitignore')
+      if (fs.existsSync(gitignorePath)) {
+        let content = fs.readFileSync(gitignorePath, 'utf8')
+        if (!content.includes('/src-tauri/bin/')) {
+          content += '\n# Tauri Bundled Runtime Sidecars\n/src-tauri/bin/*.exe\n/src-tauri/bin/*.zip\n'
+          fs.writeFileSync(gitignorePath, content)
+        }
+      }
+
+      fs.rmSync(tempDir, { recursive: true, force: true })
+
+      log('\n' + '━'.repeat(50))
+      success('✨ TAURI DESKTOP FOR NEXT.JS IMPLEMENTED SUCCESSFULLY!')
+      log('━'.repeat(50))
+      info('Your project is now ready to be built as a Windows .exe.')
+      info('Note: Make sure your next.config file has "output: \'standalone\'" set!')
+      log('\nNext steps:')
+      log('\x1b[31m  1. bun install\x1b[0m')
+      log('\x1b[31m  2. bun run setup:runtimes\x1b[0m')
+      log('\x1b[31m  3. bun run tauri:dev\x1b[0m')
+      log('\n')
+
+    } catch (e) {
+      error('\n\n❌ Tauri Injection Failed: ' + e.message)
+    } finally {
+      rl.close()
     }
     return
   }
